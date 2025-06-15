@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + Vite Smooth Scroll Animation App
 
 This is a frontend application built with **React** and **Vite**, featuring smooth scrolling and animations using `GSAP`, `ScrollTrigger`, and `Lenis`.
@@ -19,3 +20,6 @@ This is a frontend application built with **React** and **Vite**, featuring smoo
 
 ```bash
 npm install
+=======
+# d-26
+>>>>>>> 1f766b62552e17167cc3517922ab4338be70afe1

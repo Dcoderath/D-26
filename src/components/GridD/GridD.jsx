@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import "./GridD.css";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// You can keep or remove these if you no longer want to use images
 import D1 from "../../assets/D/D1.jpg";
 import D2 from "../../assets/D/D2.jpg";
 import D3 from "../../assets/D/D3.jpg";
@@ -11,16 +13,47 @@ import D6 from "../../assets/D/D6.jpg";
 
 const images = [D1, D2, D3, D4, D5, D6];
 
-const projects = [
-  { name: "Website Design", direction: "Direction A" },
-  { name: "E-commerce Platform", direction: "Direction B" },
-  { name: "Portfolio Site", direction: "Direction C" },
-  { name: "Mobile App", direction: "Direction D" },
-  { name: "Blog Layout", direction: "Direction E" },
-  { name: "Landing Page", direction: "Direction F" },
+const expertise = [
+  {
+    category: "Visual Identity",
+    items: ["Logo", "Brand guideline", "Content Creation", "Signage"],
+  },
+  {
+    category: "Digital Marketing",
+    items: [
+      "Digital Strategy",
+      "SEO",
+      "Online Advertising",
+      "Community Management",
+      "Email Marketing",
+      "Performance Analysis",
+    ],
+  },
+  {
+    category: "Web Development",
+    items: [
+      "Website Design",
+      "E-commerce Website",
+      "Website Redesign",
+      "Blog",
+      "Web Application",
+      "Hosting, Maintenance & Support",
+    ],
+  },
+  {
+    category: "Creative Development",
+    items: [
+      "Immersive Experience",
+      "Promotional Website",
+      "Animation & Motion Design",
+      "3D",
+    ],
+  },
 ];
 
 const IMAGE_HEIGHT = 280;
+
+gsap.registerPlugin(ScrollTrigger);
 
 const GridD = () => {
   const galleryRef = useRef(null);
@@ -35,60 +68,178 @@ const GridD = () => {
 
     imagesContainer.style.height = `${IMAGE_HEIGHT * images.length}px`;
 
-    gsap.set(gallery, { autoAlpha: 0 });
+    gsap.set(gallery, { autoAlpha: 0, scale: 1 });
 
-    // Add mouseenter/mouseleave listeners to each item
-    itemsRef.current.forEach((element, index) => {
-      if (!element) return;
+    const setTop = gsap.quickSetter(gallery, "top", "px");
+    const setLeft = gsap.quickSetter(gallery, "left", "px");
 
-      element.addEventListener("mouseenter", () => {
-        gsap.to(imagesContainer, {
-          marginTop: `-${IMAGE_HEIGHT * index}px`,
-          duration: 0.4,
-          ease: "power2.out",
+    let currentMarginTop = 0;
+    let targetMarginTop = 0;
+
+    gsap.ticker.add(() => {
+      currentMarginTop += (targetMarginTop - currentMarginTop) * 0.15;
+      gsap.set(imagesContainer, { marginTop: -currentMarginTop });
+    });
+
+    itemsRef.current.forEach((el, index) => {
+      if (!el) return;
+
+      const onMouseEnter = () => {
+        targetMarginTop = IMAGE_HEIGHT * index;
+
+        gsap.to(el, {
+          scale: 1.1,
+          rotation: 3,
+          color: "#f39c12",
+          duration: 0.5,
+          ease: "power3.out",
+          boxShadow: "0 15px 30px rgba(243,156,18,0.6)",
+          zIndex: 20,
+          filter: "drop-shadow(0 0 15px #f39c12)",
         });
-      });
 
-      element.addEventListener("mouseleave", () => {
-        gsap.to(element, { color: "initial", duration: 0.3, ease: "power1" });
-      });
+        gsap.to(imagesRef.current.children[index % images.length], {
+          scale: 1.15,
+          filter: "drop-shadow(0 0 25px #f39c12)",
+          duration: 0.5,
+          ease: "power3.out",
+          zIndex: 20,
+          position: "relative",
+        });
+
+        const techBadges = el.querySelectorAll(".tech-badge");
+        gsap.to(techBadges, {
+          autoAlpha: 1,
+          y: 0,
+          stagger: 0.1,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      };
+
+      const onMouseLeave = () => {
+        targetMarginTop = 0;
+
+        gsap.to(el, {
+          scale: 1,
+          rotation: 0,
+          color: "#222",
+          duration: 0.6,
+          ease: "elastic.out(1, 0.5)",
+          boxShadow: "none",
+          zIndex: 1,
+          filter: "none",
+        });
+
+        gsap.to(imagesRef.current.children[index % images.length], {
+          scale: 1,
+          filter: "none",
+          duration: 0.6,
+          ease: "elastic.out(1, 0.5)",
+          zIndex: 1,
+          position: "relative",
+        });
+
+        const techBadges = el.querySelectorAll(".tech-badge");
+        gsap.to(techBadges, {
+          autoAlpha: 0,
+          y: 10,
+          duration: 0.3,
+          ease: "power1.out",
+        });
+      };
+
+      el.addEventListener("mouseenter", onMouseEnter);
+      el.addEventListener("mouseleave", onMouseLeave);
+
+      el._onMouseEnter = onMouseEnter;
+      el._onMouseLeave = onMouseLeave;
     });
 
     const handleMouseMove = (e) => {
-      gsap.to(gallery, {
-        top: `${e.clientY}px`,
-        left: `${e.clientX}px`,
-        xPercent: -20,
-        yPercent: -45,
-        duration: 0.3,
-        ease: "power1.out",
+      const x = e.clientX;
+      const y = e.clientY;
+
+      setTop(y - IMAGE_HEIGHT / 2);
+
+      const galleryWidth = 300;
+      let left = x - galleryWidth / 2;
+      if (left < 0) left = 0;
+      if (left + galleryWidth > window.innerWidth)
+        left = window.innerWidth - galleryWidth;
+
+      setLeft(left);
+
+      gsap.to(imagesContainer, {
+        x: (x - window.innerWidth / 2) * 0.04,
+        y: (y - window.innerHeight / 2) * 0.04,
+        rotationX: (y - window.innerHeight / 2) * 0.01,
+        rotationY: (x - window.innerWidth / 2) * 0.01,
+        duration: 0.5,
+        ease: "power2.out",
+        transformPerspective: 500,
+        transformOrigin: "center center",
       });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
 
+    itemsRef.current.forEach((el, i) => {
+      if (!el) return;
+
+      gsap.fromTo(
+        el,
+        { autoAlpha: 0, y: 40, scale: 0.95 },
+        {
+          duration: 1,
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+          delay: i * 0.1,
+        }
+      );
+
+      const techBadges = el.querySelectorAll(".tech-badge");
+      gsap.set(techBadges, { autoAlpha: 0, y: 10 });
+    });
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-
-      // Clean up item listeners
-      itemsRef.current.forEach((element) => {
-        if (!element) return;
-        element.removeEventListener("mouseenter", () => {});
-        element.removeEventListener("mouseleave", () => {});
+      itemsRef.current.forEach((el) => {
+        if (!el) return;
+        el.removeEventListener("mouseenter", el._onMouseEnter);
+        el.removeEventListener("mouseleave", el._onMouseLeave);
       });
     };
   }, []);
 
-  // Handlers for mouse enter/leave on container, toggling gallery opacity
   const handleMouseEnter = () => {
     if (galleryRef.current) {
-      gsap.to(galleryRef.current, { autoAlpha: 1, duration: 0.3, ease: "power1.out" });
+      gsap.to(galleryRef.current, {
+        autoAlpha: 1,
+        scale: 1.1,
+        duration: 0.3,
+        ease: "power1.out",
+        filter: "drop-shadow(0 20px 40px rgba(243,156,18,0.6))",
+      });
     }
   };
 
   const handleMouseLeave = () => {
     if (galleryRef.current) {
-      gsap.to(galleryRef.current, { autoAlpha: 0, duration: 0.3, ease: "power1.out" });
+      gsap.to(galleryRef.current, {
+        autoAlpha: 0,
+        scale: 1,
+        duration: 0.4,
+        ease: "power1.out",
+        filter: "none",
+      });
     }
   };
 
@@ -97,16 +248,46 @@ const GridD = () => {
       <div className="container-works">
         <div className="content-works">
           <div className="header-works">
-            <h3>Recent Work</h3>
+            <h3>Expertise</h3>
           </div>
 
-          <div id="gallery-work" ref={galleryRef} style={{ height: IMAGE_HEIGHT }}>
-            <div id="work-images" ref={imagesRef}>
+          <div
+            id="gallery-work"
+            ref={galleryRef}
+            style={{
+              height: IMAGE_HEIGHT,
+              position: "fixed",
+              pointerEvents: "none",
+              top: 0,
+              left: 0,
+              width: 300,
+              zIndex: 1000,
+              borderRadius: 12,
+              overflow: "hidden",
+              backgroundColor: "rgba(0,0,0,0.1)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <div
+              id="work-images"
+              ref={imagesRef}
+              style={{ position: "relative", top: 0 }}
+            >
               {images.map((src, i) => (
                 <div
                   key={i}
                   className="work-image"
-                  style={{ backgroundImage: `url(${src})`, height: IMAGE_HEIGHT }}
+                  style={{
+                    backgroundImage: `url(${src})`,
+                    height: IMAGE_HEIGHT,
+                    borderRadius: "8px",
+                    marginBottom: "20px",
+                    boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    transition: "transform 0.3s ease",
+                    willChange: "transform, filter",
+                  }}
                 />
               ))}
             </div>
@@ -117,19 +298,81 @@ const GridD = () => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="grid-works">
-              {projects.map((project, i) => (
+            <div className="grid-works" style={{ gap: 24 }}>
+              {expertise.map((group, i) => (
                 <div
                   key={i}
                   className="item-work"
                   ref={(el) => (itemsRef.current[i] = el)}
+                  style={{
+                    cursor: "pointer",
+                    transformOrigin: "center",
+                    padding: "20px 24px",
+                    borderRadius: 12,
+                    backgroundColor: "#fff",
+                    boxShadow:
+                      "0 2px 8px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1)",
+                    userSelect: "none",
+                    transition: "box-shadow 0.3s ease",
+                  }}
                 >
                   <div className="title">
-                    <div className="item-columns">
-                      <span className="item-number">{String(i + 1).padStart(2, "0")})</span>
-                      <span className="item-name">{project.name}</span>
-                      <span className="item-direction">{project.direction}</span>
+                    <div
+                      className="item-columns"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 16,
+                        fontWeight: "600",
+                        fontSize: 18,
+                        color: "#222",
+                      }}
+                    >
+                      <span
+                        className="item-number"
+                        style={{
+                          fontFamily: "'Courier New', Courier, monospace",
+                          color: "#f39c12",
+                          minWidth: 32,
+                          textAlign: "right",
+                          userSelect: "none",
+                        }}
+                      >
+                        {String(i + 1).padStart(2, "0")})
+                      </span>
+                      <span className="item-name">{group.category}</span>
                     </div>
+                  </div>
+
+                  <div
+                    className="tech-stack"
+                    style={{
+                      marginTop: 12,
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 8,
+                    }}
+                  >
+                    {group.items.map((item, idx) => (
+                      <span
+                        key={idx}
+                        className="tech-badge"
+                        style={{
+                          backgroundColor: "#f39c12",
+                          color: "#fff",
+                          borderRadius: 12,
+                          padding: "4px 10px",
+                          fontSize: 12,
+                          fontWeight: "600",
+                          opacity: 0,
+                          transform: "translateY(10px)",
+                          userSelect: "none",
+                          pointerEvents: "none",
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 </div>
               ))}

@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://dcoderath.github.io/Dcoderath-27",
+  "homepage": "https://dcoderath.github.io/D-26",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

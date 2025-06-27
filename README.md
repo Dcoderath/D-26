@@ -6,5 +6,5 @@ This is my profile website.
 
 [![React](https://skillicons.dev/icons?i=react)](https://reactjs.org/)
 [![Vite](https://skillicons.dev/icons?i=vite)](https://vitejs.dev/)
-[![GSAP](https://skillicons.dev/icons?i=gsap)](https://greensock.com/gsap/)
 [![JavaScript](https://skillicons.dev/icons?i=js)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)](https://greensock.com/gsap/)

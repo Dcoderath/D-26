@@ -1,25 +1,10 @@
-<<<<<<< HEAD
-# React + Vite Smooth Scroll Animation App
+# เว็บไซต์โปรไฟล์ของฉัน
 
-This is a frontend application built with **React** and **Vite**, featuring smooth scrolling and animations using `GSAP`, `ScrollTrigger`, and `Lenis`.
+นี่คือเว็บไซต์โปรไฟล์ของฉัน
 
-## 🚀 Features
+## 🛠️ เทคโนโลยีที่ใช้
 
-- React 18 + Vite fast dev server
-- Smooth scrolling with [Lenis](https://github.com/studio-freight/lenis)
-- Scroll-based animations with [GSAP](https://greensock.com/gsap/) and [ScrollTrigger](https://greensock.com/scrolltrigger/)
-
-## 📦 Tech Stack
-
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [GSAP](https://greensock.com/gsap/)
-- [Lenis](https://github.com/studio-freight/lenis)
-
-## 📦 Installation
-
-```bash
-npm install
-=======
-# d-26
->>>>>>> 1f766b62552e17167cc3517922ab4338be70afe1
+[![React](https://skillicons.dev/icons?i=react)](https://reactjs.org/)
+[![Vite](https://skillicons.dev/icons?i=vite)](https://vitejs.dev/)
+[![GSAP](https://skillicons.dev/icons?i=gsap)](https://greensock.com/gsap/)
+[![Javascript](https://skillicons.dev/icons?i=js)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)

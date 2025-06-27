@@ -7,4 +7,11 @@ This is my profile website.
 [![React](https://skillicons.dev/icons?i=react)](https://reactjs.org/)
 [![Vite](https://skillicons.dev/icons?i=vite)](https://vitejs.dev/)
 [![JavaScript](https://skillicons.dev/icons?i=js)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![GSAP](https://worldvectorlogo.com/logos/gsap-greensock.svg)](https://greensock.com/gsap/)
+
+<a href="https://greensock.com/gsap/" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/GreenSock_Logo.svg" width="48" height="48" alt="GSAP logo" style="vertical-align:middle;" />
+</a>
+
+<a href="https://threejs.org/" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Three.js_Icon.svg" width="48" height="48" alt="Three.js logo" style="vertical-align:middle;" />
+</a>

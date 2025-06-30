@@ -1,0 +1,137 @@
+.plusup-container {
+  background-color: #000000;
+}
+
+.plusup-hero {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0, 0, 0);
+}
+
+.plusup-info {
+  padding-top: 15%;
+  padding: 5%;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.plusup-header-rows {
+  perspective: 1200px;
+  overflow: hidden;
+}
+
+.plusup-header-row {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.plusup-header-row:nth-child(1) {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.plusup-header-row:nth-child(2) {
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+}
+
+.plusup-pinned {
+  pointer-events: none; /* Allow clicks to pass through */
+  position: absolute;
+  top: 100vh;
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+}
+.plusup-whitespace {
+  position: relative;
+  width: 100%;
+  height: 300vh;
+  z-index: -1;
+}
+.plusup-revealer {
+  pointer-events: none; /* Also prevent blocking clicks */
+  position: absolute;
+  transform: translate(-50%, 0%);
+  left: 35%;
+  top: 415px;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  transform-origin: center center;
+}
+
+.plusup-revealer .plusup-revealer-1,
+.plusup-revealer .plusup-revealer-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  clip-path: polygon(45% 0%, 55% 0%, 55% 100%, 45% 100%);
+}
+
+.plusup-revealer .plusup-revealer-2 {
+  transform: rotate(90deg);
+  transform-origin: center center;
+  width: 100%;
+  height: 100%;
+}
+
+.plusup-header-info {
+  position: relative;
+  width: 100%;
+  height: 150vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+  color: #000000;
+  padding-bottom: 0;
+}
+
+.plusup-website-content {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #00000000;
+  z-index: 0;
+  margin-top: 0;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.plusup-container h1 {
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+  font-size: 200px;
+  font-weight: 400;
+  letter-spacing: -4px;
+}

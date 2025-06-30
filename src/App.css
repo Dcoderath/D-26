@@ -73,3 +73,16 @@ body, html {
   mix-blend-mode: difference;
   /* This will invert colors under the cursor: black becomes white, white becomes black */
 }
+
+.mobile-block-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #121212;
+  color: #ffffff;
+  font-family: sans-serif;
+  padding: 2rem;
+}

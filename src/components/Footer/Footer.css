@@ -9,7 +9,7 @@
   background: linear-gradient(to bottom, rgb(0, 0, 0) 20%, #000000 10%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: -1; /* behind content */
+  z-index: 122; /* behind content */
   position: relative;
 }
 

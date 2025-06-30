@@ -79,13 +79,36 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="hero-bottom-box">
-        <h3 className="selected-works-animated" style={{whiteSpace: 'nowrap', overflow: 'visible', textOverflow: 'unset', width: '100vw', textAlign: 'center', margin: 0, padding: 0}} ref={selectedWorksRef}>
-          {"Selected Works".split("").map((char, i) => (
-            <span key={i} className="flip-letter" style={{display: 'inline-block'}}>{char === " " ? "\u00A0" : char}</span>
-          ))}
-        </h3>
-      </div>
+    <div className="hero-bottom-box">
+  <h3
+    className="selected-works-animated"
+    style={{
+      whiteSpace: 'nowrap',
+      overflow: 'visible',
+      textOverflow: 'unset',
+      width: '100vw',
+      textAlign: 'center',
+      margin: 0,
+      padding: 0,
+      transform: 'translateX(7vw)' // shift left by 5% of viewport width
+    }}
+    ref={selectedWorksRef}
+  >
+    {"D. Credentials".split("").map((char, i) => (
+      <span
+        key={i}
+        className="flip-letter"
+        style={{
+          display: 'inline-block',
+          width: char === " " ? "1.4em" : "auto"
+        }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ))}
+  </h3>
+</div>
+
     </div>
   );
 };

@@ -106,15 +106,6 @@ const GridD = () => {
           zIndex: 20,
           position: "relative",
         });
-
-        const techBadges = el.querySelectorAll(".tech-badge");
-        gsap.to(techBadges, {
-          autoAlpha: 1,
-          y: 0,
-          stagger: 0.1,
-          duration: 0.4,
-          ease: "power3.out",
-        });
       };
 
       const onMouseLeave = () => {
@@ -138,14 +129,6 @@ const GridD = () => {
           ease: "elastic.out(1, 0.5)",
           zIndex: 1,
           position: "relative",
-        });
-
-        const techBadges = el.querySelectorAll(".tech-badge");
-        gsap.to(techBadges, {
-          autoAlpha: 0,
-          y: 10,
-          duration: 0.3,
-          ease: "power1.out",
         });
       };
 
@@ -204,10 +187,79 @@ const GridD = () => {
           delay: i * 0.1,
         }
       );
-
-      const techBadges = el.querySelectorAll(".tech-badge");
-      gsap.set(techBadges, { autoAlpha: 0, y: 10 });
     });
+
+    // GSAP ScrollTrigger animation for container fade-in
+    gsap.fromTo(
+      '.container-works',
+      { autoAlpha: 0, y: 60 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.container-works',
+          start: 'top 90%',
+          end: 'bottom 10%',
+          toggleActions: 'play reverse play reverse',
+          scrub: false,
+          once: false,
+          markers: false,
+        },
+      }
+    );
+
+    // GSAP ScrollTrigger animation for masonry items (text boxes)
+    if (itemsRef.current && itemsRef.current.length) {
+      itemsRef.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0, y: 60, scale: 0.95 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              end: 'bottom 20%',
+              toggleActions: 'play reverse play reverse',
+              scrub: false,
+              once: false,
+              markers: false,
+            },
+            delay: i * 0.08,
+          }
+        );
+        // Animate the text inside each box
+        const title = el.querySelector('.item-name');
+        if (title) {
+          gsap.fromTo(
+            title,
+            { x: -40, autoAlpha: 0 },
+            {
+              x: 0,
+              autoAlpha: 1,
+              duration: 1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 90%',
+                toggleActions: 'play reverse play reverse',
+                scrub: false,
+                once: false,
+                markers: false,
+              },
+              delay: 0.2 + i * 0.05,
+            }
+          );
+        }
+      });
+    }
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -298,78 +350,36 @@ const GridD = () => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="grid-works" style={{ gap: 24 }}>
+            <div
+              className="grid-works masonry-text-grid"
+              style={{
+                gap: 0,
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)", // only 2 columns per row
+                gridAutoRows: "minmax(220px, auto)",
+                width: "100%",
+                justifyContent: "stretch",
+                alignItems: "stretch",
+              }}
+            >
               {expertise.map((group, i) => (
                 <div
                   key={i}
-                  className="item-work"
+                  className={`item-work masonry-text-item masonry-size-${i}`}
                   ref={(el) => (itemsRef.current[i] = el)}
-                  style={{
-                    cursor: "pointer",
-                    transformOrigin: "center",
-                    padding: "20px 24px",
-                    borderRadius: 12,
-                    backgroundColor: "#fff",
-                    boxShadow:
-                      "0 2px 8px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1)",
-                    userSelect: "none",
-                    transition: "box-shadow 0.3s ease",
-                  }}
                 >
                   <div className="title">
-                    <div
-                      className="item-columns"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 16,
-                        fontWeight: "600",
-                        fontSize: 18,
-                        color: "#222",
-                      }}
-                    >
-                      <span
-                        className="item-number"
-                        style={{
-                          fontFamily: "'Courier New', Courier, monospace",
-                          color: "#f39c12",
-                          minWidth: 32,
-                          textAlign: "right",
-                          userSelect: "none",
-                        }}
-                      >
+                    <div className="item-columns">
+                      <span className="item-number">
                         {String(i + 1).padStart(2, "0")})
                       </span>
                       <span className="item-name">{group.category}</span>
                     </div>
                   </div>
 
-                  <div
-                    className="tech-stack"
-                    style={{
-                      marginTop: 12,
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: 8,
-                    }}
-                  >
+                  <div className="tech-stack">
                     {group.items.map((item, idx) => (
-                      <span
-                        key={idx}
-                        className="tech-badge"
-                        style={{
-                          backgroundColor: "#f39c12",
-                          color: "#fff",
-                          borderRadius: 12,
-                          padding: "4px 10px",
-                          fontSize: 12,
-                          fontWeight: "600",
-                          opacity: 0,
-                          transform: "translateY(10px)",
-                          userSelect: "none",
-                          pointerEvents: "none",
-                        }}
-                      >
+                      <span key={idx} className="tech-badge">
                         {item}
                       </span>
                     ))}

@@ -81,8 +81,17 @@ const AdBlank = () => {
           </li>
         ))}
       </ul>
-
       <div className="adblank__banner">
+        <div className="adblank__banner-track">
+          {[...Array(20)].map((_, i) => (
+            <div className="adblank__banner-item" key={i}>
+              <div className="adblank__banner-text">JUST IMAGINE, WE DESIGN</div>
+              <img src={D8} alt="Logo" className="adblank__banner-image" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="adblank__banner adblank__banner--alt">
         <div className="adblank__banner-track">
           {[...Array(20)].map((_, i) => (
             <div className="adblank__banner-item" key={i}>

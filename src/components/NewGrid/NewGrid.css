@@ -1,0 +1,182 @@
+/* Main Container */
+.newgrid-container {
+ 
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left Container */
+.left-container {
+  width: 50%;
+  height: 100%;
+  background-color: #4a90e2;
+  transition: width 0.3s ease-in-out;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+/* Right Container */
+.right-container {
+  width: 50%;
+  height: 100%;
+  background-color: #e94e77;
+  transition: width 0.3s ease-in-out;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
+/* Content inside the containers */
+.content {
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+/* Hover Effects */
+.newgrid-container:hover .left-container {
+  width: 90%;
+  z-index: 2;
+}
+
+.newgrid-container:hover .right-container {
+  width: 90%;
+  z-index: 2;
+}
+
+/* NewGrid.css - Responsive split container with hover expand effect */
+
+.newgrid-root {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  max-width: 100vw;
+  margin: 0;
+  overflow: hidden;
+  background: #f8fafc;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+  cursor: none;
+}
+
+.newgrid-left,
+.newgrid-right {
+  flex: 1 1 0%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: flex 0.5s cubic-bezier(.4,2,.6,1), background 0.3s, box-shadow 0.3s, z-index 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.newgrid-left {
+  background: #f9e79f00;
+  border-right: 2px solid #e0e0e0;
+  z-index: 1;
+}
+
+.newgrid-right {
+  background: #d6eaf800;
+  border-left: 2px solid #e0e0e0;
+  z-index: 1;
+}
+
+.newgrid-left:hover {
+  flex: 9 1 0%;
+  z-index: 2;
+  box-shadow: 0 0 40px 0 rgba(243, 157, 18, 0);
+}
+
+.newgrid-left:hover ~ .newgrid-right {
+  flex: 1 1 0%;
+  z-index: 1;
+}
+
+.newgrid-right:hover {
+  flex: 9 1 0%;
+  z-index: 2;
+  box-shadow: 0 0 40px 0 rgba(41,128,185,0.18);
+}
+
+.newgrid-right:hover ~ .newgrid-left {
+  flex: 1 1 0%;
+  z-index: 1;
+}
+
+.newgrid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+}
+
+@media (max-width: 900px) {
+  .newgrid-root {
+    flex-direction: column;
+    width: 100vw;
+    height: 60vw;
+    min-height: 220px;
+    max-width: 98vw;
+  }
+  .newgrid-left, .newgrid-right {
+    flex: none;
+    width: 100%;
+    height: 50%;
+    font-size: 1.2rem;
+    min-height: 80px;
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    border-radius: 0;
+    position: relative;
+  }
+  .newgrid-right {
+    border-bottom: none;
+  }
+  .newgrid-left:hover, .newgrid-right:hover {
+    height: 90%;
+    width: 100%;
+  }
+  .newgrid-left:hover ~ .newgrid-right, .newgrid-right:hover ~ .newgrid-left {
+    height: 10%;
+    width: 100%;
+  }
+  .newgrid-img {
+    border-radius: 0;
+    min-height: 80px;
+  }
+}
+
+/* Circle Cursor */
+.circle-cursor {
+  position: fixed;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #fff;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: background 0.2s, border 0.2s;
+}
+
+.circle-cursor-arrow {
+  color: #222;
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}

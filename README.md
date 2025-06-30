@@ -1,25 +1,17 @@
-<<<<<<< HEAD
-# React + Vite Smooth Scroll Animation App
+# My Profile Website
 
-This is a frontend application built with **React** and **Vite**, featuring smooth scrolling and animations using `GSAP`, `ScrollTrigger`, and `Lenis`.
+This is my profile website.
 
-## 🚀 Features
+## 🛠️ Tech Stack
 
-- React 18 + Vite fast dev server
-- Smooth scrolling with [Lenis](https://github.com/studio-freight/lenis)
-- Scroll-based animations with [GSAP](https://greensock.com/gsap/) and [ScrollTrigger](https://greensock.com/scrolltrigger/)
+[![React](https://skillicons.dev/icons?i=react)](https://reactjs.org/)
+[![Vite](https://skillicons.dev/icons?i=vite)](https://vitejs.dev/)
+[![JavaScript](https://skillicons.dev/icons?i=js)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-## 📦 Tech Stack
+<a href="https://greensock.com/gsap/" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/GreenSock_Logo.svg" width="48" height="48" alt="GSAP logo" style="vertical-align:middle;" />
+</a>
 
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [GSAP](https://greensock.com/gsap/)
-- [Lenis](https://github.com/studio-freight/lenis)
-
-## 📦 Installation
-
-```bash
-npm install
-=======
-# d-26
->>>>>>> 1f766b62552e17167cc3517922ab4338be70afe1
+<a href="https://threejs.org/" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Three.js_Icon.svg" width="48" height="48" alt="Three.js logo" style="vertical-align:middle;" />
+</a>

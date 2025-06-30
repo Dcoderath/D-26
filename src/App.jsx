@@ -44,7 +44,8 @@ import Navbar from './components/Navbar/Navbar';
 import AdBlank from './components/AdBlank/AdBlank';
 import Footer from './components/Footer/Footer';
 import NewGrid from "./components/NewGrid/NewGrid";
-// import Plusup from './components/Plusup/Plusup';
+import Skill from "./components/Skill/Skill";
+
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -96,7 +97,7 @@ const App = () => {
       <Hero />
       <NewGrid />
       <AdBlank />
-      {/* <Plusup /> */}
+    <Skill/>
       <Footer />
     </div>
   );

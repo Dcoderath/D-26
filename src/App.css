@@ -40,7 +40,6 @@ body, html {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
 /* Mobile block message styles */

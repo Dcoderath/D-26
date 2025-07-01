@@ -12,6 +12,3 @@ This is my profile website.
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/GreenSock_Logo.svg" width="48" height="48" alt="GSAP logo" style="vertical-align:middle;" />
 </a>
 
-<a href="https://threejs.org/" target="_blank">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Three.js_Icon.svg" width="48" height="48" alt="Three.js logo" style="vertical-align:middle;" />
-</a>

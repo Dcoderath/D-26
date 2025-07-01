@@ -60,8 +60,8 @@
   pointer-events: none; /* Also prevent blocking clicks */
   position: absolute;
   transform: translate(-50%, 0%);
-  left: 35%;
-  top: 415px;
+  left: 33%;
+  top: 445px;
   width: 120px;
   height: 120px;
   overflow: hidden;
@@ -86,6 +86,7 @@
   height: 100%;
 }
 
+/* Base styles for the section */
 .plusup-header-info {
   position: relative;
   width: 100%;
@@ -96,6 +97,45 @@
   background-color: #ffffff;
   color: #000000;
   padding-bottom: 0;
+  text-align: center;  /* Center-align text */
+}
+
+/* Title styles */
+.plusup-header-info .header-title h1 {
+  font-size: 3rem;
+  margin-top: 20px;
+  color: #2c3e50;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 2px;
+}
+
+/* Content styles */
+.plusup-header-info .header-content p {
+  font-size: 1.2rem;
+  color: #34495e;
+  margin: 20px 0;
+  line-height: 1.5;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Footer styles (for the button) */
+.plusup-header-info .header-footer {
+  margin-bottom: 50px;
+}
+
+.plusup-header-info .header-footer button {
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.plusup-header-info .header-footer button:hover {
+  background-color: #2980b9;
 }
 
 .plusup-website-content {

@@ -1,73 +1,76 @@
-/* General Container */
 .skill-container {
-  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
-  min-height: 100vh;
-  width: 100%;
-  height: auto;
-  margin: 0;
+  width: 90vw;
+  min-height: 100vh; /* Changed from 150vh to 100vh */
+  background: #1F1F1F;
+  margin: 0 auto;             
   padding: 0;
-  border: none;
-  box-shadow: none;
   box-sizing: border-box;
-  overflow: hidden; /* Ensures no horizontal scrolling */
+  overflow-x: hidden;
+  overflow-y: hidden;  /* Hide vertical scroll */
   position: relative;
-  display: flex;
-  flex-direction: column; /* Stacks child elements vertically */
+  border-top-left-radius: 15%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.responsive-skill-container {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%, 
-    rgba(254, 105, 0, 0.5) 50%, 
-    rgb(0, 0, 0) 100%
-  );
-  transition: none;
-  width: 100%; /* Ensures the container is full-width */
-  height: auto;
-  max-width: 100%; /* Ensures the container does not exceed full width */
-  margin: 0;
-  padding: 0;
-  border: none;
-  box-shadow: none;
-  overflow: hidden; /* Prevents horizontal overflow */
-  position: relative;
+.top-half {
+  width: 100%;  /* Changed from 100vw to 100% to avoid overflow */
+  min-height: 20vh;
   display: flex;
-  justify-content: center; /* Centers content horizontally */
-  align-items: center; /* Centers content vertically */
-}
-
-.middle {
-  display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: none;
+  align-items: flex-start;
+  padding: 6rem 2rem;
+  box-sizing: border-box;
+  text-align: left;
 }
 
-.skill-image {
+
+
+
+/* Bottom spacer */
+.bottom-spacer {
+  height: 30vh;
   width: 100%;
-  height: auto;
-  object-fit: contain; /* Maintain aspect ratio */
-  border-radius: 0;
-  box-shadow: none;
-  background: none;
-  transition: none;
-  display: block;
-  margin: 0;
-  padding: 0;
-  will-change: transform; /* Optimizes for smooth scrolling */
+  pointer-events: none;
+}
+/* Each skill section */
+
+/* Headings */
+.skill-title {
+  font-size: 9.2rem;
+  color: #ffffff;
+  margin-bottom: 4rem;
+
 }
 
+/* Paragraphs */
+.skill-description {
+  font-size: 4.1rem;
+  color: #ffffff;
+   padding: 6rem 5rem;
+  line-height: 1.6;
+
+}
+
+/* Responsive Design */
 @media (max-width: 600px) {
-  .responsive-skill-container {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
+  .skill-title {
+    font-size: 1.6rem;
   }
-  .skill-image {
-    width: 100%;
-    height: auto;
+
+  .skill-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .top-half {
+    min-height: auto;
+    padding: 3rem 1rem;
+  }
+
+  .bottom-spacer {
+    height: 30vh;
   }
 }

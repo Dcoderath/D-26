@@ -129,13 +129,14 @@ background: linear-gradient(
   color: rgb(0, 0, 0);
   width: 100vw;
   text-align: center;
-  letter-spacing: 0.0em;
+  letter-spacing: 0.3em;
   display: block;
   box-sizing: border-box;
   /* Prevent overflow on small screens */
   word-break: break-word;
   overflow-wrap: break-word;
 }
+
 
 /* ===== Responsive Enhancements (Image untouched) ===== */
 

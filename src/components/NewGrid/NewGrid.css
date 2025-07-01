@@ -53,6 +53,9 @@
 /* NewGrid.css - Responsive split container with hover expand effect */
 
 .newgrid-root {
+    padding-left: 3%;
+    padding-right: 3%;
+ 
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -63,10 +66,48 @@
   background: #f8fafc;
   box-shadow: 0 8px 32px rgba(0,0,0,0.07);
   cursor: none;
+}.project-heading {
+  position: relative;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: #333;
 }
+
+.project-heading h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.project-heading p {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Bottom container styling */
+.newgrid-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+.bottom-item {
+  background-color: #eee;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  text-align: center;
+  max-width: 180px;
+}
+
 
 .newgrid-left,
 .newgrid-right {
+  padding: 10px;
   flex: 1 1 0%;
   height: 100%;
   display: flex;

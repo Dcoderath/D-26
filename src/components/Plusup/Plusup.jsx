@@ -5,6 +5,7 @@ import Lenis from '@studio-freight/lenis';
 import './plusup.css';
 
 import AdBlank from '../AdBlank/AdBlank';
+import Skill from '../Skill/Skill';
 
 const Plusup = () => {
   useEffect(() => {
@@ -142,16 +143,19 @@ const Plusup = () => {
     <div className="plusup-container">
       <section className="plusup-hero">
         <AdBlank />
+     
       </section>
 
       <section className="plusup-info">
         <div className="plusup-header-rows">
           <div className="plusup-header-row"><h1>Motion</h1></div>
-          <div className="plusup-header-row"><h1>Stills</h1></div>
+          <div className="plusup-header-row"><h1>Skills</h1></div>
         </div>
       </section>
 
-      <section className="plusup-header-info"></section>
+      <section className="plusup-header-info">
+          <Skill />
+      </section>
 
       <section className="plusup-pinned">
         <div className="plusup-revealer">
@@ -160,9 +164,13 @@ const Plusup = () => {
         </div>
       </section>
 
-      <section className="plusup-whitespace"></section>
+      <section className="plusup-whitespace">
+           
+      </section>
 
-      <section className="plusup-website-content"></section>
+      <section className="plusup-website-content">
+         
+      </section>
     </div>
   );
 };

@@ -94,18 +94,15 @@ const Hero = () => {
     }}
     ref={selectedWorksRef}
   >
-    {"D. Credentials".split("").map((char, i) => (
-      <span
-        key={i}
-        className="flip-letter"
-        style={{
-          display: 'inline-block',
-          width: char === " " ? "1.4em" : "auto"
-        }}
-      >
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ))}
+{"D  Project".split("").map((char, i) => (
+  <span
+    key={i}
+    className="flip-letter"
+  >
+    {char === " " ? "\u00A0" : char}
+  </span>
+))}
+
   </h3>
 </div>
 

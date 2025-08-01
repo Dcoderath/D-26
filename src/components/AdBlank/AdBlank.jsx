@@ -5,8 +5,8 @@ import D8 from '../../assets/D/d8.svg';
 
 const navItems = [
   { label: 'github', href: 'https://github.com/Dcoderath' },
-  { label: 'linkedin', href: 'https://www.linkedin.com/in/divakartrivedi/' },
-  { label: 'Gmail', href: 'https://mail.google.com/mail/?view=cm&to=trivedi@2693@gmail.com' },
+  { label: 'linkedin', href: 'https://www.linkedin.com/in/divakar-trivedi-85326a376/' },
+  { label: 'contact', href: 'https://mail.google.com/mail/?view=cm&to=trivedi@2693@gmail.com' },
   { label: 'resume', href: '#' }, // Replace '#' with actual resume link if available
 ];
 

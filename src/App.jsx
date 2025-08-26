@@ -6,22 +6,23 @@ import Footer from './components/Footer/Footer';
 import NewGrid from "./components/NewGrid/NewGrid";
 import Plusup from "./components/Plusup/Plusup";
 
+const checkDevice = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(userAgent);
+  const isSmallScreen = window.innerWidth < 1024;
+  return isMobileOrTablet || isSmallScreen;
+};
+
 const App = () => {
-  const [blockAccess, setBlockAccess] = useState(false);
+  const [blockAccess, setBlockAccess] = useState(checkDevice());
   const cursorRef = useRef(null);
 
   useEffect(() => {
-    const checkDevice = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(userAgent);
-      const isSmallScreen = window.innerWidth < 1024;
-
-      setBlockAccess(isMobileOrTablet || isSmallScreen);
+    const handleResize = () => {
+      setBlockAccess(checkDevice());
     };
 
-    checkDevice();
-
-    window.addEventListener('resize', checkDevice);
+    window.addEventListener('resize', handleResize);
 
     const moveCursor = (e) => {
       if (cursorRef.current) {
@@ -42,7 +43,7 @@ const App = () => {
     document.addEventListener("mouseenter", moveCursor);
 
     return () => {
-      window.removeEventListener('resize', checkDevice);
+      window.removeEventListener('resize', handleResize);
       document.removeEventListener("mousemove", moveCursor);
       document.removeEventListener("mouseleave", hideCursor);
       document.removeEventListener("mouseenter", moveCursor);

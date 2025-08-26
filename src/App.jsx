@@ -11,15 +11,17 @@ const App = () => {
   const cursorRef = useRef(null);
 
   useEffect(() => {
-    const checkDeviceType = () => {
+    const checkDevice = () => {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
       const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(userAgent);
+      const isSmallScreen = window.innerWidth < 1024;
 
-      setBlockAccess(isMobileOrTablet);
+      setBlockAccess(isMobileOrTablet || isSmallScreen);
     };
 
-    checkDeviceType();
+    checkDevice();
+
+    window.addEventListener('resize', checkDevice);
 
     const moveCursor = (e) => {
       if (cursorRef.current) {
@@ -40,6 +42,7 @@ const App = () => {
     document.addEventListener("mouseenter", moveCursor);
 
     return () => {
+      window.removeEventListener('resize', checkDevice);
       document.removeEventListener("mousemove", moveCursor);
       document.removeEventListener("mouseleave", hideCursor);
       document.removeEventListener("mouseenter", moveCursor);

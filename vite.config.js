@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   // ✅ Use this for GitHub Pages or production if needed
-  // base: '/D-26/',
+  base: '/D-26/',
 
   plugins: [react()],
 

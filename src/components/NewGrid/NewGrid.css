@@ -45,7 +45,7 @@
 
 /* ---------------- Buttons ---------------- */
 .filter-bar {
-  width: clamp(18rem, 60%, 30rem);
+  width: clamp(18rem, 80%, 35rem);
   background-color: #f6f6f6;
   border: 1px solid #e0e0e0;
   border-radius: 0.5em;
@@ -59,11 +59,11 @@
   position: relative;
   background: transparent;
   border: 1px solid #e0e0e0;
-  padding: 0.85em 1.75em;
+  padding: 0.85em 2.75em;
   border-radius: 0.4em;
   cursor: pointer;
   overflow: hidden;
-  font-size: clamp(0.85em, 2vw, 1em);
+  font-size: clamp(0.85em, 2vw, 0.7em);
   color: #000000;
   transition: all 0.25s ease;
   display: flex;

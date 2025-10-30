@@ -69,7 +69,7 @@ canvas.pixel-screen {
 .bio-panel {
   background: rgb(255, 255, 255);
   padding: clamp(8px, 1vw, 14px);
-  border-radius: clamp(6px, 0.8vw, 8px);
+ 
   backdrop-filter: blur(6px);
   border: 1px solid rgb(255, 255, 255);
 }

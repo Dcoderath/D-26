@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
+/* ----------------------------
+   Base Reset + Font
+---------------------------- */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +10,7 @@
 }
 
 body, * {
-  cursor: none !important;
+  cursor: none !important; /* Hide system cursor */
 }
 
 body, html {
@@ -20,6 +23,9 @@ body, html {
   font-family: 'Orbitron', sans-serif;
 }
 
+/* ----------------------------
+   Scrollbar Styling
+---------------------------- */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -36,53 +42,49 @@ body, html {
   background-color: #888;
 }
 
+/* ----------------------------
+   Layout Containers
+---------------------------- */
 .App {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Mobile block message styles */
+/* ----------------------------
+   Mobile Block Message
+---------------------------- */
 .mobile-block-message {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
   padding: 20px;
   text-align: center;
-  background-color: #222;
-  color: #fff;
+  background-color: #121212;
+  color: #ffffff;
   user-select: none;
+  font-family: sans-serif;
 }
 
-.white-circle-cursor {
+/* ----------------------------
+   Custom Cursor Styles
+---------------------------- */
+.custom-cursor {
   position: fixed;
   left: 0;
   top: 0;
-  width: 60px;
-  height: 60px;
-  background: #fff;
-  border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease;
   opacity: 0;
-  mix-blend-mode: difference;
-  /* This will invert colors under the cursor: black becomes white, white becomes black */
 }
 
-.mobile-block-message {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-  background-color: #121212;
-  color: #ffffff;
-  font-family: sans-serif;
-  padding: 2rem;
+/* (Optional) Add a subtle glow for style */
+.custom-cursor svg {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+  transition: transform 0.15s ease, color 0.15s ease, filter 0.15s ease;
 }

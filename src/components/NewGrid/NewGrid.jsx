@@ -1,53 +1,74 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
 import "./NewGrid.css";
-import D1 from "../../assets/D/D1.jpg";
-import D2 from "../../assets/D/D2.jpg";
-import { FaArrowTrendUp } from "react-icons/fa6";
+
+const tabData = {
+  Development: {
+    heading: "Full Stack Developer",
+    text: "Building scalable, high-performance web applications using modern frameworks, REST APIs, and secure architecture — from front-end aesthetics to optimized back-end systems.",
+    img: "https://cdn.prod.website-files.com/67726722d415dc401ae23cf6/677289e14dd4dbca1d8e5930_philip-oroni-IANBrm46bF0-unsplash%20(2).avif",
+  },
+  Security: {
+    heading: "Cybersecurity Specialist",
+    text: "Protecting digital infrastructure through ethical hacking, penetration testing, and secure code principles. Security is not an afterthought — it’s built into every layer.",
+    img: "https://cdn.prod.website-files.com/67726722d415dc401ae23cf6/677289e19e4d013c6a4c5a1b_philip-oroni-Zx_G3LpNnV4-unsplash%20(1).avif",
+  },
+  Innovation: {
+    heading: "Tech Innovator",
+    text: "Blending creativity with logic to design clean code, automation systems, and smart applications that push the boundaries of technology.",
+    img: "https://cdn.prod.website-files.com/67726722d415dc401ae23cf6/677289e1c88b5b4c14d1e6fd_philip-oroni-h9N7bm-HRCo-unsplash.avif",
+  },
+};
 
 const NewGrid = () => {
-  const cursorRef = useRef(null);
-  const rootRef = useRef(null);
-
-  useEffect(() => {
-    const moveCursor = (e) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.left = e.clientX + "px";
-        cursorRef.current.style.top = e.clientY + "px";
-        cursorRef.current.style.opacity = 1;
-      }
-    };
-    const hideCursor = () => {
-      if (cursorRef.current) {
-        cursorRef.current.style.opacity = 0;
-      }
-    };
-    const root = rootRef.current;
-    if (root) {
-      root.addEventListener("mousemove", moveCursor);
-      root.addEventListener("mouseleave", hideCursor);
-      root.addEventListener("mouseenter", moveCursor);
-    }
-    return () => {
-      if (root) {
-        root.removeEventListener("mousemove", moveCursor);
-        root.removeEventListener("mouseleave", hideCursor);
-        root.removeEventListener("mouseenter", moveCursor);
-      }
-    };
-  }, []);
+  const [active, setActive] = useState("Development");
 
   return (
-    <div className="newgrid-root" ref={rootRef}>
-      <div ref={cursorRef} className="circle-cursor" style={{ opacity: 0 }}>
-        <FaArrowTrendUp className="circle-cursor-arrow" />
+    <section className="cloneable simple-layout">
+      <div className="tab-layout">
+        {/* Left Column */}
+        <div className="tab-layout-col">
+          <div className="tab-layout-container">
+            <h1 className="tab-layout-heading">
+              Where Aesthetic Meets Architecture Design, Build, Secure.
+            </h1>
+
+            {/* Interactive Buttons */}
+            <div className="filter-bar">
+              {Object.keys(tabData).map((item) => (
+                <button
+                  key={item}
+                  className={`filter-button ${active === item ? "active" : ""}`}
+                  onClick={() => setActive(item)}
+                >
+                  <div className="filter-button__p">{item}</div>
+                  <div className="tab-button__bg"></div>
+                </button>
+              ))}
+            </div>
+
+            {/* Animated Content */}
+            <div key={active} className="tab-content animate-slide">
+              <h2 className="tab-content__heading">{tabData[active].heading}</h2>
+              <p className="content-p">{tabData[active].text}</p>
+              <a href="#" className="tab-content__button">
+                <p className="content-p">Explore Projects</p>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column with Image */}
+        <div className="tab-layout-col">
+          <div key={active} className="tab-visual-wrap animate-image">
+            <img
+              src={tabData[active].img}
+              alt={active}
+              className="tab-image"
+            />
+          </div>
+        </div>
       </div>
-      <div className="newgrid-left">
-        <img src={D1} alt="D1" className="newgrid-img" />
-      </div>
-      <div className="newgrid-right">
-        <img src={D2} alt="D2" className="newgrid-img" />
-      </div>
-    </div>
+    </section>
   );
 };
 

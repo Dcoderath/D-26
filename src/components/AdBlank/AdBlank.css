@@ -1,192 +1,153 @@
-ul,
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-a:focus {
-  outline: none;
-  border: none;
-}
-
-/* Container */
 .adblank {
   position: relative;
   width: 100vw;
   height: 110vh;
-  background-color: rgb(255, 255, 255);
+  background-color: #0b0b0b;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* Prevent scrollbars */
-  padding: 0;
-}
-
-/* Menu Wrapper */
-.adblank__menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
   overflow: hidden;
+  padding: 40px;
 }
 
-/* Menu Items */
-.adblank__item {
-  position: relative;
-  margin-bottom: 24px;
+.pixel-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #0b0b0b;
 }
 
-/* Links */
+/* ✅ Menu moved to bottom right */
+.adblank__menu {
+  position: absolute;
+  bottom: 0%;
+  right: 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: auto;
+  z-index: 3;
+  gap: 10px;
+  text-align: right;
+}
+
+/* ✅ remove dots and underlines only here */
+.adblank__menu li {
+  list-style: none;
+}
+
+.adblank__menu a {
+  text-decoration: none;
+}
+
 .adblank__link {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  height: 15vh;
-  padding: 0 20px;
-  perspective: 800px;
-}
-
-/* Text Elements */
-.adblank-text {
-  display: inline-block;
+  justify-content: flex-end;
+  gap: 12px;
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(3rem, 10vw, 10rem);
-  line-height: 1;
-  font-weight: 100;
-  font-style: normal;
-  color: #000;
+  font-size: clamp(4rem, 2.8vw, 3.2rem);
   text-transform: uppercase;
-  will-change: transform;
+  font-weight: 400;
+  color: #000000;
+  background-color: #9d00ff;
+  transition: all 0.3s ease;
 }
 
-.adblank-text--front {
-  opacity: 0;
+.adblank__link:hover {
+  color: #ffffff;
+  transform: translateX(6px);
 }
 
-.adblank-text--bold {
-  font-weight: 100;
+.adblank__icon {
+  font-size: 3.8rem;
+  color: #000000;
+  transition: transform 0.3s ease;
 }
 
-/* Fixed Banner */
+.adblank__link:hover .adblank__icon {
+  transform: rotate(20deg);
+}
+
+/* ✅ Banner moved to the top */
 .adblank__banner {
   position: absolute;
-  bottom: 110px;
+  top: 80;
   left: -5vw;
   width: 110vw;
   height: 80px;
-  background-color: #222;
+  background-color: rgb(17, 17, 17);
   color: #fff;
   font-family: 'Orbitron', sans-serif;
   display: flex;
   align-items: center;
   padding: 0 40px;
-  transform-origin: bottom left;
-  transform: rotate(3.5deg); /* Main banner angle */
+  transform-origin: top left;
+  transform: rotate(-1.5deg);
   overflow: hidden;
-  z-index: 0; /* Ensure this is above the alt banner */
-  opacity: 1; /* Changed from 0.85 to 1 to prevent opacity reduction */
+  z-index: 1;
   pointer-events: none;
+ 
 }
 
-/* Alternate Banner */
 .adblank__banner--alt {
   position: absolute;
   left: -5vw;
-  bottom: 0px; /* Move the alt banner further up from the bottom */
   width: 110vw;
   height: 80px;
-  background-color: #222;
+  background-color: rgb(17, 17, 17);
   color: #fff;
   font-family: 'Orbitron', sans-serif;
   display: flex;
   align-items: center;
   padding: 0 40px;
-  transform-origin: bottom left;
-  transform: rotate(-4.5deg); /* Subtle positive angle for better visibility */
+  transform-origin: top left;
+  transform: rotate(4.5deg);
   overflow: hidden;
   z-index: 9;
-  opacity: 1;
   pointer-events: none;
+  backdrop-filter: blur(4px);
 }
 
-/* Banner Header */
-.adblank__banner-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 40px;
-  z-index: 2;
-}
-
-/* Banner Scrolling Track */
 .adblank__banner-track {
   display: flex;
   align-items: center;
   white-space: nowrap;
   padding: 10px 40px;
   width: max-content;
-  opacity: 1; /* Changed from 0.8 to 1 to prevent opacity reduction */
   animation: scroll-left 50s linear infinite;
   z-index: 1;
 }
 
 .adblank__banner--alt .adblank__banner-track {
   animation-direction: reverse;
-  opacity: 1; /* Changed from 0.7 to 1 to prevent opacity reduction */
 }
 
-/* Banner Items */
 .adblank__banner-item {
   display: flex;
   align-items: center;
   margin-right: 60px;
 }
 
-/* Banner Text */
 .adblank__banner-text {
   font-size: 1.1rem;
   font-weight: 600;
   margin-right: 12px;
+  color: #9d00ff;
 }
 
-/* Banner Images */
 .adblank__banner-image {
   height: 40px;
   object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
-/* Resume Bar */
-.adblank__resume-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 190px; /* Place above the alt banner (100px + 80px + margin) */
-  width: 100vw;
-  background: #fff;
-  color: #222;
-  text-align: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3.2rem; /* Increased size for more prominence */
-  font-weight: 700;
-  padding: 28px 0 24px 0; /* More padding for a larger bar */
-  z-index: 11; /* Ensure the resume bar is above both banners */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  border-radius: 0 0 18px 18px;
-}
-
-/* Scroll Left Animation */
 @keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }

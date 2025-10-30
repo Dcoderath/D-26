@@ -1,0 +1,199 @@
+/* -------- Main Section -------- */
+.pricing-section {
+  background: #ffffff;
+  padding: 6em 2em;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  color: #111;
+}
+
+/* -------- Header -------- */
+.pricing-header {
+  max-width: 900px;
+  margin: 0 auto 3em auto;
+}
+
+.pricing-title {
+  background-color: #9d00ff;
+  font-size: 3em;
+  font-weight: 600;
+  margin-bottom: 0.4em;
+}
+
+.pricing-subtitle {
+  font-size: 1.2em;
+  color: #555;
+}
+
+/* -------- Grid Layout -------- */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 0; /* Removed horizontal gap between cards */
+  justify-items: center;
+}
+
+/* -------- Pricing Card -------- */
+.pricing-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 1em;
+  padding: 2.5em 2em;
+  text-align: left;
+  max-width: 470px;
+  width: 100%;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* -------- Individual Card Colors -------- */
+.pricing-card:nth-child(1) {
+  background: #EFEEEC;
+  color: #0E0E0E;
+}
+
+.pricing-card:nth-child(2) {
+  background: #FF4C24;
+  color: #EFEEEC;
+}
+
+.pricing-card:nth-child(3) {
+  background: #0E0E0E;
+  color: #EFEEEC;
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-color: #111;
+}
+
+/* -------- Badge -------- */
+.badge {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  background: #111;
+  color: #fff;
+  font-size: 0.8em;
+  padding: 0.4em 0.8em;
+  border-radius: 0.3em;
+}
+
+/* -------- Text Content -------- */
+.plan-title {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-bottom: 0.2em;
+}
+
+.plan-tagline {
+  color: inherit;
+  font-size: 1em;
+  margin-bottom: 1.5em;
+  opacity: 0.9;
+}
+
+.plan-price {
+  font-size: 2.4em;
+  font-weight: 600;
+  color: inherit;
+  margin-bottom: 1.5em;
+}
+
+/* -------- Features -------- */
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2em;
+}
+
+.plan-features li {
+  margin-bottom: 0.75em;
+  padding-left: 1.5em;
+  position: relative;
+  color: inherit;
+  font-size: 1em;
+  opacity: 0.95;
+}
+
+.plan-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: inherit;
+  font-weight: bold;
+}
+
+/* -------- Button -------- */
+.plan-button {
+  width: 100%;
+  padding: 1em 0;
+  background: #0E0E0E; /* Default button color */
+  color: #EFEEEC; /* Text color */
+  border: none;
+  border-radius: 0.4em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  /* New alignment for icon + text */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+}
+
+.plan-button:hover {
+  background: #111;
+  transform: translateY(-2px);
+}
+
+/* -------- Last Card Button (Inverse Colors) -------- */
+.pricing-card:nth-child(3) .plan-button {
+  background: #EFEEEC;
+  color: #0E0E0E;
+}
+
+.pricing-card:nth-child(3) .plan-button:hover {
+  background: #ddd;
+}
+
+/* -------- Popular Plan Highlight (Optional) -------- */
+.pricing-card.popular {
+  transform: scale(1.02);
+  border-color: #111;
+}
+
+/* -------- Arrow Icon -------- */
+.arrow-icon {
+  font-size: 0.9em; /* smaller than text */
+  color: inherit; /* inherits text color */
+  margin-left: 0.3em;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+.plan-button:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* -------- Responsive -------- */
+@media (max-width: 768px) {
+  .pricing-title {
+    font-size: 2.2em;
+  }
+
+  .pricing-card {
+    text-align: center;
+  }
+
+  .plan-features li {
+    text-align: left;
+  }
+
+  /* Add a small gap on mobile for better spacing */
+  .pricing-grid {
+    gap: 1em;
+  }
+}

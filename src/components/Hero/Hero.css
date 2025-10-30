@@ -1,13 +1,13 @@
 .term-hero-root {
   position: relative;
   width: 100%;
-  min-height: 95vh; /* ✅ allow it to grow if needed */
+  min-height: 95vh;
   overflow: hidden;
   background: #0b0b0b;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2vw;
+  padding: clamp(16px, 2vw, 40px);
 }
 
 canvas.pixel-screen {
@@ -25,33 +25,32 @@ canvas.pixel-screen {
 }
 
 .top-left {
-  left: 2vw;
-  top: 2vw;
+  left: clamp(16px, 2vw, 40px);
+  top: clamp(16px, 2vw, 40px);
   text-align: left;
 }
 
 .bottom-right {
-  right: 2vw;
-  bottom: 2vw;
+  right: clamp(16px, 2vw, 40px);
+  bottom: clamp(16px, 2vw, 40px);
   text-align: right;
-  max-width: 50vw; /* ✅ less restrictive for moderate screens */
+  max-width: 50vw;
 }
 
-/* Hacker lines with minimum readable size */
+/* Hacker and Bio text */
 .hacker-line {
-  font-size: clamp(10px, 2.2vw, 20px); /* ✅ raised base min */
+  font-size: clamp(10px, 2.2vw, 20px);
   line-height: 1.5;
   margin-bottom: 0.4em;
- 
 }
 
 .bio-line {
-  font-size: clamp(14px, 1.6vw, 15px); /* ✅ increased base min */
+  font-size: clamp(14px, 1.6vw, 15px);
   line-height: 1.5;
   margin-bottom: 0.5em;
- 
 }
 
+/* Caret animation */
 .caret {
   display: inline-block;
   width: 8px;
@@ -66,52 +65,60 @@ canvas.pixel-screen {
   50% { opacity: 0; }
 }
 
+/* Bio info panel */
 .bio-panel {
   background: rgb(255, 255, 255);
-  padding: 12px 14px;
-  border-radius: 8px;
+  padding: clamp(8px, 1vw, 14px);
+  border-radius: clamp(6px, 0.8vw, 8px);
   backdrop-filter: blur(6px);
   border: 1px solid rgb(255, 255, 255);
 }
 
-/* ✅ Tablet adjustments */
+/* ✅ Tablet responsiveness */
 @media (max-width: 1024px) {
   .bottom-right {
     right: 3vw;
     bottom: 3vw;
     max-width: 70vw;
   }
+
+  .hacker-line {
+    font-size: clamp(12px, 2.5vw, 18px);
+  }
+
+  .bio-line {
+    font-size: clamp(13px, 2vw, 17px);
+  }
 }
 
-/* ✅ Mobile-friendly layout */
+/* ✅ Mobile responsiveness */
 @media (max-width: 600px) {
   .term-hero-root {
-    min-height: 100vh; /* ✅ ensure full viewport height */
-    height: auto;      /* ✅ allow content to grow naturally */
-    padding: 8vw 4vw;
-    display: flex;
+    min-height: 100vh;
+    height: auto;
+    padding: clamp(20px, 6vw, 32px);
     flex-direction: column;
     justify-content: space-between;
   }
 
   .top-left {
-    left: 5vw;
+    left: vw;
     top: 5vw;
   }
 
   .bottom-right {
     right: 5vw;
     bottom: 5vw;
-    max-width: 90vw; /* ✅ allow text to fit comfortably */
+    max-width: 90vw;
   }
 
   .hacker-line {
-    font-size: clamp(14px, 4vw, 18px);
+    font-size: clamp(13px, 4vw, 18px);
     line-height: 1.4;
   }
 
   .bio-line {
-    font-size: clamp(13px, 3.6vw, 16px);
+    font-size: clamp(12px, 3.6vw, 16px);
     line-height: 1.4;
   }
 
@@ -122,6 +129,25 @@ canvas.pixel-screen {
 
   .bio-panel {
     border-radius: 6px;
-    padding: 8px 10px;
+    padding: clamp(6px, 2vw, 10px);
+  }
+}
+
+/* ✅ Ultra-small screens (≤ 380px) */
+@media (max-width: 380px) {
+  .term-hero-root {
+    padding: 6vw 4vw;
+  }
+
+  .bottom-right {
+    max-width: 100%;
+  }
+
+  .hacker-line {
+    font-size: 3.5vw;
+  }
+
+  .bio-line {
+    font-size: 3.2vw;
   }
 }

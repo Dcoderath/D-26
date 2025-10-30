@@ -1,15 +1,16 @@
 .adblank {
   position: relative;
   width: 100vw;
-  height: 110vh;
+  height: 100vh;
   background-color: #0b0b0b;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   overflow: hidden;
-  padding: 40px;
+  padding: clamp(16px, 4vw, 40px);
 }
 
+/* Pixel screen overlay */
 .pixel-screen {
   position: absolute;
   top: 0;
@@ -21,7 +22,7 @@
   background-color: #0b0b0b;
 }
 
-/* ✅ Menu moved to bottom right */
+/* ✅ Menu bottom right */
 .adblank__menu {
   position: absolute;
   bottom: 0%;
@@ -32,11 +33,10 @@
   align-items: flex-end;
   height: auto;
   z-index: 3;
-  gap: 10px;
+  gap: clamp(6px, 1.2vw, 10px);
   text-align: right;
 }
 
-/* ✅ remove dots and underlines only here */
 .adblank__menu li {
   list-style: none;
 }
@@ -49,14 +49,16 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
+  gap: clamp(6px, 1vw, 12px);
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(4rem, 2.8vw, 3.2rem);
+  font-size: clamp(1.2rem, 3vw, 4rem);
   text-transform: uppercase;
   font-weight: 400;
   color: #000000;
   background-color: #9d00ff;
   transition: all 0.3s ease;
+  padding: clamp(6px, 1vw, 10px) clamp(10px, 2vw, 20px);
+  border-radius: clamp(4px, 1vw, 8px);
 }
 
 .adblank__link:hover {
@@ -65,7 +67,7 @@
 }
 
 .adblank__icon {
-  font-size: 3.8rem;
+  font-size: clamp(1.5rem, 3.5vw, 3.8rem);
   color: #000000;
   transition: transform 0.3s ease;
 }
@@ -74,38 +76,37 @@
   transform: rotate(20deg);
 }
 
-/* ✅ Banner moved to the top */
+/* ✅ Banner top */
 .adblank__banner {
   position: absolute;
-  top: 80;
+  top: 80px;
   left: -5vw;
   width: 110vw;
-  height: 80px;
+  height: clamp(50px, 7vw, 80px);
   background-color: rgb(17, 17, 17);
   color: #fff;
   font-family: 'Orbitron', sans-serif;
   display: flex;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 clamp(16px, 4vw, 40px);
   transform-origin: top left;
   transform: rotate(-1.5deg);
   overflow: hidden;
   z-index: 1;
   pointer-events: none;
- 
 }
 
 .adblank__banner--alt {
   position: absolute;
   left: -5vw;
   width: 110vw;
-  height: 80px;
+  height: clamp(50px, 7vw, 80px);
   background-color: rgb(17, 17, 17);
   color: #fff;
   font-family: 'Orbitron', sans-serif;
   display: flex;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 clamp(16px, 4vw, 40px);
   transform-origin: top left;
   transform: rotate(4.5deg);
   overflow: hidden;
@@ -114,11 +115,12 @@
   backdrop-filter: blur(4px);
 }
 
+/* Banner scroll animation */
 .adblank__banner-track {
   display: flex;
   align-items: center;
   white-space: nowrap;
-  padding: 10px 40px;
+  padding: clamp(6px, 1vw, 10px) clamp(16px, 3vw, 40px);
   width: max-content;
   animation: scroll-left 50s linear infinite;
   z-index: 1;
@@ -131,18 +133,18 @@
 .adblank__banner-item {
   display: flex;
   align-items: center;
-  margin-right: 60px;
+  margin-right: clamp(20px, 5vw, 60px);
 }
 
 .adblank__banner-text {
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
   font-weight: 600;
-  margin-right: 12px;
+  margin-right: clamp(6px, 1.5vw, 12px);
   color: #9d00ff;
 }
 
 .adblank__banner-image {
-  height: 40px;
+  height: clamp(24px, 4vw, 40px);
   object-fit: contain;
   filter: brightness(0) invert(1);
 }
@@ -150,4 +152,91 @@
 @keyframes scroll-left {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
+}
+
+/* -------- ✅ Responsive Adjustments -------- */
+@media (max-width: 1024px) {
+  .adblank__link {
+    font-size: clamp(1rem, 2.5vw, 2.4rem);
+    padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 16px);
+  }
+
+  .adblank__icon {
+    font-size: clamp(1.4rem, 3vw, 2.5rem);
+  }
+
+  .adblank__menu {
+    right: 5%;
+    gap: 0.6em;
+  }
+}
+
+@media (max-width: 768px) {
+  .adblank {
+    padding: clamp(12px, 3vw, 24px);
+  }
+
+  .adblank__menu {
+    right: 4%;
+    bottom: 4%;
+    gap: 0.8em;
+  }
+
+  .adblank__link {
+    font-size: clamp(0.9rem, 4vw, 1.6rem);
+    padding: clamp(6px, 2vw, 10px) clamp(10px, 3vw, 16px);
+  }
+
+  .adblank__icon {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+
+  .adblank__banner,
+  .adblank__banner--alt {
+    height: clamp(36px, 8vw, 60px);
+    top: 50px;
+    left: -8vw;
+  }
+
+  .adblank__banner-text {
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
+  }
+
+  .adblank__banner-image {
+    height: clamp(18px, 5vw, 28px);
+  }
+}
+
+@media (max-width: 480px) {
+  .adblank {
+    height: 80vh;
+  }
+
+  .adblank__menu {
+    right: 3%;
+    bottom: 5%;
+  }
+
+  .adblank__link {
+    font-size: clamp(0.8rem, 4.5vw, 1.2rem);
+    padding: clamp(5px, 2vw, 8px) clamp(8px, 3vw, 12px);
+  }
+
+  .adblank__icon {
+    font-size: clamp(1rem, 5vw, 1.5rem);
+  }
+
+  .adblank__banner,
+  .adblank__banner--alt {
+    height: clamp(48px, 14vw, 68px);
+    top: 40px;
+  }
+
+  .adblank__banner-text {
+    font-size: clamp(0.6rem, 2.5vw, 0.8rem);
+  }
+
+  .adblank__banner-image {
+    height: clamp(16px, 6vw, 22px);
+  }
 }

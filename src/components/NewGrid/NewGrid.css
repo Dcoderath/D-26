@@ -153,16 +153,23 @@
   position: relative;
   overflow: hidden;
   border-radius: .25em;
-  background: #eee;
+  background: #cc00ff;
   transition: all 0.3s ease;
   align-self: flex-start;
   font-size: clamp(0.9em, 2vw, 1em);
 }
 
-.tab-content__button:hover {
-  background: #ccc;
-  transform: translateY(-2px);
+/* Make button text white */
+.tab-content__button p {
+  color: #fff !important;
 }
+
+.tab-content__button:hover {
+  background: #000000;
+  transform: translateY(-2px);
+  border: 2px solid black;
+}
+
 
 /* ---------------- Image ---------------- */
 .tab-visual-wrap {

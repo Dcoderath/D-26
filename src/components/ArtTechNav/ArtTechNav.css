@@ -13,10 +13,8 @@
 
 .text-logo {
   background-color: #000;
-    max-width: max-content;
-
+  max-width: max-content;
   padding: 10px;
-
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -25,6 +23,7 @@
   line-height: 1.1;
   font-size: 16px;
 }
+
 nav {
   position: relative;
   display: flex;
@@ -39,13 +38,19 @@ nav {
 }
 
 .elite-btn {
-   background-color: #000;
+  background-color: #000;
   border: 1px solid #fff;
   color: #fff;
   padding: 10px 20px;
   font-family: "Space Mono", monospace;
   text-transform: uppercase;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.elite-btn:hover {
+  background-color: #fff;
+  color: #000;
 }
 
 .art-tech-nav-container p {
@@ -95,7 +100,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   z-index: 10000;
-  padding: 0 1em;
+  padding: 20px;
+  background: transparent;
 }
 
 nav > div {
@@ -137,6 +143,7 @@ nav > div {
   transition: all 250ms ease-out;
   cursor: pointer;
   position: relative;
+  z-index: 10001; /* Higher than menu */
 }
 
 .burger:before,
@@ -184,7 +191,7 @@ nav > div {
   height: 100vh;
   display: flex;
   z-index: 9998;
-  pointer-events: none;
+  pointer-events: none; /* Disabled by default */
 }
 
 .block {
@@ -209,28 +216,27 @@ nav > div {
   color: #fff;
   padding: 10em 5em;
   z-index: 9999;
-  pointer-events: none;
+  pointer-events: none; /* Disabled by default */
 }
 
-.menu-item,
 .menu-title {
   flex: 1;
   width: 100%;
   opacity: 0;
   pointer-events: none;
-}
-
-.menu-title {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .menu-item {
+  flex: 1;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
   display: flex;
   padding: 1em;
   cursor: pointer;
-  pointer-events: auto;
 }
 
 .menu-item:hover {
@@ -262,6 +268,12 @@ nav > div {
   justify-content: flex-end;
 }
 
+/* When menu is open */
+.menu-open .overlay,
+.menu-open .overlay-menu {
+  pointer-events: auto;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .logo-main img {
@@ -279,5 +291,13 @@ nav > div {
   .menu-item-name p {
     font-size: 6vw;
   }
+  
+  nav {
+    padding: 15px;
+  }
+  
+  .text-logo {
+    font-size: 14px;
+    padding: 8px;
+  }
 }
-

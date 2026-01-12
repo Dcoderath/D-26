@@ -4,7 +4,7 @@ import D8 from '../../assets/D/d8.svg';
 import { HiMiniArrowTrendingUp } from 'react-icons/hi2';
 
 const navItems = [
-
+  { label: '+91 7084674889', href: '#' },
   { label: 'linkedin', href: 'https://www.linkedin.com/in/divakar-trivedi-85326a376/' },
   { label: 'contact', href: 'https://mail.google.com/mail/?view=cm&to=trivedi@2693@gmail.com' },
   { label: 'resume', href: '#' },

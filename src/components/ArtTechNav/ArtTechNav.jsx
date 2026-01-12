@@ -4,13 +4,27 @@ import './ArtTechNav.css';
 const ArtTechNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const timelineRef = useRef(null);
+  const overlayRef = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const loadGSAP = async () => {
       const gsap = (await import('gsap')).default;
 
-      timelineRef.current = gsap.timeline({ paused: true });
+      timelineRef.current = gsap.timeline({ 
+        paused: true,
+        onReverseComplete: () => {
+          // Reset pointer-events when animation completes in reverse
+          if (overlayRef.current) {
+            overlayRef.current.style.pointerEvents = 'none';
+          }
+          if (menuRef.current) {
+            menuRef.current.style.pointerEvents = 'none';
+          }
+        }
+      });
 
+      // First animate blocks
       timelineRef.current.to(".block", {
         duration: 1,
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
@@ -18,6 +32,7 @@ const ArtTechNav = () => {
         ease: "power3.inOut"
       });
 
+      // Then animate menu items
       timelineRef.current.to(".menu-title, .menu-item", {
         duration: 0.3,
         opacity: 1,
@@ -30,10 +45,42 @@ const ArtTechNav = () => {
 
   const handleToggle = () => {
     if (timelineRef.current) {
-      isOpen ? timelineRef.current.reverse() : timelineRef.current.play();
+      if (!isOpen) {
+        // Enable pointer-events when opening
+        if (overlayRef.current) {
+          overlayRef.current.style.pointerEvents = 'auto';
+        }
+        if (menuRef.current) {
+          menuRef.current.style.pointerEvents = 'auto';
+        }
+        timelineRef.current.play();
+      } else {
+        timelineRef.current.reverse();
+      }
     }
     setIsOpen(!isOpen);
   };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && menuRef.current && overlayRef.current) {
+        const isClickInsideMenu = menuRef.current.contains(event.target);
+        const isClickOnBurger = event.target.closest('.burger');
+        const isClickOnToggleBtn = event.target.closest('.toggle-btn');
+        
+        // Only close if clicking outside both menu and burger button
+        if (!isClickInsideMenu && !isClickOnBurger && !isClickOnToggleBtn) {
+          handleToggle();
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const menuItems = [
     { year: "2023", name: "Digital Art Collecting" },
@@ -47,7 +94,6 @@ const ArtTechNav = () => {
       {/* Background content */}
       <div className="website-content">
         <div className="header">
-          {/* Center Top Button (replacing image) */}
           <button className="elite-btn">
             Elite Web Design
           </button>
@@ -56,7 +102,6 @@ const ArtTechNav = () => {
 
       {/* Navigation */}
       <nav>
-        {/* Top Left Text (replacing image) */}
         <div className="logo text-logo">
           <span>web</span>
           <span>design</span>
@@ -64,7 +109,6 @@ const ArtTechNav = () => {
           <span>+23</span>
         </div>
 
-        {/* Center button again if needed inside nav */}
         <div className="logo-main">
           <button className="elite-btn">
             Elite Web Design
@@ -80,15 +124,15 @@ const ArtTechNav = () => {
         </div>
       </nav>
 
-      {/* Overlay animation blocks */}
-      <div className="overlay">
+      {/* Overlay animation blocks - pointer events disabled by default */}
+      <div ref={overlayRef} className="overlay">
         {[...Array(8)].map((_, index) => (
           <div key={index} className="block"></div>
         ))}
       </div>
 
-      {/* Menu overlay */}
-      <div className="overlay-menu">
+      {/* Menu overlay - pointer events disabled by default */}
+      <div ref={menuRef} className="overlay-menu">
         <div className="menu-title">
           <p>[menu]</p>
         </div>
@@ -111,7 +155,8 @@ const ArtTechNav = () => {
                   fontFamily: '"Space Mono", monospace',
                   textTransform: 'uppercase',
                   fontSize: '14px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  padding: '10px'
                 }}
               >
                 [explore]

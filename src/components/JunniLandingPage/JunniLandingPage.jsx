@@ -1,18 +1,14 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './JunniLandingPage.css';
 
-// Constants outside component to prevent recreation
+// Constants
 const ROWS = 6;
 const COLS = 6;
 const BLOCK_SIZE = 50;
-const COOLDOWN = 1000;
+const SNAKE_LENGTH = 5;
+const SNAKE_SPEED = 80;
 const TILT_MAP = {
-  0: -40,  // left edge
-  1: -20,  // left-middle
-  2: -10,  // left-center
-  3: 10,   // right-center
-  4: 20,   // right-middle
-  5: 40    // right edge
+  0: -25, 1: -12, 2: -3, 3: 3, 4: 12, 5: 25
 };
 
 const JunniLandingPage = () => {
@@ -20,70 +16,200 @@ const JunniLandingPage = () => {
   const boardRef = useRef(null);
   const blocksRef = useRef(null);
   const gsapRef = useRef(null);
-  const lastEnterTimesRef = useRef(new Map());
+  const snakeQueueRef = useRef([]);
   const rafIdRef = useRef(null);
+  const mousePosRef = useRef({ x: 0, y: 0 });
   const [isGsapLoaded, setIsGsapLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const lastProcessedTileRef = useRef(null);
+  const mouseHistoryRef = useRef([]);
+  const processingRef = useRef(false); // Add processing flag
+  const lastMouseMoveTimeRef = useRef(0); // Throttle mouse moves
 
-  // Memoized event handlers
+  // Check if mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Improved highlight with cursor tracking
   const highlightBlock = useCallback((event) => {
     if (!blocksRef.current || rafIdRef.current) return;
     
-    // Use requestAnimationFrame for smooth highlighting
+    mousePosRef.current = { x: event.clientX, y: event.clientY };
+    
     rafIdRef.current = requestAnimationFrame(() => {
       const rect = blocksRef.current.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
+      const x = mousePosRef.current.x - rect.left;
+      const y = mousePosRef.current.y - rect.top;
       const col = Math.floor(x / BLOCK_SIZE);
       const row = Math.floor(y / BLOCK_SIZE);
       
       const blockContainer = blocksRef.current;
       if (!blockContainer) return;
       
-      const index = row * Math.ceil(window.innerWidth / BLOCK_SIZE) + col;
+      const numCols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+      const index = row * numCols + col;
       const block = blockContainer.children[index];
       
       if (block && !block.classList.contains("junni-highlight")) {
+        const highlights = blockContainer.querySelectorAll('.junni-highlight');
+        highlights.forEach(h => h.classList.remove('junni-highlight'));
         block.classList.add("junni-highlight");
+        
         setTimeout(() => {
-          block.classList.remove("junni-highlight");
-        }, 250);
+          if (block.classList.contains("junni-highlight")) {
+            block.classList.remove("junni-highlight");
+          }
+        }, 300);
       }
       rafIdRef.current = null;
     });
   }, []);
 
+  // Snake-like hover effect - FIXED to prevent loops
   const handleTileMouseEnter = useCallback((tile, index) => {
-    if (!gsapRef.current) return;
+    if (!gsapRef.current || isMobile || processingRef.current) return;
     
-    const currentTime = Date.now();
-    const lastEnterTime = lastEnterTimesRef.current.get(index) || 0;
+    processingRef.current = true;
     
-    if (currentTime - lastEnterTime > COOLDOWN) {
-      lastEnterTimesRef.current.set(index, currentTime);
-      const tiltY = TILT_MAP[index % 6] || 0;
-      animateTile(tile, tiltY);
+    // Don't process the same tile repeatedly
+    if (lastProcessedTileRef.current === index) {
+      processingRef.current = false;
+      return;
     }
-  }, []);
+    lastProcessedTileRef.current = index;
+    
+    // Check if tile is already in queue
+    const isAlreadyInQueue = snakeQueueRef.current.some(item => item.index === index);
+    if (isAlreadyInQueue) {
+      processingRef.current = false;
+      return;
+    }
+    
+    // Add tile to snake queue
+    snakeQueueRef.current.push({ tile, index, time: Date.now() });
+    
+    // Keep only SNAKE_LENGTH tiles in the queue
+    if (snakeQueueRef.current.length > SNAKE_LENGTH) {
+      snakeQueueRef.current.shift();
+    }
+    
+    // Animate each tile in the snake with staggered delays
+    snakeQueueRef.current.forEach((snakeSegment, segmentIndex) => {
+      const delay = segmentIndex * SNAKE_SPEED;
+      
+      setTimeout(() => {
+        if (snakeSegment.tile) {
+          animateSnakeTile(snakeSegment.tile, snakeSegment.index, segmentIndex);
+        }
+      }, delay);
+    });
+    
+    // Store mouse position for direction calculation
+    mouseHistoryRef.current.push({
+      x: mousePosRef.current.x,
+      y: mousePosRef.current.y,
+      time: Date.now(),
+      tileIndex: index
+    });
+    
+    // Keep only recent history
+    if (mouseHistoryRef.current.length > 10) {
+      mouseHistoryRef.current.shift();
+    }
+    
+    // Allow processing again after a short delay
+    setTimeout(() => {
+      processingRef.current = false;
+    }, 100);
+    
+  }, [isMobile]);
 
-  const animateTile = useCallback((tile, tiltY) => {
+  // Animate a single snake tile
+  const animateSnakeTile = useCallback((tile, index, segmentIndex) => {
     if (!gsapRef.current || !tile) return;
     
-    const tl = gsapRef.current.timeline();
-    tl.set(tile, { rotateX: isFlipped.current ? 180 : 0, rotateY: 0 })
+    const col = index % COLS;
+    const tiltY = TILT_MAP[col] || 0;
+    
+    // Calculate intensity based on position in snake
+    const intensity = 1 - (segmentIndex / SNAKE_LENGTH) * 0.5;
+    
+    // Calculate rotation based on mouse direction (for head only)
+    let extraRotation = 0;
+    if (segmentIndex === 0 && mouseHistoryRef.current.length >= 2) {
+      const recentHistory = mouseHistoryRef.current.slice(-3);
+      if (recentHistory.length >= 2) {
+        const dx = recentHistory[recentHistory.length - 1].x - recentHistory[0].x;
+        const dy = recentHistory[recentHistory.length - 1].y - recentHistory[0].y;
+        extraRotation = Math.atan2(dy, dx) * 20;
+      }
+    }
+    
+    // Kill any existing animations on this tile
+    gsapRef.current.killTweensOf(tile);
+    
+    // Base rotation
+    const baseRotation = isFlipped.current ? 180 : 0;
+    const flipRotation = 360 * intensity;
+    
+    // Snake-like animation
+    gsapRef.current.timeline()
       .to(tile, {
-        rotateX: isFlipped.current ? 450 : 270,
-        rotateY: tiltY,
-        duration: 0.5,
-        ease: "power2.out",
+        rotateX: baseRotation + flipRotation,
+        rotateY: tiltY + extraRotation,
+        duration: 0.3,
+        ease: "power2.out"
       })
       .to(tile, {
-        rotateX: isFlipped.current ? 540 : 360,
+        rotateX: baseRotation,
         rotateY: 0,
-        duration: 0.5,
-        ease: "power2.out",
-      }, "-=0.25");
+        duration: 0.2,
+        delay: 0.1,
+        ease: "power1.inOut"
+      }, ">");
+      
   }, []);
 
+  // Smooth mouse movement tracking for snake-like hover - FIXED THROTTLING
+  const handleMouseMoveOnBoard = useCallback((event) => {
+    if (!boardRef.current || isMobile) return;
+    
+    // Throttle mouse moves to prevent loops
+    const now = Date.now();
+    if (now - lastMouseMoveTimeRef.current < 50) { // 50ms throttle
+      return;
+    }
+    lastMouseMoveTimeRef.current = now;
+    
+    const rect = boardRef.current.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    
+    // Only trigger if mouse is actually over the board
+    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+      const col = Math.min(Math.floor((x / rect.width) * COLS), COLS - 1);
+      const row = Math.min(Math.floor((y / rect.height) * ROWS), ROWS - 1);
+      const index = row * COLS + col;
+      
+      const tiles = document.querySelectorAll(".junni-tile");
+      const tile = tiles[index];
+      
+      if (tile) {
+        // Use requestAnimationFrame for smoother processing
+        requestAnimationFrame(() => {
+          handleTileMouseEnter(tile, index);
+        });
+      }
+    }
+  }, [handleTileMouseEnter, isMobile]);
+
+  // Improved flip all tiles with wave effect
   const flipAllTiles = useCallback(() => {
     if (!gsapRef.current) return;
     
@@ -92,25 +218,94 @@ const JunniLandingPage = () => {
     
     isFlipped.current = !isFlipped.current;
     
+    // Kill any existing animations
+    gsapRef.current.killTweensOf(tiles);
+    snakeQueueRef.current = [];
+    processingRef.current = false;
+    
+    const targetRotation = isFlipped.current ? 180 : 0;
+    
+    // Create wave effect from center
+    const centerRow = Math.floor(ROWS / 2);
+    const centerCol = Math.floor(COLS / 2);
+    
     gsapRef.current.to(tiles, {
-      rotateX: isFlipped.current ? 180 : 0,
-     duration: 0.6,
-stagger: {
-  amount: 0.25,
-        from: "random",
+      rotateX: targetRotation,
+      duration: 0.6,
+      stagger: (index) => {
+        const row = Math.floor(index / COLS);
+        const col = index % COLS;
+        const distance = Math.sqrt(
+          Math.pow(row - centerRow, 2) + Math.pow(col - centerCol, 2)
+        );
+        return distance * 0.1;
       },
-      ease: "power2.inOut",
+      ease: "elastic.out(1, 0.5)",
       onComplete: () => {
-        // Reset tiles to base state after animation
-        gsapRef.current.set(tiles, { rotateX: isFlipped.current ? 180 : 0 });
+        gsapRef.current.set(tiles, { rotateX: targetRotation });
       }
     });
   }, []);
 
+  // Touch support for mobile
+  const handleTileTouch = useCallback((tile, index, event) => {
+    if (!gsapRef.current || processingRef.current) return;
+    event.preventDefault();
+    
+    processingRef.current = true;
+    
+    // Create snake effect from touch point
+    const tiles = document.querySelectorAll(".junni-tile");
+    const row = Math.floor(index / COLS);
+    
+    // Get SNAKE_LENGTH tiles in a row
+    const snakeTiles = [];
+    for (let i = 0; i < SNAKE_LENGTH; i++) {
+      const snakeIndex = index + i;
+      if (snakeIndex < tiles.length && Math.floor(snakeIndex / COLS) === row) {
+        snakeTiles.push(tiles[snakeIndex]);
+      }
+    }
+    
+    // Animate each tile with delay
+    snakeTiles.forEach((snakeTile, i) => {
+      setTimeout(() => {
+        if (snakeTile) {
+          const col = snakeTile.dataset.col;
+          const tiltY = TILT_MAP[col] || 0;
+          
+          gsapRef.current.killTweensOf(snakeTile);
+          gsapRef.current.to(snakeTile, {
+            rotateX: isFlipped.current ? 540 : 360,
+            rotateY: tiltY,
+            duration: 0.3,
+            ease: "back.out(1.2)",
+            onComplete: () => {
+              gsapRef.current.to(snakeTile, {
+                rotateX: isFlipped.current ? 180 : 0,
+                rotateY: 0,
+                duration: 0.15,
+                ease: "power1.out"
+              });
+            }
+          });
+        }
+      }, i * 80);
+    });
+    
+    setTimeout(() => {
+      processingRef.current = false;
+    }, SNAKE_LENGTH * 80 + 100);
+    
+  }, []);
+
+  // Create individual tile - REMOVE direct mouseenter listener to prevent conflicts
   const createTile = useCallback((row, col, index) => {
     const tile = document.createElement("div");
     tile.className = "junni-tile";
     tile.dataset.index = index;
+    tile.dataset.row = row;
+    tile.dataset.col = col;
     tile.setAttribute('aria-label', `Tile ${index + 1}`);
     tile.setAttribute('role', 'button');
     tile.tabIndex = 0;
@@ -131,20 +326,33 @@ stagger: {
     front.style.backgroundPosition = bgPosition;
     back.style.backgroundPosition = bgPosition;
 
-    // Handle both mouse and keyboard interaction
-    const handleInteraction = () => handleTileMouseEnter(tile, index);
+    // REMOVED: Direct mouseenter listener on each tile
+    // We'll handle all mouse movement through the board container
     
-    tile.addEventListener("mouseenter", handleInteraction);
-    tile.addEventListener("focus", handleInteraction);
+    // Touch interaction for mobile
+    const handleTouchStart = (e) => handleTileTouch(tile, index, e);
+    tile.addEventListener("touchstart", handleTouchStart, { passive: false });
+    
+    // Keyboard interaction
     tile.addEventListener("keydown", (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        handleInteraction();
+        // Simulate hover for keyboard
+        handleTileMouseEnter(tile, index);
       }
     });
 
+    // Focus styles
+    tile.addEventListener("focus", () => {
+      tile.classList.add("junni-tile-focused");
+    });
+    
+    tile.addEventListener("blur", () => {
+      tile.classList.remove("junni-tile-focused");
+    });
+
     return tile;
-  }, [handleTileMouseEnter]);
+  }, [handleTileMouseEnter, handleTileTouch]);
 
   const createBoard = useCallback(() => {
     if (!boardRef.current) return;
@@ -176,6 +384,7 @@ stagger: {
 
     blocksRef.current.innerHTML = '';
     blocksRef.current.style.gridTemplateColumns = `repeat(${numCols}, ${BLOCK_SIZE}px)`;
+    blocksRef.current.style.gridTemplateRows = `repeat(${numRows}, ${BLOCK_SIZE}px)`;
     
     for (let i = 0; i < numBlocks; i++) {
       const block = document.createElement("div");
@@ -194,38 +403,44 @@ stagger: {
     }
   }, [createBlocks]);
 
+  // Initialize with proper event handling
   const initialize = useCallback(() => {
     if (!gsapRef.current) return;
     
     createBoard();
     createBlocks();
     
-    // Throttled mousemove for better performance
+    // Single mousemove handler on window
     let mouseMoveTimeout;
-    const throttledHighlight = (e) => {
-      if (mouseMoveTimeout) return;
+    const handleMouseMove = (e) => {
+      if (mouseMoveTimeout) clearTimeout(mouseMoveTimeout);
       mouseMoveTimeout = setTimeout(() => {
         highlightBlock(e);
-        mouseMoveTimeout = null;
-      }, 16); // ~60fps
+        handleMouseMoveOnBoard(e);
+      }, 16);
     };
     
-    window.addEventListener('mousemove', throttledHighlight);
-    window.addEventListener('resize', handleResize);
+    // Add event listeners
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
     
     // Cleanup function
     return () => {
-      window.removeEventListener('mousemove', throttledHighlight);
+      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       if (mouseMoveTimeout) clearTimeout(mouseMoveTimeout);
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+      snakeQueueRef.current = [];
+      mouseHistoryRef.current = [];
+      processingRef.current = false;
     };
-  }, [createBoard, createBlocks, highlightBlock, handleResize]);
+  }, [createBoard, createBlocks, handleMouseMoveOnBoard, highlightBlock, handleResize]);
 
   useEffect(() => {
-    // Load GSAP with error handling
     const loadGSAP = async () => {
       try {
-        // Check if GSAP is already loaded
         if (window.gsap) {
           gsapRef.current = window.gsap;
           setIsGsapLoaded(true);
@@ -244,7 +459,6 @@ stagger: {
         
         script.onerror = () => {
           console.error('Failed to load GSAP');
-          // Fallback: could use CSS animations instead
         };
         
         document.head.appendChild(script);
@@ -256,11 +470,11 @@ stagger: {
     loadGSAP();
 
     return () => {
-      // Cleanup animations and event listeners
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
       }
       gsapRef.current?.killTweensOf?.('.junni-tile, .junni-block');
+      snakeQueueRef.current = [];
     };
   }, []);
 
@@ -296,8 +510,12 @@ stagger: {
           className="junni-flip-button"
           onClick={flipAllTiles}
           aria-label="Flip all tiles"
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            flipAllTiles();
+          }}
         >
-          Flip Tiles
+          {isMobile ? 'Tap to Flip' : 'Flip Tiles'}
         </button>
       </div>
     </main>

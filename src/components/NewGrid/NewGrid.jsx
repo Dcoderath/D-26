@@ -26,52 +26,62 @@ const NewGrid = () => {
   const [active, setActive] = useState("Development");
 
   return (
-    <section className="cloneable simple-layout">
-      <div className="tab-layout">
+    <section className="cloneable">
+      <div className="wrapper-card">
+        <div className="tab-layout">
 
-        <div className="tab-layout-col">
-          <div className="tab-layout-container">
+          <div className="tab-layout-col">
+            <div className="tab-layout-container">
 
-            <h1 className="tab-layout-heading black-text">
-              Where Aesthetic Meets Architecture — Design, Build, Secure.
-            </h1>
+              <h1 className="tab-layout-heading black-text">
+                Where Aesthetic Meets Architecture — Design, Build, Secure.
+              </h1>
 
-            <div className="filter-bar">
-              {Object.keys(tabData).map((item) => (
+              <div className="filter-bar">
+                {Object.keys(tabData).map((item) => (
+                  <button
+                    key={item}
+                    className={`filter-button ${active === item ? "active" : ""}`}
+                    onClick={() => setActive(item)}
+                  >
+                    <div className="filter-button__p">{item}</div>
+                    <div className="tab-button__bg"></div>
+                  </button>
+                ))}
+              </div>
+
+              <div key={active} className="tab-content animate-slide">
+                <h2 className="tab-content__heading black-text">
+                  {tabData[active].heading}
+                </h2>
+
+                <p className="content-p black-text">
+                  {tabData[active].text}
+                </p>
+
                 <button
-                  key={item}
-                  className={`filter-button ${active === item ? "active" : ""}`}
-                  onClick={() => setActive(item)}
+                  className="tab-content__button"
+                  onClick={() => {
+                    const pricingSection = document.querySelector('.pricing-section');
+                    if (pricingSection) {
+                      pricingSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                 >
-                  <div className="filter-button__p">{item}</div>
-                  <div className="tab-button__bg"></div>
+                  <p className="content-p">Explore Projects</p>
                 </button>
-              ))}
+              </div>
+
             </div>
+          </div>
 
-            <div key={active} className="tab-content animate-slide">
-              <h2 className="tab-content__heading black-text">
-                {tabData[active].heading}
-              </h2>
-
-              <p className="content-p black-text">
-                {tabData[active].text}
-              </p>
-
-              <a href="#" className="tab-content__button">
-                <p className="content-p black-text">Explore Projects</p>
-              </a>
+          <div className="tab-layout-col">
+            <div key={active} className="tab-visual-wrap animate-image">
+              <img src={tabData[active].img} alt={active} className="tab-image" />
             </div>
-
           </div>
-        </div>
 
-        <div className="tab-layout-col">
-          <div key={active} className="tab-visual-wrap animate-image">
-            <img src={tabData[active].img} alt={active} className="tab-image" />
-          </div>
         </div>
-
       </div>
     </section>
   );

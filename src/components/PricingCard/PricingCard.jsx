@@ -5,34 +5,34 @@ import { HiMiniArrowTrendingUp } from "react-icons/hi2";
 const plans = [
   {
     title: "Starter",
-    price: "$499",
-    tagline: "Perfect for small websites and portfolios.",
+    pricingIdea: "Best for small websites & personal brands",
+    tagline: "Perfect for portfolios and basic business sites.",
     features: [
       "Responsive Design",
       "Up to 5 Pages",
       "Basic SEO Optimization",
       "1 Month Support",
     ],
-    button: "Get Started",
+    button: "Get a Quote",
     popular: false,
   },
   {
     title: "Professional",
-    price: "$1,499",
-    tagline: "Ideal for growing businesses and freelancers.",
+    pricingIdea: "Most popular for growing businesses",
+    tagline: "Ideal for startups, agencies & freelancers.",
     features: [
       "Custom Design & Animations",
       "Up to 15 Pages",
       "Advanced SEO Setup",
       "3 Months Maintenance",
     ],
-    button: "Start Project",
+    button: "Book a Call",
     popular: true,
   },
   {
     title: "Enterprise",
-    price: "$2,999+",
-    tagline: "For startups & brands needing full-stack systems.",
+    pricingIdea: "Fully custom, scope-based pricing",
+    tagline: "For brands needing scalable full-stack systems.",
     features: [
       "Full-Stack Development (MERN)",
       "API Integrations",
@@ -48,9 +48,10 @@ const PricingCard = () => {
   return (
     <section className="pricing-section">
       <div className="pricing-header">
-        <h1 className="pricing-title">One plan, constant updates.</h1>
+        <h1 className="pricing-title">Simple plans. Flexible pricing.</h1>
         <p className="pricing-subtitle">
-Unlock a full library of resources and join our Slack community of creatives. Share ideas, get feedback, and lock in your price for life—no surprises, no hikes.
+          Every project is different. Pricing is based on your requirements,
+          features, and timeline — no hidden costs.
         </p>
       </div>
 
@@ -60,12 +61,12 @@ Unlock a full library of resources and join our Slack community of creatives. Sh
             key={index}
             className={`pricing-card ${plan.popular ? "popular" : ""}`}
           >
-            {plan.popular && <div className="badge">Most Popular</div>}
+            {plan.popular && <div className="badge">Most Chosen</div>}
 
             <h2 className="plan-title">{plan.title}</h2>
             <p className="plan-tagline">{plan.tagline}</p>
 
-            <div className="plan-price">{plan.price}</div>
+            <div className="plan-price">{plan.pricingIdea}</div>
 
             <ul className="plan-features">
               {plan.features.map((feature, i) => (
@@ -73,7 +74,18 @@ Unlock a full library of resources and join our Slack community of creatives. Sh
               ))}
             </ul>
 
-            <button className="plan-button">
+            <button
+              className="plan-button"
+              onClick={() => {
+                if (plan.button === "Get a Quote") {
+                  window.location.href = "mailto:trivedi@2693@gmail.com?subject=Quote Request";
+                } else if (plan.button === "Book a Call") {
+                  window.open("https://calendly.com/your-calendly-link", "_blank");
+                } else if (plan.button === "Contact Me") {
+                  window.location.href = "mailto:trivedi@2693@gmail.com?subject=Contact Inquiry";
+                }
+              }}
+            >
               {plan.button}
               <HiMiniArrowTrendingUp className="arrow-icon" />
             </button>

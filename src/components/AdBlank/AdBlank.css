@@ -9,6 +9,8 @@
   align-items: flex-start;
   overflow: hidden;
   padding: clamp(16px, 4vw, 40px);
+  z-index: 1;
+  font-family: "Limelight", sans-serif;
 }
 
 /* Pixel screen overlay */
@@ -23,11 +25,11 @@
   background-color: #0b0b0b;
 }
 
-/* ✅ Menu bottom right */
-.adblank__menu {
+/* ✅ Navigator bottom right */
+.adblank__navigator {
   position: absolute;
   bottom: 5%;
-  right: 3%; /* shifted further right */
+  right: 3%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -38,26 +40,21 @@
   text-align: right;
 }
 
-.adblank__menu li {
+.adblank__navigator li {
   list-style: none;
 }
-  .adblank__menu {
-    right: 3%;
-    bottom: 1%;
-    gap: 0.8em;
-  }
 
-.adblank__menu a {
+.adblank__navigator a {
   text-decoration: none;
 }
 
-/* ✅ Menu link button */
-.adblank__link {
+/* ✅ Navigator link button */
+.adblank__navigator-link {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: clamp(6px, 1vw, 12px);
-  font-family: "Orbitron", sans-serif;
+  font-family: "Limelight", sans-serif;
   font-size: clamp(1.2rem, 3vw, 4rem);
   text-transform: uppercase;
   font-weight: 400;
@@ -65,22 +62,22 @@
   background-color: #9d00ff;
   transition: all 0.3s ease;
   padding: clamp(6px, 1vw, 10px) clamp(10px, 2vw, 20px);
-  border-radius: 0; /* 🔥 Removed all rounding */
-  border: none; /* make edges sharp */
+  border-radius: 0;
+  border: none;
 }
 
-.adblank__link:hover {
+.adblank__navigator-link:hover {
   color: #ffffff;
   transform: translateX(6px);
 }
 
-.adblank__icon {
+.adblank__navigator-icon {
   font-size: clamp(1.5rem, 3.5vw, 3.8rem);
   color: #000000;
   transition: transform 0.3s ease;
 }
 
-.adblank__link:hover .adblank__icon {
+.adblank__navigator-link:hover .adblank__navigator-icon {
   transform: rotate(20deg);
 }
 
@@ -93,7 +90,7 @@
   height: clamp(50px, 7vw, 80px);
   background-color: rgb(17, 17, 17);
   color: #fff;
-  font-family: "Orbitron", sans-serif;
+  font-family: "Limelight", sans-serif;
   display: flex;
   align-items: center;
   padding: 0 clamp(16px, 4vw, 40px);
@@ -111,7 +108,7 @@
   height: clamp(50px, 7vw, 80px);
   background-color: rgb(17, 17, 17);
   color: #fff;
-  font-family: "Orbitron", sans-serif;
+  font-family: "Limelight", sans-serif;
   display: flex;
   align-items: center;
   padding: 0 clamp(16px, 4vw, 40px);
@@ -168,23 +165,23 @@
 
 /* -------- ✅ Responsive Adjustments -------- */
 @media (max-width: 1024px) {
-  .adblank__link {
+  .adblank__navigator-link {
     font-size: clamp(1rem, 2.5vw, 2.4rem);
     padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 16px);
-    border-radius: 0; /* keep sharp */
+    border-radius: 0;
   }
-    .adblank__menu {
+
+  .adblank__navigator {
     right: 3%;
     bottom: 1%;
     gap: 0.8em;
   }
 
-
-  .adblank__icon {
+  .adblank__navigator-icon {
     font-size: clamp(1.4rem, 3vw, 2.5rem);
   }
 
-  .adblank__menu {
+  .adblank__navigator {
     right: 2%;
     gap: 0.6em;
   }
@@ -195,19 +192,19 @@
     padding: clamp(12px, 3vw, 24px);
   }
 
-  .adblank__menu {
+  .adblank__navigator {
     right: 3%;
     bottom: 1%;
     gap: 0.8em;
   }
 
-  .adblank__link {
+  .adblank__navigator-link {
     font-size: clamp(0.9rem, 4vw, 1.6rem);
     padding: clamp(6px, 2vw, 10px) clamp(10px, 3vw, 16px);
     border-radius: 0;
   }
 
-  .adblank__icon {
+  .adblank__navigator-icon {
     font-size: clamp(1.2rem, 4vw, 2rem);
   }
 
@@ -232,19 +229,19 @@
     height: 80vh;
   }
 
-  .adblank__menu {
+  .adblank__navigator {
     right: 3%;
     bottom: 1%;
     gap: 0.8em;
   }
 
-  .adblank__link {
+  .adblank__navigator-link {
     font-size: clamp(0.8rem, 4.5vw, 1.2rem);
     padding: clamp(5px, 2vw, 8px) clamp(8px, 3vw, 12px);
     border-radius: 0;
   }
 
-  .adblank__icon {
+  .adblank__navigator-icon {
     font-size: clamp(1rem, 5vw, 1.5rem);
   }
 

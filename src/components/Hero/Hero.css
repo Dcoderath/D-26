@@ -1,4 +1,5 @@
-.term-hero-root {
+/* .term-hero-root {
+
   position: relative;
   width: 100%;
   min-height: 95vh;
@@ -38,6 +39,9 @@ canvas.pixel-screen {
 }
 
 /* Hacker and Bio text */
+
+
+/* 
 .hacker-line {
   font-size: clamp(10px, 2.2vw, 20px);
   line-height: 1.5;
@@ -51,7 +55,7 @@ canvas.pixel-screen {
 }
 
 /* Caret animation */
-.caret {
+/* .caret {
   display: inline-block;
   width: 8px;
   height: 16px;
@@ -65,7 +69,7 @@ canvas.pixel-screen {
   50% { opacity: 0; }
 }
 
-/* Bio info panel */
+
 .bio-panel {
   background: rgb(255, 255, 255);
   padding: clamp(8px, 1vw, 14px);
@@ -74,7 +78,6 @@ canvas.pixel-screen {
   border: 1px solid rgb(255, 255, 255);
 }
 
-/* ✅ Tablet responsiveness */
 @media (max-width: 1024px) {
   .bottom-right {
     right: 3vw;
@@ -91,7 +94,6 @@ canvas.pixel-screen {
   }
 }
 
-/* ✅ Mobile responsiveness */
 @media (max-width: 600px) {
   .term-hero-root {
     min-height: 100vh;
@@ -133,7 +135,7 @@ canvas.pixel-screen {
   }
 }
 
-/* ✅ Ultra-small screens (≤ 380px) */
+
 @media (max-width: 380px) {
   .term-hero-root {
     padding: 6vw 4vw;
@@ -150,4 +152,20 @@ canvas.pixel-screen {
   .bio-line {
     font-size: 3.2vw;
   }
+} */ 
+
+
+.term-hero-root {
+  position: relative;
+  width: 100%;
+  min-height: 95vh;
+  overflow: hidden;
+  background: #0b0b0b;
 }
+
+canvas.pixel-screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+

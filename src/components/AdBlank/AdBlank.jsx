@@ -4,7 +4,7 @@ import D8 from '../../assets/D/d8.svg';
 import { HiMiniArrowTrendingUp } from 'react-icons/hi2';
 
 const navItems = [
-  { label: 'github', href: 'https://github.com/Dcoderath' },
+
   { label: 'linkedin', href: 'https://www.linkedin.com/in/divakar-trivedi-85326a376/' },
   { label: 'contact', href: 'https://mail.google.com/mail/?view=cm&to=trivedi@2693@gmail.com' },
   { label: 'resume', href: '#' },
@@ -141,17 +141,17 @@ const AdBlank = () => {
       <canvas ref={canvasRef} className="pixel-screen" />
       <div className="adblank__glass-bg"></div>
 
-      <ul className="adblank__menu">
+      <ul className="adblank__navigator">
         {navItems.map(({ label, href }) => (
-          <li className="adblank__item" key={label}>
+          <li className="adblank__navigator-item" key={label}>
             <a
               href={href}
-              className="adblank__link"
+              className="adblank__navigator-link"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span className="adblank__label">{label}</span>
-              <HiMiniArrowTrendingUp className="adblank__icon" />
+              <span className="adblank__navigator-label">{label}</span>
+              <HiMiniArrowTrendingUp className="adblank__navigator-icon" />
             </a>
           </li>
         ))}

@@ -3,33 +3,47 @@
   color: #000 !important;
 }
 
+.limelight-regular {
+  font-family: "Limelight", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ---------------- Main Wrapper ---------------- */
 .cloneable {
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: stretch;
+  align-items: stretch;
+  padding: 30px;
   min-height: 100vh;
+  width: 100%;
   background-color: #ffffff;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Limelight", sans-serif; /* UPDATED */
+  overflow-x: hidden;
 }
 
 /* ---------------- Layout ---------------- */
 .tab-layout {
   display: flex;
+  width: 100%;
+  max-width: 100%;
   justify-content: space-between;
   align-items: stretch;
-  flex-wrap: wrap;
-  width: 100%;
+  flex-wrap: nowrap;
 }
 
 .tab-layout-col {
   width: 50%;
+  flex: 0 0 50%;
   display: flex;
   align-items: center;
 }
 
+/* ---------------- Content Container ---------------- */
 .tab-layout-container {
   width: 100%;
-  max-width: 40em;
+  max-width: none;
   padding: 2em 3em;
   display: flex;
   flex-direction: column;
@@ -41,13 +55,14 @@
 .tab-layout-heading {
   margin: 0;
   font-size: clamp(2rem, 3vw, 3em);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.05;
 }
 
 /* ---------------- Buttons ---------------- */
 .filter-bar {
-  width: clamp(18rem, 80%, 35rem);
+  width: 100%;
+  max-width: 35rem;
   background-color: #f6f6f6;
   border: 1px solid #e0e0e0;
   border-radius: 0.5em;
@@ -58,7 +73,6 @@
 }
 
 .filter-button {
-  position: relative;
   background: transparent;
   border: 1px solid #e0e0e0;
   padding: 0.85em 2.75em;
@@ -71,7 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Limelight", sans-serif; /* UPDATED */
   text-align: center;
   user-select: none;
 }
@@ -79,10 +93,6 @@
 .filter-button:hover {
   background-color: #efefef;
   transform: translateY(-2px);
-}
-
-.filter-button:active {
-  transform: scale(0.96);
 }
 
 .filter-button.active {
@@ -101,7 +111,7 @@
 .tab-content__heading {
   margin: 0;
   font-size: clamp(1.4em, 2.5vw, 1.9em);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.1;
 }
 
@@ -109,6 +119,44 @@
   margin: 0;
   font-size: clamp(0.9em, 2vw, 1.1em);
   line-height: 1.5;
+}
+
+/* ---------------- CTA Button ---------------- */
+.tab-content__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 3.5em;
+  padding: 0 2em;
+  border-radius: 0.25em;
+  background: #cc00ff;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  text-decoration: none;
+}
+
+.tab-content__button p {
+  color: #fff !important;
+}
+
+.tab-content__button:hover {
+  background: #000;
+  transform: translateY(-2px);
+}
+
+/* ---------------- Image ---------------- */
+.tab-visual-wrap {
+  width: 100%;
+  height: 42em;
+  max-height: 80vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* ---------------- Animation ---------------- */
@@ -121,90 +169,41 @@
 }
 
 @keyframes slideIn {
-  0% {
+  from {
     opacity: 0;
     transform: translateX(-30px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
 @keyframes imageSlide {
-  0% {
+  from {
     opacity: 0;
     transform: translateX(30px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-/* ---------------- Button ---------------- */
-.tab-content__button {
-  justify-content: center;
-  align-items: center;
-  height: 3.5em;
-  padding: 0 2em;
-  text-decoration: none;
-  display: inline-flex;
-  position: relative;
-  overflow: hidden;
-  border-radius: .25em;
-  background: #cc00ff;
-  transition: all 0.3s ease;
-  align-self: flex-start;
-  font-size: clamp(0.9em, 2vw, 1em);
-}
-
-/* Make button text white */
-.tab-content__button p {
-  color: #fff !important;
-}
-
-.tab-content__button:hover {
-  background: #000000;
-  transform: translateY(-2px);
-  border: 2px solid black;
-}
-
-
-/* ---------------- Image ---------------- */
-.tab-visual-wrap {
-  border-radius: .5em;
-  width: 100%;
-  height: 42em;
-  max-height: 80vh;
-  position: relative;
-  overflow: hidden;
-  padding-right: 2em;
-  box-sizing: border-box;
-}
-
-.tab-image {
-  object-fit: cover;
-  border-radius: .5em;
-  width: 100%;
-  height: 100%;
 }
 
 /* ---------------- Responsive ---------------- */
 @media (max-width: 1024px) {
   .tab-layout {
     flex-direction: column;
-    align-items: center;
   }
 
   .tab-layout-col {
     width: 100%;
+    flex: 0 0 100%;
   }
 
   .tab-layout-container {
-    padding: 2em 2em;
-    text-align: center;
     align-items: center;
+    text-align: center;
   }
 
   .tab-content__button {
@@ -212,42 +211,26 @@
   }
 
   .tab-visual-wrap {
-    margin-top: 2em;
-    padding-right: 0;
     height: 30em;
   }
 }
 
 @media (max-width: 600px) {
   .cloneable {
-    padding: 1.5em;
     min-height: 90vh;
   }
 
-  .tab-layout-heading {
-    font-size: clamp(1.8em, 6vw, 2.2em);
-  }
-
   .filter-bar {
-    width: 100%;
     flex-wrap: wrap;
-    gap: 0.3em;
-    padding: 0.4em;
   }
 
   .filter-button {
     flex: 1 1 45%;
-    font-size: clamp(0.8em, 3vw, 0.95em);
     padding: 0.6em 1em;
   }
 
   .tab-visual-wrap {
     height: 24em;
-  }
-
-  .tab-content__button {
-    padding: 0.75em 1.5em;
-    height: auto;
   }
 }
 
@@ -256,13 +239,8 @@
     min-height: 80vh;
   }
 
-  .tab-layout-heading {
-    font-size: clamp(1.5em, 6vw, 2em);
-  }
-
   .filter-button {
     flex: 1 1 100%;
-    font-size: 0.9em;
   }
 
   .tab-visual-wrap {

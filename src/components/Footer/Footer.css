@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to bottom, rgb(0, 0, 0) 20%, #000000 10%);
+  background: #141414;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 122;

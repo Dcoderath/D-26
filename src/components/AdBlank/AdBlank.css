@@ -247,15 +247,20 @@
 
   .adblank__banner,
   .adblank__banner--alt {
-    height: clamp(48px, 14vw, 68px);
-    top: 40px;
+   
+    height: clamp(78px, 24vw, 88px);
+    top: 20px;
   }
+    .adblank__banner--alt {
+       top: 70px;
+      
+    }
 
   .adblank__banner-text {
-    font-size: clamp(0.6rem, 2.5vw, 0.8rem);
+    font-size: clamp(1.6rem, 2.5vw, 0.8rem);
   }
 
   .adblank__banner-image {
-    height: clamp(16px, 6vw, 22px);
+    height: clamp(36px, 6vw, 22px);
   }
 }

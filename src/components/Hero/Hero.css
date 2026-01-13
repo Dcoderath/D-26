@@ -365,6 +365,7 @@ canvas.pixel-screen {
 /* Mobile */
 @media (max-width: 480px) {
   .term-hero-root {
+  
     min-height: 100vh;
   }
 

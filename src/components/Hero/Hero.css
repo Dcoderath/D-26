@@ -155,7 +155,7 @@ canvas.pixel-screen {
 } */ 
 
 
-.term-hero-root {
+/* .term-hero-root {
   position: relative;
   width: 100%;
   min-height: 95vh;
@@ -168,4 +168,212 @@ canvas.pixel-screen {
   width: 100%;
   height: 100%;
 }
+ */
 
+/* ============================= */
+/* HERO ROOT */
+/* ============================= */
+
+.term-hero-root {
+  position: relative;
+  width: 100%;
+  min-height: 95vh;
+  overflow: hidden;
+  background: #0b0b0b;
+}
+
+/* Canvas */
+.term-hero-root canvas.pixel-screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================= */
+/* OVERLAY */
+/* ============================= */
+
+.term-hero__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Overlay sides */
+.term-hero__overlay-left,
+.term-hero__overlay-right {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  pointer-events: auto;
+}
+
+/* ============================= */
+/* LEFT SIDE */
+/* ============================= */
+
+.term-hero__overlay-left {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: clamp(1.5rem, 4vw, 4rem);
+  box-sizing: border-box;
+}
+
+/* ============================= */
+/* LEFT TEXT BACKGROUND BLUR */
+/* ============================= */
+
+.term-hero__intro {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 720px;
+
+  padding: clamp(1rem, 3vw, 2.5rem);
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(clamp(8px, 2vw, 20px));
+  -webkit-backdrop-filter: blur(clamp(8px, 2vw, 20px));
+
+  border-radius: clamp(8px, 2vw, 16px);
+  box-sizing: border-box;
+}
+
+/* Fallback for no blur support */
+@supports not (backdrop-filter: blur(1px)) {
+  .term-hero__intro {
+    background: rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* ============================= */
+/* TEXT */
+/* ============================= */
+
+.term-hero__availability {
+  display: inline-block;
+  margin-bottom: 1.2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.term-hero__headline {
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: #000000;
+}
+
+/* ============================= */
+/* RIGHT SIDE */
+/* ============================= */
+
+.term-hero__overlay-right {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ============================= */
+/* SERVICES BUTTONS */
+/* ============================= */
+
+.term-hero__services {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: absolute;
+  gap: 8px;
+}
+
+/* Buttons */
+.term-hero__services span {
+  display: block;
+  padding: 10px 20px;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 0;
+
+  font-family: "Limelight", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(18px, 2vw, 24px);
+
+  cursor: pointer;
+  text-align: right;
+  transition: background 0.2s ease;
+
+  position: relative;
+  box-shadow: 0 4px 0 rgb(0, 0, 0);
+  margin-bottom: 4px;
+  min-width: clamp(140px, 18vw, 180px);
+  z-index: 0;
+}
+
+/* Hover */
+.term-hero__services span:hover {
+  background: #FF4C24;
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 4px 0 rgb(0, 0, 0);
+}
+
+/* Stuck reset */
+.term-hero__services span.stuck {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 4px 0 rgb(0, 0, 0) !important;
+}
+
+/* ============================= */
+/* RESPONSIVE BREAKPOINTS */
+/* ============================= */
+
+/* Tablets & below */
+@media (max-width: 900px) {
+  .term-hero__overlay {
+    flex-direction: column;
+  }
+
+  .term-hero__overlay-left,
+  .term-hero__overlay-right {
+    width: 100%;
+    height: auto;
+  }
+
+  .term-hero__overlay-right {
+    padding: 2rem;
+    justify-content: flex-start;
+  }
+
+  .term-hero__services {
+    position: static;
+    align-items: flex-start;
+  }
+
+  .term-hero__services span {
+    text-align: left;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .term-hero-root {
+    min-height: 100vh;
+  }
+
+  .term-hero__overlay-left {
+    padding: 1rem;
+  }
+
+  .term-hero__intro {
+    max-width: 100%;
+    padding: 1rem;
+  }
+}

@@ -74,21 +74,17 @@ const PricingCard = () => {
               ))}
             </ul>
 
-            <button
-              className="plan-button"
-              onClick={() => {
-                if (plan.button === "Get a Quote") {
-                  window.location.href = "mailto:trivedi@2693@gmail.com?subject=Quote Request";
-                } else if (plan.button === "Book a Call") {
-                  window.open("https://calendly.com/your-calendly-link", "_blank");
-                } else if (plan.button === "Contact Me") {
-                  window.location.href = "mailto:trivedi@2693@gmail.com?subject=Contact Inquiry";
-                }
-              }}
-            >
-              {plan.button}
-              <HiMiniArrowTrendingUp className="arrow-icon" />
-            </button>
+        <button
+  className="plan-button"
+  onClick={() => {
+    // All buttons now open Gmail compose to your email
+    window.location.href = "https://mail.google.com/mail/?view=cm&to=divakartrivedioffice@gmail.com";
+  }}
+>
+  {plan.button}
+  <HiMiniArrowTrendingUp className="arrow-icon" />
+</button>
+
           </div>
         ))}
       </div>
@@ -97,3 +93,4 @@ const PricingCard = () => {
 };
 
 export default PricingCard;
+

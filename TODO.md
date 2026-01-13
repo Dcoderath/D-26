@@ -1,17 +1,9 @@
-# TODO List for Menu Z-Index Fix
+# TODO: Implement Navigation Functionality for ArtTechNav Menu
 
-- [x] Increase z-index of .overlay-menu to 9999 in ArtTechNav.css
-- [x] Increase z-index of .overlay to 9998 in ArtTechNav.css
-- [ ] Test the menu opening to ensure it appears above AdBlank component
-
-# TODO List for Button Functionality Fix
-
-- [x] Add onClick handlers to PricingCard buttons (Get a Quote, Book a Call, Contact Me) to open email or Calendly
-- [x] Change ArtTechNav [explore] links to buttons that close the menu
-- [x] Change NewGrid "Explore Projects" link to button that scrolls to pricing section
-
-# TODO List for JunniLandingPage Fixes
-
-- [x] Simplify tile flip animation in JunniLandingPage.jsx to use 180 degrees for perfect flips
-- [x] Move flip button to bottom center in JunniLandingPage.css
-- [x] Test the page to ensure flips work perfectly and button is centered at bottom
+## Steps to Complete:
+- [x] Add unique IDs to components in App.jsx for scrolling targets:
+  - Hero component: id="hero"
+  - NewGrid component: id="newgrid"
+  - PricingCard component: id="pricing"
+  - AdBlank component: id="adblank"
+- [x] Modify ArtTechNav.jsx menu item buttons to close the menu and smoothly scroll to the respective component based on menu item name

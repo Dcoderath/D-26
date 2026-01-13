@@ -2,13 +2,16 @@ import { useEffect, useRef } from 'react';
 import './AdBlank.css';
 import D8 from '../../assets/D/d8.svg';
 import { HiMiniArrowTrendingUp } from 'react-icons/hi2';
-
 const navItems = [
-  { label: '+91 7084674889', href: '#' },
+  { label: '+91 7084674889', href: 'tel:+917084674889' }, // Opens dialer
   { label: 'linkedin', href: 'https://www.linkedin.com/in/divakar-trivedi-85326a376/' },
-  { label: 'contact', href: 'https://mail.google.com/mail/?view=cm&to=trivedi@2693@gmail.com' },
-  { label: 'resume', href: '#' },
+  { label: 'whatsapp', href: 'https://wa.me/917084674889' }, // Opens WhatsApp chat
+  { 
+    label: 'divakartrivedioffice@gmail.com', 
+    href: 'https://mail.google.com/mail/?view=cm&to=divakartrivedioffice@gmail.com' // Opens Gmail compose
+  }
 ];
+
 
 const AdBlank = () => {
   const canvasRef = useRef(null);
@@ -29,7 +32,7 @@ const AdBlank = () => {
 
     function drawPixels() {
       const { width, height } = canvas;
-      ctx.fillStyle = '#0b0b0b';
+      ctx.fillStyle = '#3300FF';
       ctx.fillRect(0, 0, width, height);
 
       const size = 30;

@@ -1,16 +1,6 @@
-/* ---------------- Global ---------------- */
-.black-text {
-  color: #000 !important;
-}
 
-.limelight-regular {
-  font-family: "Limelight", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
 
-/* ---------------- Main Wrapper ---------------- */
-.cloneable {
+.dex-card{
   position: relative;
   display: flex;
   justify-content: stretch;
@@ -19,11 +9,47 @@
   min-height: 100vh;
   width: 100%;
   background-color: #ffffff;
+  overflow-x: hidden;
+}
+.cloneable {
+  border-radius: 30px;
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  padding: 80px;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #000000;
   font-family: "Limelight", sans-serif; /* UPDATED */
   overflow-x: hidden;
 }
+/* ---------------- Grid Overlay ---------------- */
+.cloneable::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* covers the whole container */
+  pointer-events: none; /* so it doesn't block clicks */
 
-/* ---------------- Layout ---------------- */
+  /* Grid lines */
+  background-image:
+    linear-gradient(to right, rgba(128, 128, 128, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.2) 1px, transparent 1px);
+  background-size: 60px 60px; /* adjust grid size here */
+
+  z-index: 1; /* behind content */
+}
+
+/* Make sure content is above the grid */
+.wrapper-card,
+.tab-layout,
+.tab-layout-container,
+.tab-visual-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+
 .tab-layout {
   display: flex;
   width: 100%;
@@ -53,6 +79,7 @@
 
 /* ---------------- Headings ---------------- */
 .tab-layout-heading {
+  color: #ffffff;
   margin: 0;
   font-size: clamp(2rem, 3vw, 3em);
   font-weight: 400;
@@ -109,6 +136,7 @@
 }
 
 .tab-content__heading {
+    color: #ffffff;
   margin: 0;
   font-size: clamp(1.4em, 2.5vw, 1.9em);
   font-weight: 400;
@@ -116,6 +144,7 @@
 }
 
 .content-p {
+    color:#ffffff;
   margin: 0;
   font-size: clamp(0.9em, 2vw, 1.1em);
   line-height: 1.5;

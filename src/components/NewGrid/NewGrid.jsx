@@ -1,89 +1,197 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./NewGrid.css";
 
+// ✅ Import your local images
+import dex1 from "../../assets/dex1.png";
+import dex2 from "../../assets/dex2.png";
+import dex3 from "../../assets/dex3.png";
+
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Tab data with local images
 const tabData = {
-  Development: {
-    heading: "Full Stack Developer",
-    text:
-      "Building scalable, high-performance web applications using modern frameworks, REST APIs, and secure architecture — from front-end aesthetics to optimized back-end systems.",
-    img: "https://cdn.prod.website-files.com/67726722d415dc401ae23cf6/677289e14dd4dbca1d8e5930_philip-oroni-IANBrm46bF0-unsplash%20(2).avif",
+  "Mobile App Design": {
+    heading: "Engaging Mobile Experiences",
+    text: "Showcasing product design projects, from ideation to prototyping.",
+    img: dex1,
   },
-  Security: {
-    heading: "Cybersecurity Specialist",
-    text:
-      "Protecting digital infrastructure through ethical hacking, penetration testing, and secure code principles. Security is not an afterthought — it’s built into every layer.",
-    img: "https://cdn.prod.website-files.com/67726722d415dc401ae23cf6/677289e19e4d013c6a4c5a1b_philip-oroni-Zx_G3LpNnV4-unsplash%20(1).avif",
+  "Web Design": {
+    heading: "Stunning Websites",
+    text: "Projects focusing on responsive, modern, and interactive website designs.",
+    img: dex2,
   },
-  Innovation: {
-    heading: "Tech Innovator",
-    text:
-      "Blending creativity with logic to design clean code, automation systems, and smart applications that push the boundaries of technology.",
-    img: "https://cdn.prod.website-files.com/67726722d415dc401ae23cf6/677289e1c88b5b4c14d1e6fd_philip-oroni-h9N7bm-HRCo-unsplash.avif",
+  "Brand Identity": {
+    heading: "Helping Brands Stand Out",
+    text: "Showcasing projects where I created logos, visual identities, and brand systems.",
+    img: dex3,
   },
 };
 
 const NewGrid = () => {
-  const [active, setActive] = useState("Development");
+  const [active, setActive] = useState("Mobile App Design");
+  const [words, setWords] = useState([]);
+
+  const contentRef = useRef(null);
+  const imageRef = useRef(null);
+  const textRef = useRef(null);
+
+  // Split heading into words
+  useEffect(() => {
+    if (tabData[active]) {
+      setWords(tabData[active].heading.split(" "));
+    }
+  }, [active]);
+
+  // Animate heading words and paragraph on mount or tab change
+  useEffect(() => {
+    const tl = gsap.timeline();
+
+    // Animate heading word by word
+    tl.from(".heading-word", {
+      opacity: 0,
+      y: 20,
+      stagger: 0.1,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+
+    // Animate paragraph
+    if (textRef.current) {
+      gsap.fromTo(
+        textRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: 0.1,
+          scrollTrigger: {
+            trigger: textRef.current,
+            start: "top 80%",
+            end: "bottom 60%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }
+  }, [words]);
+
+  // Hover animation on heading
+  const handleHover = () => {
+    gsap.to(".heading-word", { scale: 1.05, duration: 0.3, stagger: 0.05 });
+  };
+  const handleHoverOut = () => {
+    gsap.to(".heading-word", { scale: 1, duration: 0.3, stagger: 0.05 });
+  };
+
+  // Smooth tab change with exit/enter animation
+  const handleTabClick = (tab) => {
+    if (tab === active) return; // don't animate if same tab
+
+    const tl = gsap.timeline({
+      onComplete: () => setActive(tab), // switch tab after exit animation
+    });
+
+    tl.to(contentRef.current, { opacity: 0, y: 20, duration: 0.3 });
+    tl.to(imageRef.current, { opacity: 0, scale: 0.95, duration: 0.3 }, "<");
+  };
+
+  // Animate new content in after tab changes
+  useEffect(() => {
+    if (contentRef.current && imageRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+      );
+      gsap.fromTo(
+        imageRef.current,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }
+      );
+    }
+  }, [active]);
 
   return (
-    <section className="cloneable">
-      <div className="wrapper-card">
-        <div className="tab-layout">
-
-          <div className="tab-layout-col">
-            <div className="tab-layout-container">
-
-              <h1 className="tab-layout-heading black-text">
-                Where Aesthetic Meets Architecture — Design, Build, Secure.
-              </h1>
-
-              <div className="filter-bar">
-                {Object.keys(tabData).map((item) => (
-                  <button
-                    key={item}
-                    className={`filter-button ${active === item ? "active" : ""}`}
-                    onClick={() => setActive(item)}
-                  >
-                    <div className="filter-button__p">{item}</div>
-                    <div className="tab-button__bg"></div>
-                  </button>
-                ))}
-              </div>
-
-              <div key={active} className="tab-content animate-slide">
-                <h2 className="tab-content__heading black-text">
-                  {tabData[active].heading}
-                </h2>
-
-                <p className="content-p black-text">
-                  {tabData[active].text}
-                </p>
-
-                <button
-                  className="tab-content__button"
-                  onClick={() => {
-                    const pricingSection = document.querySelector('.pricing-section');
-                    if (pricingSection) {
-                      pricingSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
+    <div className="dex-card">
+      <section className="cloneable">
+        <div className="wrapper-card">
+          <div className="tab-layout">
+            {/* Content Column */}
+            <div className="tab-layout-col">
+              <div className="tab-layout-container">
+                <h1
+                  className="tab-layout-heading black-text"
+                  onMouseEnter={handleHover}
+                  onMouseLeave={handleHoverOut}
                 >
-                  <p className="content-p">Explore Projects</p>
-                </button>
+                  {words.map((word, index) => (
+                    <span
+                      key={index}
+                      className="heading-word"
+                      style={{ display: "inline-block", marginRight: "0.3em" }}
+                    >
+                      {word}
+                    </span>
+                  ))}
+                </h1>
+
+                {/* Tab buttons */}
+                <div className="filter-bar">
+                  {Object.keys(tabData).map((item) => (
+                    <button
+                      key={item}
+                      className={`filter-button ${active === item ? "active" : ""}`}
+                      onClick={() => handleTabClick(item)}
+                    >
+                      <div className="filter-button__p">{item}</div>
+                      <div className="tab-button__bg"></div>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Content */}
+                <div ref={contentRef} className="tab-content animate-slide">
+                  <h2 className="tab-content__heading black-text">
+                    {tabData[active]?.heading || ""}
+                  </h2>
+
+                  <p ref={textRef} className="content-p black-text">
+                    {tabData[active]?.text || ""}
+                  </p>
+
+                  <button
+                    className="tab-content__button"
+                    onClick={() => {
+                      const pricingSection = document.querySelector(".pricing-section");
+                      if (pricingSection) {
+                        pricingSection.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    <p className="content-p">Explore Projects</p>
+                  </button>
+                </div>
               </div>
+            </div>
 
+            {/* Image Column */}
+            <div className="tab-layout-col">
+              <div ref={imageRef} className="tab-visual-wrap animate-image">
+                <img
+                  src={tabData[active]?.img || ""}
+                  alt={active}
+                  className="tab-image"
+                />
+              </div>
             </div>
           </div>
-
-          <div className="tab-layout-col">
-            <div key={active} className="tab-visual-wrap animate-image">
-              <img src={tabData[active].img} alt={active} className="tab-image" />
-            </div>
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

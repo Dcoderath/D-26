@@ -250,10 +250,10 @@ const App = () => {
       {/* ArtTechNav is a standalone fullscreen navigation overlay */}
         <ArtTechNav />
         <JunniLandingPage/>
-        <Hero />
-        <NewGrid />
-        <PricingCard />
-        <AdBlank />
+        <Hero id="hero" />
+        <NewGrid id="newgrid" />
+        <PricingCard id="pricing" />
+        <AdBlank id="adblank" />
       </div>
   
   );

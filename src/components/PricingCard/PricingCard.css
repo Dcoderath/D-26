@@ -2,7 +2,7 @@
 .pricing-section {
   width: 100%;
   position: relative;
-  background-color: #000000;
+  background-color: #ffffff;
   padding: clamp(3em, 8vw, 6em) clamp(1em, 6vw, 6em);
   text-align: center;
   font-family: "Limelight", sans-serif;
@@ -14,13 +14,13 @@
 
 /* -------- Header -------- */
 .pricing-header {
-  background-color: #000000;
+  background-color: transparent;
   max-width: min(1200px, 90vw);
   margin: 0 auto clamp(2em, 4vw, 3em) auto;
 }
 
 .pricing-title {
-  color: #ffffff;
+  color: #0e0e0e;
   font-size: clamp(1.8em, 5vw, 3em);
   font-weight: 400;
   margin-bottom: 0.4em;
@@ -29,7 +29,7 @@
 
 .pricing-subtitle {
   font-size: clamp(0.9em, 2.5vw, 1.2em);
-  color: #cfcfcf;
+  color: #5a5a5a;
   font-family: "Courier New", Courier, monospace;
   line-height: 1.4;
   max-width: 600px;
@@ -50,7 +50,7 @@
 
 /* -------- Pricing Card -------- */
 .pricing-card {
-  border: 1px solid #2a2a2a;
+  border: 1px solid #e5e5e5;
   border-radius: clamp(0.8em, 2vw, 1em);
   padding: clamp(1.5em, 4vw, 2.5em) clamp(1.2em, 3vw, 2em);
   text-align: left;
@@ -62,11 +62,12 @@
   font-family: "Limelight", sans-serif;
   box-sizing: border-box;
   margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 /* -------- Card Backgrounds -------- */
 .pricing-card:nth-child(1) {
-  background: #efeeec;
+  background: #f6f6f4;
   color: #0e0e0e;
 }
 
@@ -79,7 +80,8 @@
   background: #0e0e0e;
   color: #efeeec;
   border: 1px solid #9D00FF;
-  box-shadow: inset 0 0 0 1px rgba(157, 0, 255, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(157, 0, 255, 0.25),
+              0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 /* -------- Hover -------- */
@@ -92,8 +94,8 @@
   position: absolute;
   top: 1em;
   right: 1em;
-  background: #111;
-  color: #fff;
+  background: #0e0e0e;
+  color: #ffffff;
   font-size: clamp(0.7em, 1.5vw, 0.8em);
   padding: 0.3em 0.6em;
   border-radius: 0.3em;
@@ -122,7 +124,7 @@
   display: block;
 }
 
-/* -------- Blue Accent Text (Last Card) -------- */
+/* -------- Accent Price (Enterprise) -------- */
 .pricing-card:nth-child(3) .plan-price {
   color: #9D00FF;
 }
@@ -155,7 +157,7 @@
   width: 100%;
   padding: clamp(0.8em, 2.2vw, 1em) 0;
   background: #0e0e0e;
-  color: #efeeec;
+  color: #ffffff;
   border: none;
   border-radius: 0.4em;
   font-size: clamp(0.85em, 2vw, 1em);
@@ -174,17 +176,16 @@
 /* -------- Button Hover -------- */
 .plan-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* -------- Last Card Button (Blue Accent) -------- */
+/* -------- Enterprise Button -------- */
 .pricing-card:nth-child(3) .plan-button {
   background: #9D00FF;
   color: #ffffff;
 }
 
 .pricing-card:nth-child(3) .plan-button:hover {
-  background: #9D00FF;
   filter: brightness(1.1);
 }
 
@@ -203,191 +204,38 @@
   transform: translateX(4px);
 }
 
-/* -------- Mobile First Media Queries -------- */
-
-/* Extra Small Mobile (320px - 480px) */
+/* -------- Mobile & Responsive -------- */
 @media (max-width: 480px) {
   .pricing-section {
     padding: 2em 0.8em;
   }
-  
-  .pricing-header {
-    margin-bottom: 1.5em;
-    padding: 0 0.5em;
-  }
-  
+
   .pricing-grid {
     display: flex;
     flex-direction: column;
     gap: 1.2em;
-    width: 100%;
-    max-width: 100%;
     padding: 0 0.5em;
   }
-  
+
   .pricing-card {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
     padding: 1.5em 1.2em;
   }
-  
-  .plan-features {
-    margin-bottom: 1.5em;
-  }
-  
-  .plan-features li {
-    padding-left: 1.2em;
-    margin-bottom: 0.6em;
-  }
-  
-  .badge {
-    top: 0.8em;
-    right: 0.8em;
-    font-size: 0.75em;
-  }
-  
-  .plan-button {
-    padding: 0.85em 0;
-    min-height: 42px;
-  }
-  
-  /* Ensure cards have consistent spacing */
-  .pricing-card + .pricing-card {
-    margin-top: 0.5em;
-  }
 }
 
-/* Small Mobile (481px - 600px) */
-@media (min-width: 481px) and (max-width: 600px) {
-  .pricing-section {
-    padding: 2.5em 1em;
-  }
-  
-  .pricing-grid {
-    gap: 1.5em;
-    padding: 0 0.5em;
-  }
-  
-  .pricing-card {
-    padding: 1.8em 1.5em;
-  }
-  
-  .plan-features {
-    margin-bottom: 1.8em;
-  }
-}
-
-/* Medium Mobile/Tablet (601px - 768px) */
-@media (min-width: 601px) and (max-width: 768px) {
-  .pricing-section {
-    padding: 3em 1.2em;
-  }
-  
-  .pricing-grid {
-    gap: 1.8em;
-  }
-  
-  .pricing-card {
-    padding: 2em 1.8em;
-  }
-  
-  .plan-features li {
-    text-align: left;
-  }
-}
-
-/* Small Tablets (769px - 900px) */
-@media (min-width: 769px) and (max-width: 900px) {
-  .pricing-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5em;
-  }
-  
-  .pricing-card {
-    padding: 2em 1.5em;
-  }
-}
-
-/* Large Tablets (901px - 1024px) */
-@media (min-width: 901px) and (max-width: 1024px) {
-  .pricing-section {
-    padding: 4em 1.5em;
-  }
-  
-  .pricing-grid {
-    gap: 2em;
-  }
-  
-  .pricing-card {
-    max-width: 320px;
-  }
-}
-
-/* -------- Desktops -------- */
 @media (min-width: 1025px) {
   .pricing-section {
     padding: 6em 2em;
   }
-  
-  .pricing-grid {
-    gap: 2.5em;
-  }
 }
 
-/* -------- Large Desktops -------- */
 @media (min-width: 1440px) {
   .pricing-section {
     padding: 8em 4em;
   }
-  
-  .pricing-grid {
-    max-width: 1400px;
-  }
-  
-  .pricing-card {
-    max-width: 400px;
-  }
 }
 
-/* -------- Extra Large Screens -------- */
 @media (min-width: 1920px) {
   .pricing-section {
     padding: 10em 6em;
-  }
-  
-  .pricing-grid {
-    max-width: 1600px;
-    gap: 3em;
-  }
-}
-
-/* -------- Fix for very small screens -------- */
-@media (max-width: 360px) {
-  .pricing-section {
-    padding: 1.5em 0.5em;
-  }
-  
-  .pricing-grid {
-    gap: 1em;
-    padding: 0 0.3em;
-  }
-  
-  .pricing-card {
-    padding: 1.2em 1em;
-  }
-  
-  .plan-title {
-    font-size: 1.3em;
-  }
-  
-  .plan-features li {
-    font-size: 0.8em;
-    padding-left: 1em;
-  }
-  
-  .plan-button {
-    padding: 0.7em 0;
-    font-size: 0.85em;
   }
 }

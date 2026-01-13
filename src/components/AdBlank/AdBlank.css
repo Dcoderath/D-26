@@ -59,7 +59,7 @@
   text-transform: uppercase;
   font-weight: 400;
   color: #000000;
-  background-color: #9d00ff;
+  background-color:#FF4C24;
   transition: all 0.3s ease;
   padding: clamp(6px, 1vw, 10px) clamp(10px, 2vw, 20px);
   border-radius: 0;
@@ -145,7 +145,7 @@
   font-size: clamp(0.8rem, 1.5vw, 1.1rem);
   font-weight: 600;
   margin-right: clamp(6px, 1.5vw, 12px);
-  color: #9d00ff;
+  color:#FF4C24;
 }
 
 .adblank__banner-image {

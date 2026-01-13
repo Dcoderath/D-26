@@ -23,8 +23,10 @@ const JunniLandingPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const lastProcessedTileRef = useRef(null);
   const mouseHistoryRef = useRef([]);
-  const processingRef = useRef(false); // Add processing flag
-  const lastMouseMoveTimeRef = useRef(0); // Throttle mouse moves
+  const processingRef = useRef(false);
+  const lastMouseMoveTimeRef = useRef(0);
+  const hoveredTilesSet = useRef(new Set()); // Track currently hovered tiles
+  const tileElementsRef = useRef([]); // Reference to all tile elements
 
   // Check if mobile device
   useEffect(() => {
@@ -71,17 +73,26 @@ const JunniLandingPage = () => {
     });
   }, []);
 
-  // Snake-like hover effect - FIXED to prevent loops
-  const handleTileMouseEnter = useCallback((tile, index) => {
+  // Improved snake-like hover effect with better tile tracking
+  const handleTileInteraction = useCallback((tile, index, isTouch = false) => {
     if (!gsapRef.current || isMobile || processingRef.current) return;
+    
+    // For mobile touch, use simpler interaction
+    if (isTouch) {
+      handleTileTouch(tile, index);
+      return;
+    }
     
     processingRef.current = true;
     
     // Don't process the same tile repeatedly
-    if (lastProcessedTileRef.current === index) {
+    if (hoveredTilesSet.current.has(index)) {
       processingRef.current = false;
       return;
     }
+    
+    // Add tile to hovered set
+    hoveredTilesSet.current.add(index);
     lastProcessedTileRef.current = index;
     
     // Check if tile is already in queue
@@ -96,7 +107,10 @@ const JunniLandingPage = () => {
     
     // Keep only SNAKE_LENGTH tiles in the queue
     if (snakeQueueRef.current.length > SNAKE_LENGTH) {
-      snakeQueueRef.current.shift();
+      const removed = snakeQueueRef.current.shift();
+      if (removed) {
+        hoveredTilesSet.current.delete(removed.index);
+      }
     }
     
     // Animate each tile in the snake with staggered delays
@@ -171,18 +185,24 @@ const JunniLandingPage = () => {
         rotateY: 0,
         duration: 0.2,
         delay: 0.1,
-        ease: "power1.inOut"
+        ease: "power1.inOut",
+        onComplete: () => {
+          // Remove from hovered set after animation
+          setTimeout(() => {
+            hoveredTilesSet.current.delete(index);
+          }, 500);
+        }
       }, ">");
       
   }, []);
 
-  // Smooth mouse movement tracking for snake-like hover - FIXED THROTTLING
+  // Smooth mouse movement tracking with improved hover detection
   const handleMouseMoveOnBoard = useCallback((event) => {
-    if (!boardRef.current || isMobile) return;
+    if (!boardRef.current || isMobile || processingRef.current) return;
     
-    // Throttle mouse moves to prevent loops
+    // Throttle mouse moves
     const now = Date.now();
-    if (now - lastMouseMoveTimeRef.current < 50) { // 50ms throttle
+    if (now - lastMouseMoveTimeRef.current < 50) {
       return;
     }
     lastMouseMoveTimeRef.current = now;
@@ -197,31 +217,29 @@ const JunniLandingPage = () => {
       const row = Math.min(Math.floor((y / rect.height) * ROWS), ROWS - 1);
       const index = row * COLS + col;
       
-      const tiles = document.querySelectorAll(".junni-tile");
-      const tile = tiles[index];
+      const tile = tileElementsRef.current[index];
       
-      if (tile) {
-        // Use requestAnimationFrame for smoother processing
-        requestAnimationFrame(() => {
-          handleTileMouseEnter(tile, index);
-        });
+      if (tile && !hoveredTilesSet.current.has(index)) {
+        handleTileInteraction(tile, index);
       }
     }
-  }, [handleTileMouseEnter, isMobile]);
+  }, [isMobile]);
 
   // Improved flip all tiles with wave effect
   const flipAllTiles = useCallback(() => {
     if (!gsapRef.current) return;
     
-    const tiles = document.querySelectorAll(".junni-tile");
+    const tiles = tileElementsRef.current;
     if (tiles.length === 0) return;
     
     isFlipped.current = !isFlipped.current;
     
-    // Kill any existing animations
+    // Kill any existing animations and clear states
     gsapRef.current.killTweensOf(tiles);
     snakeQueueRef.current = [];
     processingRef.current = false;
+    hoveredTilesSet.current.clear();
+    lastProcessedTileRef.current = null;
     
     const targetRotation = isFlipped.current ? 180 : 0;
     
@@ -248,58 +266,38 @@ const JunniLandingPage = () => {
   }, []);
 
   // Touch support for mobile
-  const handleTileTouch = useCallback((tile, index, event) => {
+  const handleTileTouch = useCallback((tile, index) => {
     if (!gsapRef.current || processingRef.current) return;
-    event.preventDefault();
     
     processingRef.current = true;
     
-    // Create snake effect from touch point
-    const tiles = document.querySelectorAll(".junni-tile");
-    const row = Math.floor(index / COLS);
+    // Simple touch animation without snake effect
+    const col = index % COLS;
+    const tiltY = TILT_MAP[col] || 0;
     
-    // Get SNAKE_LENGTH tiles in a row
-    const snakeTiles = [];
-    for (let i = 0; i < SNAKE_LENGTH; i++) {
-      const snakeIndex = index + i;
-      if (snakeIndex < tiles.length && Math.floor(snakeIndex / COLS) === row) {
-        snakeTiles.push(tiles[snakeIndex]);
+    gsapRef.current.killTweensOf(tile);
+    gsapRef.current.to(tile, {
+      rotateX: isFlipped.current ? 360 : 180,
+      rotateY: tiltY,
+      duration: 0.2,
+      ease: "back.out(1.2)",
+      onComplete: () => {
+        gsapRef.current.to(tile, {
+          rotateX: isFlipped.current ? 180 : 0,
+          rotateY: 0,
+          duration: 0.2,
+          ease: "power1.out"
+        });
       }
-    }
-    
-    // Animate each tile with delay
-    snakeTiles.forEach((snakeTile, i) => {
-      setTimeout(() => {
-        if (snakeTile) {
-          const col = snakeTile.dataset.col;
-          const tiltY = TILT_MAP[col] || 0;
-          
-          gsapRef.current.killTweensOf(snakeTile);
-          gsapRef.current.to(snakeTile, {
-            rotateX: isFlipped.current ? 540 : 360,
-            rotateY: tiltY,
-            duration: 0.3,
-            ease: "back.out(1.2)",
-            onComplete: () => {
-              gsapRef.current.to(snakeTile, {
-                rotateX: isFlipped.current ? 180 : 0,
-                rotateY: 0,
-                duration: 0.15,
-                ease: "power1.out"
-              });
-            }
-          });
-        }
-      }, i * 80);
     });
     
     setTimeout(() => {
       processingRef.current = false;
-    }, SNAKE_LENGTH * 80 + 100);
+    }, 400);
     
   }, []);
 
-  // Create individual tile - REMOVE direct mouseenter listener to prevent conflicts
+  // Create individual tile with event listeners
   const createTile = useCallback((row, col, index) => {
     const tile = document.createElement("div");
     tile.className = "junni-tile";
@@ -326,19 +324,22 @@ const JunniLandingPage = () => {
     front.style.backgroundPosition = bgPosition;
     back.style.backgroundPosition = bgPosition;
 
-    // REMOVED: Direct mouseenter listener on each tile
-    // We'll handle all mouse movement through the board container
+    // Mouse event listeners
+    const handleMouseEnter = () => handleTileInteraction(tile, index);
+    tile.addEventListener("mouseenter", handleMouseEnter);
     
     // Touch interaction for mobile
-    const handleTouchStart = (e) => handleTileTouch(tile, index, e);
+    const handleTouchStart = (e) => {
+      e.preventDefault();
+      handleTileTouch(tile, index);
+    };
     tile.addEventListener("touchstart", handleTouchStart, { passive: false });
     
     // Keyboard interaction
     tile.addEventListener("keydown", (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        // Simulate hover for keyboard
-        handleTileMouseEnter(tile, index);
+        handleTileInteraction(tile, index);
       }
     });
 
@@ -352,12 +353,13 @@ const JunniLandingPage = () => {
     });
 
     return tile;
-  }, [handleTileMouseEnter, handleTileTouch]);
+  }, [handleTileInteraction, handleTileTouch]);
 
   const createBoard = useCallback(() => {
     if (!boardRef.current) return;
     
     boardRef.current.innerHTML = '';
+    tileElementsRef.current = [];
     
     for (let i = 0; i < ROWS; i++) {
       const row = document.createElement("div");
@@ -367,6 +369,7 @@ const JunniLandingPage = () => {
       for (let j = 0; j < COLS; j++) {
         const tileIndex = i * COLS + j;
         const tile = createTile(i, j, tileIndex);
+        tileElementsRef.current.push(tile);
         row.appendChild(tile);
       }
       boardRef.current.appendChild(row);
@@ -410,7 +413,7 @@ const JunniLandingPage = () => {
     createBoard();
     createBlocks();
     
-    // Single mousemove handler on window
+    // Mouse move handlers
     let mouseMoveTimeout;
     const handleMouseMove = (e) => {
       if (mouseMoveTimeout) clearTimeout(mouseMoveTimeout);
@@ -434,6 +437,7 @@ const JunniLandingPage = () => {
       }
       snakeQueueRef.current = [];
       mouseHistoryRef.current = [];
+      hoveredTilesSet.current.clear();
       processingRef.current = false;
     };
   }, [createBoard, createBlocks, handleMouseMoveOnBoard, highlightBlock, handleResize]);
@@ -473,8 +477,9 @@ const JunniLandingPage = () => {
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
       }
-      gsapRef.current?.killTweensOf?.('.junni-tile, .junni-block');
+      gsapRef.current?.killTweensOf?.(tileElementsRef.current);
       snakeQueueRef.current = [];
+      hoveredTilesSet.current.clear();
     };
   }, []);
 

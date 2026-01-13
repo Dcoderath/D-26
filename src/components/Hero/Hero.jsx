@@ -1445,7 +1445,8 @@ export default function Hero() {
   }, []);
 
   return (
-    <header className="term-hero-root">
+<header id="Hero" className="term-hero-root">
+
       <canvas ref={canvasRef} className="pixel-screen" />
 
       <div className="term-hero__overlay">

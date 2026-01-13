@@ -140,6 +140,7 @@ const AdBlank = () => {
   }, []);
 
   return (
+    <div id="AdBlank">
     <nav className="adblank">
       <canvas ref={canvasRef} className="pixel-screen" />
       <div className="adblank__glass-bg"></div>
@@ -182,6 +183,7 @@ const AdBlank = () => {
         </div>
       </div>
     </nav>
+    </div>
   );
 };
 

@@ -46,7 +46,8 @@ const plans = [
 
 const PricingCard = () => {
   return (
-    <section className="pricing-section">
+<section id="PricingCard" className="pricing-section">
+
       <div className="pricing-header">
         <h1 className="pricing-title">Simple plans. Flexible pricing.</h1>
         <p className="pricing-subtitle">

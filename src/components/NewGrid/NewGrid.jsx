@@ -116,6 +116,7 @@ const NewGrid = () => {
   }, [active]);
 
   return (
+     <div id="NewGrid">
     <div className="dex-card">
       <section className="cloneable">
         <div className="wrapper-card">
@@ -191,6 +192,7 @@ const NewGrid = () => {
           </div>
         </div>
       </section>
+    </div>
     </div>
   );
 };

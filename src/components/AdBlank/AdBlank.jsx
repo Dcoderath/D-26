@@ -2,16 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import './AdBlank.css';
 import D8 from '../../assets/D/d8.svg';
 import { HiMiniArrowTrendingUp } from 'react-icons/hi2';
-const navItems = [
-  { label: '+91 7084674889', href: 'tel:+917084674889' }, // Opens dialer
-  { label: 'linkedin', href: 'https://www.linkedin.com/in/divakar-trivedi-85326a376/' },
-  { label: 'whatsapp', href: 'https://wa.me/917084674889' }, // Opens WhatsApp chat
-  { 
-    label: 'divakartrivedioffice@gmail.com', 
-    href: 'https://mail.google.com/mail/?view=cm&to=divakartrivedioffice@gmail.com' // Opens Gmail compose
-  }
-];
-
 
 const AdBlank = () => {
   const canvasRef = useRef(null);

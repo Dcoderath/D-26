@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './AdBlank.css';
 import D8 from '../../assets/D/d8.svg';
 import { HiMiniArrowTrendingUp } from 'react-icons/hi2';
 const navItems = [
-  { label: '+91 7084674889', href: 'tel:+91708467****' }, // Opens dialer
+  { label: '+91 7084674889', href: 'tel:+917084674889' }, // Opens dialer
   { label: 'linkedin', href: 'https://www.linkedin.com/in/divakar-trivedi-85326a376/' },
-  { label: 'whatsapp', href: 'https://wa.me/91708467****' }, // Opens WhatsApp chat
+  { label: 'whatsapp', href: 'https://wa.me/917084674889' }, // Opens WhatsApp chat
   { 
     label: 'divakartrivedioffice@gmail.com', 
     href: 'https://mail.google.com/mail/?view=cm&to=divakartrivedioffice@gmail.com' // Opens Gmail compose
@@ -15,8 +15,16 @@ const navItems = [
 
 const AdBlank = () => {
   const canvasRef = useRef(null);
+const [name, setName] = useState('');
+const [email, setEmail] = useState('');
+const [message, setMessage] = useState('');
 
-  // 🧱 Pixel Background
+const isFormValid =
+  name.trim() !== '' &&
+  email.trim() !== '' &&
+  message.trim() !== '';
+
+  // 🧱 Pixel Background (exactly original)
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -84,8 +92,8 @@ const AdBlank = () => {
               const snakeLength = Math.floor(random() * 4) + 5;
               for (let i = 0; i < snakeLength; i++) {
                 ctx.fillRect(cx * size, cy * size, size, size);
-                cx += Math.floor(random() * 3) - 1;
-                cy += Math.floor(random() * 2) - 1;
+                cx += Math.floor(Math.random() * 3) - 1;
+                cy += Math.floor(Math.random() * 2) - 1;
                 if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
               }
             }
@@ -96,8 +104,8 @@ const AdBlank = () => {
             const snakeLength = Math.floor(random() * 3) + 4;
             for (let i = 0; i < snakeLength; i++) {
               ctx.fillRect(cx * size, cy * size, size, size);
-              cx += Math.floor(random() * 3) - 1;
-              cy += Math.floor(random() * 3) - 1;
+              cx += Math.floor(Math.random() * 3) - 1;
+              cy += Math.floor(Math.random() * 3) - 1;
               if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
             }
           } else if (normalizedX > 0.7 && normalizedY > 0.7) {
@@ -141,48 +149,96 @@ const AdBlank = () => {
 
   return (
     <div id="AdBlank">
-    <nav className="adblank">
-      <canvas ref={canvasRef} className="pixel-screen" />
-      <div className="adblank__glass-bg"></div>
+      <nav className="adblank">
+        <canvas ref={canvasRef} className="pixel-screen" />
+        <div className="adblank__glass-bg"></div>
 
+        {/* Navigator replaced with only Name and Email inputs */}
       <ul className="adblank__navigator">
-        {navItems.map(({ label, href }) => (
-          <li className="adblank__navigator-item" key={label}>
-            <a
-              href={href}
-              className="adblank__navigator-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="adblank__navigator-label">{label}</span>
-              <HiMiniArrowTrendingUp className="adblank__navigator-icon" />
-            </a>
-          </li>
-        ))}
-      </ul>
+  {/* Form: Name + Email + Button */}
+  <li className="adblank__navigator-item">
+    <div className="adblank__form">
+  <input
+    type="text"
+    placeholder="Enter name..."
+    className="adblank__navigator-input"
+    value={name}
+    onChange={(e) => setName(e.target.value)}
+  />
 
-      <div className="adblank__banner">
-        <div className="adblank__banner-track">
-          {[...Array(20)].map((_, i) => (
-            <div className="adblank__banner-item" key={i}>
-              <div className="adblank__banner-text">JUST IMAGINE, WE DESIGN</div>
-              <img src={D8} alt="Logo" className="adblank__banner-image" />
-            </div>
-          ))}
-        </div>
-      </div>
+  <input
+    type="email"
+    placeholder="Enter email..."
+    className="adblank__navigator-input"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+  />
 
-      <div className="adblank__banner adblank__banner--alt">
-        <div className="adblank__banner-track">
-          {[...Array(20)].map((_, i) => (
-            <div className="adblank__banner-item" key={i}>
-              <div className="adblank__banner-text">JUST IMAGINE, WE DESIGN</div>
-              <img src={D8} alt="Logo" className="adblank__banner-image" />
-            </div>
-          ))}
+  {/* NEW MESSAGE BOX */}
+  <textarea
+    placeholder="Your message..."
+    className="adblank__navigator-input"
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+  />
+
+  {/* UPDATED BUTTON */}
+  <button
+    className="adblank__navigator-button"
+    disabled={!isFormValid}
+  >
+    Let's Talk
+  </button>
+</div>
+
+  </li>
+
+  {/* Horizontal Links: LinkedIn + Email */}
+  <li className="adblank__navigator-item">
+    <div className="adblank__horizontal-links">
+      <a
+        href="https://www.linkedin.com/in/divakar-trivedi-85326a376/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="adblank__navigator-link"
+      >
+        LinkedIn <HiMiniArrowTrendingUp className="adblank__navigator-icon" />
+      </a>
+      <a
+        href="mailto:divakartrivedioffice@gmail.com"
+        className="adblank__navigator-link"
+      >
+        divakartrivedioffice@gmail.com{' '}
+        <HiMiniArrowTrendingUp className="adblank__navigator-icon" />
+      </a>
+    </div>
+  </li>
+</ul>
+
+
+        {/* Banner unchanged */}
+        <div className="adblank__banner">
+          <div className="adblank__banner-track">
+            {[...Array(20)].map((_, i) => (
+              <div className="adblank__banner-item" key={i}>
+                <div className="adblank__banner-text">JUST IMAGINE, WE DESIGN</div>
+                <img src={D8} alt="Logo" className="adblank__banner-image" />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </nav>
+
+        <div className="adblank__banner adblank__banner--alt">
+          <div className="adblank__banner-track">
+            {[...Array(20)].map((_, i) => (
+              <div className="adblank__banner-item" key={i}>
+                <div className="adblank__banner-text">JUST IMAGINE, WE DESIGN</div>
+                <img src={D8} alt="Logo" className="adblank__banner-image" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </nav>
     </div>
   );
 };

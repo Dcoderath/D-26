@@ -59,7 +59,7 @@
   text-transform: uppercase;
   font-weight: 400;
   color: #000000;
-  background-color:#FF4C24;
+  background-color: #FF4C24;
   transition: all 0.3s ease;
   padding: clamp(6px, 1vw, 10px) clamp(10px, 2vw, 20px);
   border-radius: 0;
@@ -80,6 +80,80 @@
 .adblank__navigator-link:hover .adblank__navigator-icon {
   transform: rotate(20deg);
 }
+
+/* ===============================
+   INPUT & MESSAGE (MATCH BUTTON)
+================================ */
+
+/* Form container */
+.adblank__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs for Name and Email */
+.adblank__navigator-input {
+  padding: 8px 12px;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  border: 2px solid #FF4C24;
+  border-radius: 4px;
+  background-color: #0b0b0b;
+  color: #fff;
+  outline: none;
+}
+
+/* Button */
+.adblank__navigator-button {
+  padding: 10px 16px;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  background-color: #FF4C24;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.adblank__navigator-button:hover {
+  background-color: #ff6b45;
+  color: #fff;
+}
+
+/* Horizontal links container */
+
+.adblank__horizontal-links {
+  color: #000;
+  display: flex;
+  gap: 20px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+    justify-content: flex-end; /* default right alignment */
+}
+
+.adblank__horizontal-links a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #000000;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  transition: 0.3s;
+}
+
+.adblank__horizontal-links a:hover {
+  color: #fff;
+}
+
+.adblank__horizontal-links .adblank__navigator-icon {
+  font-size: 1.8em;
+}
+.adblank__navigator-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 
 /* ✅ Banner top */
 .adblank__banner {
@@ -145,7 +219,7 @@
   font-size: clamp(0.8rem, 1.5vw, 1.1rem);
   font-weight: 600;
   margin-right: clamp(6px, 1.5vw, 12px);
-  color:#FF4C24;
+  color: #FF4C24;
 }
 
 .adblank__banner-image {
@@ -164,11 +238,13 @@
 }
 
 /* -------- ✅ Responsive Adjustments -------- */
+
 @media (max-width: 1024px) {
-  .adblank__navigator-link {
+  .adblank__navigator-link,
+  .adblank__navigator-input,
+  .adblank__navigator-textarea {
     font-size: clamp(1rem, 2.5vw, 2.4rem);
     padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 16px);
-    border-radius: 0;
   }
 
   .adblank__navigator {
@@ -180,11 +256,6 @@
   .adblank__navigator-icon {
     font-size: clamp(1.4rem, 3vw, 2.5rem);
   }
-
-  .adblank__navigator {
-    right: 2%;
-    gap: 0.6em;
-  }
 }
 
 @media (max-width: 768px) {
@@ -192,20 +263,11 @@
     padding: clamp(12px, 3vw, 24px);
   }
 
-  .adblank__navigator {
-    right: 3%;
-    bottom: 1%;
-    gap: 0.8em;
-  }
-
-  .adblank__navigator-link {
+  .adblank__navigator-link,
+  .adblank__navigator-input,
+  .adblank__navigator-textarea {
     font-size: clamp(0.9rem, 4vw, 1.6rem);
-    padding: clamp(6px, 2vw, 10px) clamp(10px, 3vw, 16px);
-    border-radius: 0;
-  }
-
-  .adblank__navigator-icon {
-    font-size: clamp(1.2rem, 4vw, 2rem);
+    min-width: clamp(180px, 60vw, 300px);
   }
 
   .adblank__banner,
@@ -214,14 +276,6 @@
     top: 50px;
     left: -8vw;
   }
-
-  .adblank__banner-text {
-    font-size: clamp(0.7rem, 2vw, 0.9rem);
-  }
-
-  .adblank__banner-image {
-    height: clamp(18px, 5vw, 28px);
-  }
 }
 
 @media (max-width: 480px) {
@@ -229,38 +283,19 @@
     height: 80vh;
   }
 
-  .adblank__navigator {
-    right: 3%;
-    bottom: 1%;
-    gap: 0.8em;
-  }
-
-  .adblank__navigator-link {
+  .adblank__navigator-link,
+  .adblank__navigator-input,
+  .adblank__navigator-textarea {
     font-size: clamp(0.8rem, 4.5vw, 1.2rem);
-    padding: clamp(5px, 2vw, 8px) clamp(8px, 3vw, 12px);
-    border-radius: 0;
+    min-width: clamp(160px, 80vw, 260px);
   }
 
-  .adblank__navigator-icon {
-    font-size: clamp(1rem, 5vw, 1.5rem);
-  }
-
-  .adblank__banner,
-  .adblank__banner--alt {
-   
-    height: clamp(78px, 24vw, 88px);
+  .adblank__banner {
     top: 20px;
-  }
-    .adblank__banner--alt {
-       top: 70px;
-      
-    }
-
-  .adblank__banner-text {
-    font-size: clamp(1.6rem, 2.5vw, 0.8rem);
+    height: clamp(78px, 24vw, 88px);
   }
 
-  .adblank__banner-image {
-    height: clamp(36px, 6vw, 22px);
+  .adblank__banner--alt {
+    top: 70px;
   }
 }

@@ -27,25 +27,34 @@ const AdBlank = () => {
     const res = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, message }) // send to Vercel API
+      body: JSON.stringify({ 
+        name: name.trim(), 
+        email: email.trim(), 
+        message: message.trim(),
+        website: "" // honeypot field
+      })
     });
 
-    if (!res.ok) throw new Error("Failed to send");
+    const data = await res.json();
+    
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to send");
+    }
 
     alert("Message sent successfully ✅");
-
+    
     // Clear form
     setName("");
     setEmail("");
     setMessage("");
+    
   } catch (err) {
-    console.error(err);
-    alert("Something went wrong ❌");
+    console.error("Form submit error:", err);
+    alert(err.message || "Something went wrong ❌");
   } finally {
     setLoading(false);
   }
-};
-  // ================= PIXEL BACKGROUND (EXACT SAME) =================
+};  // ================= PIXEL BACKGROUND (EXACT SAME) =================
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');

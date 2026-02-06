@@ -1,14 +1,18 @@
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
 
   try {
     const { name, email, message } = req.body;
+
     if (!name || !email || !message)
       return res.status(400).json({ error: "Missing fields" });
 
-    const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL; // must match your Vercel env var
+    const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL;
+    if (!GOOGLE_SCRIPT_URL)
+      return res.status(500).json({ error: "Missing Google Script URL" });
 
-    // Use URLSearchParams because your Google Script uses e.parameter
+    // Send as URL-encoded because Apps Script expects e.parameter
     const formData = new URLSearchParams();
     formData.append("name", name);
     formData.append("email", email);
@@ -22,6 +26,7 @@ export default async function handler(req, res) {
     });
 
     const text = await response.text();
+
     if (!text.includes("OK")) {
       return res.status(500).json({ error: "Google Script failed", details: text });
     }

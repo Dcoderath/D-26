@@ -24,24 +24,30 @@ const AdBlank = () => {
   setLoading(true);
 
   try {
+    console.log('Submitting form...');
     const res = await fetch("/api/contact", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
       body: JSON.stringify({ 
         name: name.trim(), 
         email: email.trim(), 
         message: message.trim(),
-        website: "" // honeypot field
+        website: "" // honeypot - always empty
       })
     });
 
     const data = await res.json();
+    console.log('API Response:', data);
     
     if (!res.ok) {
-      throw new Error(data.error || "Failed to send");
+      throw new Error(data.error || "Failed to send message");
     }
 
-    alert("Message sent successfully ✅");
+    // Success
+    alert("✅ Message sent successfully!");
     
     // Clear form
     setName("");
@@ -49,8 +55,16 @@ const AdBlank = () => {
     setMessage("");
     
   } catch (err) {
-    console.error("Form submit error:", err);
-    alert(err.message || "Something went wrong ❌");
+    console.error("Form submission error:", err);
+    
+    // User-friendly error messages
+    if (err.message.includes("timeout")) {
+      alert("⏰ Connection timeout. Please check your internet and try again.");
+    } else if (err.message.includes("Failed to save")) {
+      alert("📄 Could not save to database. Please try again in a moment.");
+    } else {
+      alert("❌ " + err.message || "Something went wrong. Please try again.");
+    }
   } finally {
     setLoading(false);
   }

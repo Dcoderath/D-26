@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import './AdBlank.css';
 import D8 from '../../assets/D/d8.svg';
 import { HiMiniArrowTrendingUp } from 'react-icons/hi2';
@@ -18,35 +19,32 @@ const AdBlank = () => {
 
   // ================= FORM SUBMIT =================
   const handleSubmit = async () => {
-    if (!isFormValid || loading) return;
+  if (!isFormValid || loading) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const formData = new URLSearchParams();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('message', message);
-      formData.append('website', ''); // honeypot
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message }) // send to Vercel API
+    });
 
- await fetch('/api/contact', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ name, email, message })
-});
+    if (!res.ok) throw new Error("Failed to send");
 
+    alert("Message sent successfully ✅");
 
-      alert('Message sent ✅');
-      setName('');
-      setEmail('');
-      setMessage('');
-    } catch (err) {
-      alert('Something went wrong ❌');
-    } finally {
-      setLoading(false);
-    }
-  };
-
+    // Clear form
+    setName("");
+    setEmail("");
+    setMessage("");
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong ❌");
+  } finally {
+    setLoading(false);
+  }
+};
   // ================= PIXEL BACKGROUND (EXACT SAME) =================
   useEffect(() => {
     const canvas = canvasRef.current;

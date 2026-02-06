@@ -1268,7 +1268,7 @@
 //   );
 // }
 import React, { useEffect, useRef, useState } from "react";
-import "./hero.css";
+import "./Hero.css";
 
 export default function Hero() {
   const canvasRef = useRef(null);

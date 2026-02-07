@@ -246,6 +246,28 @@
     font-size: clamp(1rem, 2.5vw, 2.4rem);
     padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 16px);
   }
+.adblank__navigator-input {
+  padding: 8px 12px;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  border: 2px solid #FF4C24;
+  border-radius: 4px;
+  background-color: #0b0b0b;
+  color: #fff;
+  outline: none;
+
+  /* ✅ ADD THIS */
+  font-family: "Limelight", sans-serif;
+  text-transform: uppercase; /* optional – matches your links */
+}
+.adblank__navigator-input::placeholder {
+  font-family: "Limelight", sans-serif;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+}
+.adblank__navigator-button {
+  font-family: "Limelight", sans-serif;
+  letter-spacing: 0.08em;
+}
 
   .adblank__navigator {
     right: 3%;

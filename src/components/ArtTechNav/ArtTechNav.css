@@ -1,15 +1,24 @@
+/* ===============================
+   GLOBAL NAV CONTAINER
+================================ */
 .art-tech-nav-container {
   width: 100%;
   position: relative;
-  z-index: 10000; /* Ensure nav is above overlay */
+  z-index: 10000;
+  font-family: "Limelight", sans-serif;
+  text-transform: uppercase;
 }
 
 .art-tech-nav-container * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
+/* ===============================
+   TEXT LOGO
+================================ */
 .text-logo {
   background-color: #000;
   max-width: max-content;
@@ -17,14 +26,16 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  font-family: "Space Mono", monospace;
-  text-transform: uppercase;
   line-height: 1.1;
   font-size: 16px;
   position: relative;
-  z-index: 10001; /* Higher than container */
+  z-index: 10001;
+  letter-spacing: 0.08em;
 }
 
+/* ===============================
+   NAV BAR
+================================ */
 nav {
   position: fixed;
   width: 100%;
@@ -33,10 +44,13 @@ nav {
   align-items: center;
   padding: 20px;
   background: transparent;
-  z-index: 10000; /* Match container z-index */
-  pointer-events: auto; /* Ensure clickable */
+  z-index: 10000;
+  pointer-events: auto;
 }
 
+/* ===============================
+   CENTER LOGO
+================================ */
 .logo-main {
   position: absolute;
   left: 50%;
@@ -44,7 +58,7 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10001; /* Higher than overlay */
+  z-index: 10001;
 }
 
 .logo-main img {
@@ -53,18 +67,20 @@ nav {
   z-index: inherit;
 }
 
+/* ===============================
+   BUTTONS
+================================ */
 .elite-btn {
   background-color: #000;
   border: 1px solid #fff;
   color: #fff;
   padding: 10px 20px;
-  font-family: "Space Mono", monospace;
-  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  z-index: 10001; /* Higher than overlay */
-  pointer-events: auto; /* Ensure clickable */
+  z-index: 10001;
+  pointer-events: auto;
+  letter-spacing: 0.08em;
 }
 
 .elite-btn:hover {
@@ -72,15 +88,17 @@ nav {
   color: #000;
 }
 
+/* ===============================
+   TOGGLE / BURGER
+================================ */
 .toggle-btn {
   display: flex;
   justify-content: flex-end;
   padding: 0 1.5em;
   position: relative;
-  z-index: 10002; /* Highest for button */
+  z-index: 10002;
 }
 
-/* Burger button */
 .burger {
   display: flex;
   justify-content: center;
@@ -95,8 +113,8 @@ nav {
   transition: all 250ms ease-out;
   cursor: pointer;
   position: relative;
-  z-index: 10002; /* Ensure button is always clickable */
-  pointer-events: auto; /* Force clickability */
+  z-index: 10002;
+  pointer-events: auto;
 }
 
 .burger:before,
@@ -107,41 +125,35 @@ nav {
   position: absolute;
   background: #fff;
   transition: all 250ms ease-out;
-  z-index: inherit;
 }
 
-.burger:before { 
-  transform: translateY(-3px); 
-}
-.burger:after { 
-  transform: translateY(3px); 
+.burger:before { transform: translateY(-3px); }
+.burger:after { transform: translateY(3px); }
+
+.active.burger:before { transform: translateY(0) rotate(45deg); }
+.active.burger:after { transform: translateY(0) rotate(-45deg); }
+
+.burger:hover {
+  background: #fff;
 }
 
-.active.burger:before { 
-  transform: translateY(0) rotate(45deg); 
-}
-.active.burger:after { 
-  transform: translateY(0) rotate(-45deg); 
-}
-
-.burger:hover { 
-  background: rgba(255, 255, 255, 1); 
-}
 .burger:hover:before,
-.burger:hover:after { 
-  background: #000; 
+.burger:hover:after {
+  background: #000;
 }
 
-/* Overlay blocks - These should be UNDER the nav */
+/* ===============================
+   OVERLAY BLOCKS
+================================ */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: none; /* hidden by default */
+  display: none;
   flex-direction: row;
-  z-index: 9998; /* Below nav */
+  z-index: 9998;
   pointer-events: none;
 }
 
@@ -153,39 +165,39 @@ nav {
   margin-right: -2px;
 }
 
-/* Overlay menu - This should be UNDER the nav but above blocks */
+/* ===============================
+   OVERLAY MENU
+================================ */
 .overlay-menu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: none; /* hidden by default */
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #fff;
   padding: 10em 5em;
-  z-index: 9999; /* Between blocks and nav */
+  z-index: 9999;
   pointer-events: none;
 }
 
-.menu-title {
-  flex: 1;
-  width: 100%;
-  opacity: 0;
-  pointer-events: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* ===============================
+   MENU ITEMS
+================================ */
+.menu-title,
 .menu-item {
   flex: 1;
   width: 100%;
   opacity: 0;
   pointer-events: none;
   display: flex;
+  align-items: center;
+}
+
+.menu-item {
   padding: 1em;
   cursor: pointer;
 }
@@ -209,39 +221,41 @@ nav {
 }
 
 .menu-item-name p {
-  font-family: "PP Formula", sans-serif;
   font-size: 4vw;
   text-align: center;
+  letter-spacing: 0.12em;
 }
 
 .menu-item-link {
-  text-align: right;
   justify-content: flex-end;
 }
 
-/* Menu buttons inside overlay */
+/* ===============================
+   MENU BUTTONS
+================================ */
 .menu-link-btn {
   background: none;
   border: none;
   color: #fff;
-  font-family: "Space Mono", monospace;
-  text-transform: uppercase;
   font-size: 14px;
   cursor: pointer;
   padding: 10px 20px;
+  letter-spacing: 0.1em;
   transition: color 0.3s ease, background 0.3s ease;
 }
 
 .menu-link-btn:hover {
-  color: #ff4081;
+  color: #FF4C24;
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Website content */
+/* ===============================
+   WEBSITE CONTENT
+================================ */
 .website-content {
   position: relative;
   width: 100%;
-  z-index: 0; /* Lowest z-index */
+  z-index: 0;
 }
 
 .website-content .header {
@@ -249,39 +263,45 @@ nav {
   margin: 50px auto;
 }
 
-/* When overlay is active, ensure nav stays on top */
+/* ===============================
+   OVERLAY ACTIVE BOOST
+================================ */
 body.overlay-active .art-tech-nav-container,
 body.overlay-active nav,
 body.overlay-active .text-logo,
 body.overlay-active .elite-btn,
 body.overlay-active .logo-main,
 body.overlay-active .burger {
-  z-index: 10010 !important; /* Boost when overlay is open */
+  z-index: 10010 !important;
 }
 
-/* Responsive */
+/* ===============================
+   RESPONSIVE
+================================ */
 @media (max-width: 900px) {
-  .logo-main img { 
-    display: none; 
+  .logo-main img { display: none; }
+
+  .website-content .header {
+    width: 300px;
   }
-  .website-content .header { 
-    width: 300px; 
+
+  .overlay-menu {
+    padding: 5em 2em;
   }
-  .overlay-menu { 
-    padding: 5em 2em; 
+
+  .menu-item-name p {
+    font-size: 6vw;
   }
-  .menu-item-name p { 
-    font-size: 6vw; 
+
+  nav {
+    padding: 15px;
   }
-  nav { 
-    padding: 15px; 
+
+  .text-logo {
+    font-size: 14px;
+    padding: 8px;
   }
-  .text-logo { 
-    font-size: 14px; 
-    padding: 8px; 
-  }
-  
-  /* Ensure mobile z-index hierarchy */
+
   body.overlay-active .burger {
     z-index: 10011 !important;
   }

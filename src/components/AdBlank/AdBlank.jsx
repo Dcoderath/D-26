@@ -24,38 +24,33 @@ const handleSubmit = async () => {
   setLoading(true);
 
   try {
-    const res = await fetch(
-      "https://script.google.com/macros/s/AKfycbwzx9mcS_ibA1CHfc0EgJRp-Y9p9K_WUtbVhLu2zMNDbfaEShPtB16aqazTYTefU25G/exec",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          key: "DEX_SECRET_2603",
-          name: name.trim(),
-          email: email.trim(),
-          message: message.trim(),
-          website: "" // honeypot
-        })
-      }
-    );
+    const formData = new FormData();
+    formData.append("key", import.meta.env.VITE_API_KEY);
+    formData.append("name", name.trim());
+    formData.append("email", email.trim());
+    formData.append("message", message.trim());
+    formData.append("website", "");
+
+    const res = await fetch(import.meta.env.VITE_SCRIPT_URL, {
+      method: "POST",
+      body: formData
+    });
 
     const text = await res.text();
+    console.log("SCRIPT RESPONSE:", text);
 
     if (text.trim() !== "OK") {
       throw new Error(text);
     }
 
-    // ✅ Success
+    alert("✅ Message sent!");
     setName("");
     setEmail("");
     setMessage("");
-    alert("✅ Message sent successfully!");
 
-  } catch (error) {
-    console.error(error);
-    alert("❌ Message failed");
+  } catch (err) {
+    console.error("FORM ERROR:", err.message);
+    alert("❌ Message failed: " + err.message);
   } finally {
     setLoading(false);
   }

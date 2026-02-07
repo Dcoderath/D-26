@@ -1,4 +1,6 @@
-/* ✅ Base container */
+/* ===============================
+   BASE CONTAINER
+=============================== */
 .adblank {
   position: relative;
   width: 100vw;
@@ -10,10 +12,13 @@
   overflow: hidden;
   padding: clamp(16px, 4vw, 40px);
   z-index: 1;
-  font-family: "Limelight", sans-serif;
+  font-family: "Limelight", sans-serif; /* ✅ Base font */
+  text-transform: uppercase; /* optional to match buttons/links */
 }
 
-/* Pixel screen overlay */
+/* ===============================
+   PIXEL SCREEN OVERLAY
+=============================== */
 .pixel-screen {
   position: absolute;
   top: 0;
@@ -25,7 +30,9 @@
   background-color: #0b0b0b;
 }
 
-/* ✅ Navigator bottom right */
+/* ===============================
+   NAVIGATOR BOTTOM RIGHT
+=============================== */
 .adblank__navigator {
   position: absolute;
   bottom: 5%;
@@ -34,10 +41,9 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  height: auto;
-  z-index: 3;
   gap: clamp(6px, 1.2vw, 10px);
   text-align: right;
+  z-index: 3;
 }
 
 .adblank__navigator li {
@@ -48,7 +54,9 @@
   text-decoration: none;
 }
 
-/* ✅ Navigator link button */
+/* ===============================
+   NAVIGATOR LINK BUTTON
+=============================== */
 .adblank__navigator-link {
   display: flex;
   align-items: center;
@@ -56,8 +64,8 @@
   gap: clamp(6px, 1vw, 12px);
   font-family: "Limelight", sans-serif;
   font-size: clamp(1.2rem, 3vw, 4rem);
-  text-transform: uppercase;
   font-weight: 400;
+  text-transform: uppercase;
   color: #000000;
   background-color: #FF4C24;
   transition: all 0.3s ease;
@@ -82,10 +90,8 @@
 }
 
 /* ===============================
-   INPUT & MESSAGE (MATCH BUTTON)
-================================ */
-
-/* Form container */
+   INPUTS & BUTTONS
+=============================== */
 .adblank__form {
   display: flex;
   flex-direction: column;
@@ -101,6 +107,14 @@
   background-color: #0b0b0b;
   color: #fff;
   outline: none;
+  font-family: "Limelight", sans-serif; /* ✅ Ensure font matches everywhere */
+  text-transform: uppercase;
+}
+
+.adblank__navigator-input::placeholder {
+  font-family: "Limelight", sans-serif;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
 }
 
 /* Button */
@@ -112,6 +126,8 @@
   border: none;
   cursor: pointer;
   text-transform: uppercase;
+  font-family: "Limelight", sans-serif; /* ✅ Match font */
+  letter-spacing: 0.08em;
   transition: 0.3s;
 }
 
@@ -120,15 +136,19 @@
   color: #fff;
 }
 
-/* Horizontal links container */
+.adblank__navigator-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
+/* Horizontal links container */
 .adblank__horizontal-links {
   color: #000;
   display: flex;
   gap: 20px;
   margin-top: 12px;
   flex-wrap: wrap;
-    justify-content: flex-end; /* default right alignment */
+  justify-content: flex-end;
 }
 
 .adblank__horizontal-links a {
@@ -137,6 +157,7 @@
   gap: 6px;
   color: #000000;
   font-weight: 500;
+  font-family: "Limelight", sans-serif; /* ✅ Match font */
   text-decoration: none;
   font-size: clamp(1rem, 2vw, 1.3rem);
   transition: 0.3s;
@@ -149,52 +170,42 @@
 .adblank__horizontal-links .adblank__navigator-icon {
   font-size: 1.8em;
 }
-.adblank__navigator-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
 
-
-/* ✅ Banner top */
-.adblank__banner {
-  position: absolute;
-  top: 80px;
-  left: -5vw;
-  width: 110vw;
-  height: clamp(50px, 7vw, 80px);
-  background-color: rgb(17, 17, 17);
-  color: #fff;
-  font-family: "Limelight", sans-serif;
-  display: flex;
-  align-items: center;
-  padding: 0 clamp(16px, 4vw, 40px);
-  transform-origin: top left;
-  transform: rotate(-1.5deg);
-  overflow: hidden;
-  z-index: 1;
-  pointer-events: none;
-}
-
+/* ===============================
+   BANNERS
+=============================== */
+.adblank__banner,
 .adblank__banner--alt {
   position: absolute;
   left: -5vw;
   width: 110vw;
-  height: clamp(50px, 7vw, 80px);
   background-color: rgb(17, 17, 17);
   color: #fff;
-  font-family: "Limelight", sans-serif;
+  font-family: "Limelight", sans-serif; /* ✅ Match font */
   display: flex;
   align-items: center;
   padding: 0 clamp(16px, 4vw, 40px);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.adblank__banner {
+  top: 80px;
+  height: clamp(50px, 7vw, 80px);
+  transform-origin: top left;
+  transform: rotate(-1.5deg);
+}
+
+.adblank__banner--alt {
+  height: clamp(50px, 7vw, 80px);
   transform-origin: top left;
   transform: rotate(4.5deg);
-  overflow: hidden;
   z-index: 9;
-  pointer-events: none;
   backdrop-filter: blur(4px);
 }
 
-/* Banner scroll animation */
+/* Banner track scroll */
 .adblank__banner-track {
   display: flex;
   align-items: center;
@@ -220,6 +231,7 @@
   font-weight: 600;
   margin-right: clamp(6px, 1.5vw, 12px);
   color: #FF4C24;
+  font-family: "Limelight", sans-serif; /* ✅ Match font */
 }
 
 .adblank__banner-image {
@@ -229,45 +241,21 @@
 }
 
 @keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
-/* -------- ✅ Responsive Adjustments -------- */
-
+/* ===============================
+   RESPONSIVE
+=============================== */
 @media (max-width: 1024px) {
   .adblank__navigator-link,
   .adblank__navigator-input,
-  .adblank__navigator-textarea {
+  .adblank__navigator-textarea,
+  .adblank__navigator-button {
     font-size: clamp(1rem, 2.5vw, 2.4rem);
     padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 16px);
   }
-.adblank__navigator-input {
-  padding: 8px 12px;
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  border: 2px solid #FF4C24;
-  border-radius: 4px;
-  background-color: #0b0b0b;
-  color: #fff;
-  outline: none;
-
-  /* ✅ ADD THIS */
-  font-family: "Limelight", sans-serif;
-  text-transform: uppercase; /* optional – matches your links */
-}
-.adblank__navigator-input::placeholder {
-  font-family: "Limelight", sans-serif;
-  color: rgba(255, 255, 255, 0.6);
-  letter-spacing: 0.05em;
-}
-.adblank__navigator-button {
-  font-family: "Limelight", sans-serif;
-  letter-spacing: 0.08em;
-}
 
   .adblank__navigator {
     right: 3%;

@@ -18,57 +18,49 @@ const AdBlank = () => {
     message.trim() !== '';
 
   // ================= FORM SUBMIT =================
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
   if (!isFormValid || loading) return;
 
   setLoading(true);
 
   try {
-    console.log('Submitting form...');
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({ 
-        name: name.trim(), 
-        email: email.trim(), 
-        message: message.trim(),
-        website: "" // honeypot - always empty
-      })
-    });
+    const res = await fetch(
+      "https://script.google.com/macros/s/AKfycbwzx9mcS_ibA1CHfc0EgJRp-Y9p9K_WUtbVhLu2zMNDbfaEShPtB16aqazTYTefU25G/exec",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          key: "DEX_SECRET_2603",
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+          website: "" // honeypot
+        })
+      }
+    );
 
-    const data = await res.json();
-    console.log('API Response:', data);
-    
-    if (!res.ok) {
-      throw new Error(data.error || "Failed to send message");
+    const text = await res.text();
+
+    if (text.trim() !== "OK") {
+      throw new Error(text);
     }
 
-    // Success
-    alert("✅ Message sent successfully!");
-    
-    // Clear form
+    // ✅ Success
     setName("");
     setEmail("");
     setMessage("");
-    
-  } catch (err) {
-    console.error("Form submission error:", err);
-    
-    // User-friendly error messages
-    if (err.message.includes("timeout")) {
-      alert("⏰ Connection timeout. Please check your internet and try again.");
-    } else if (err.message.includes("Failed to save")) {
-      alert("📄 Could not save to database. Please try again in a moment.");
-    } else {
-      alert("❌ " + err.message || "Something went wrong. Please try again.");
-    }
+    alert("✅ Message sent successfully!");
+
+  } catch (error) {
+    console.error(error);
+    alert("❌ Message failed");
   } finally {
     setLoading(false);
   }
-};  // ================= PIXEL BACKGROUND (EXACT SAME) =================
+};
+ // ================= PIXEL BACKGROUND (EXACT SAME) =================
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');

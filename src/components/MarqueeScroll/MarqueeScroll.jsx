@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import Lenis from "@studio-freight/lenis";
+import imagesLoaded from "imagesloaded";
 import "./MarqueeScroll.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -26,67 +27,94 @@ const MarqueeScroll = () => {
     });
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const containers = containerRef.current.querySelectorAll(
-        ".marqueeScroll-container"
-      );
+    const container = containerRef.current;
 
-      containers.forEach((container, index) => {
-        const marquee = container.querySelector(".marqueeScroll-marquee");
+    // ✅ Wait until all images are loaded
+    imagesLoaded(container, { background: true }, () => {
+      // Initialize GSAP and Lenis after images load
+      const ctx = gsap.context(() => {
+        const rows = container.querySelectorAll(".marqueeScroll-container");
 
-        // Duplicate content for seamless marquee
-        marquee.innerHTML += marquee.innerHTML;
+        rows.forEach((row, index) => {
+          const marquee = row.querySelector(".marqueeScroll-marquee");
 
-        // Split and animate text
-        const headings = container.querySelectorAll("h1");
-        headings.forEach((heading) => {
-          const split = new SplitType(heading, { types: "chars" });
-          gsap.fromTo(
-            split.chars,
-            { fontWeight: 100 },
-            {
-              fontWeight: 900,
-              stagger: { each: 0.15, from: index % 2 !== 0 ? "start" : "end" },
-              scrollTrigger: {
-                trigger: container,
-                start: "top 80%",
-                end: "top 20%",
-                scrub: true,
-              },
-            }
-          );
+          // Duplicate content in JSX instead of innerHTML += innerHTML
+          // (already done in Row component)
+
+          // SplitType text animations
+          const headings = row.querySelectorAll("h1");
+          headings.forEach((heading) => {
+            const split = new SplitType(heading, { types: "chars" });
+            gsap.fromTo(
+              split.chars,
+              { fontWeight: 100 },
+              {
+                fontWeight: 900,
+                stagger: { each: 0.15, from: index % 2 !== 0 ? "start" : "end" },
+                scrollTrigger: {
+                  trigger: row,
+                  start: "top 80%",
+                  end: "top 20%",
+                  scrub: true,
+                },
+              }
+            );
+          });
+
+          // Horizontal marquee movement
+          ScrollTrigger.matchMedia({
+            "(max-width: 768px)": () => {
+              // Small screens: slower, shorter movement
+              gsap.fromTo(
+                marquee,
+                { xPercent: 0 },
+                {
+                  xPercent: -10,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: row,
+                    start: "top 90%",
+                    end: "top 10%",
+                    scrub: 1,
+                  },
+                }
+              );
+            },
+            "(min-width: 769px)": () => {
+              // Larger screens
+              gsap.fromTo(
+                marquee,
+                { xPercent: index % 2 === 0 ? -20 : 0 },
+                {
+                  xPercent: index % 2 === 0 ? 0 : -20,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: row,
+                    start: "top bottom",
+                    end: "200% top",
+                    scrub: 1,
+                  },
+                }
+              );
+            },
+          });
         });
 
-        // Horizontal marquee movement
-        gsap.fromTo(
-          marquee,
-          { xPercent: index % 2 === 0 ? -20 : 0 },
-          {
-            xPercent: index % 2 === 0 ? 0 : -20,
-            ease: "none",
-            scrollTrigger: {
-              trigger: container,
-              start: "top bottom",
-              end: "200% top",
-              scrub: 1,
-            },
-          }
-        );
-      });
+        // Lenis smooth scrolling
+        const lenis = new Lenis({ smooth: true, lerp: 0.08 });
+        lenis.on("scroll", ScrollTrigger.update);
 
-      // Lenis smooth scroll
-      const lenis = new Lenis({ smooth: true, lerp: 0.08 });
-      lenis.on("scroll", ScrollTrigger.update);
-      const raf = (time) => {
-        lenis.raf(time * 1000);
+        const raf = (time) => {
+          lenis.raf(time * 1000);
+          requestAnimationFrame(raf);
+        };
         requestAnimationFrame(raf);
-      };
-      requestAnimationFrame(raf);
 
-      gsap.ticker.lagSmoothing(0);
-    }, containerRef);
+        gsap.ticker.lagSmoothing(0);
+      }, container);
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    });
   }, []);
 
   return (
@@ -101,30 +129,45 @@ const MarqueeScroll = () => {
   );
 };
 
-const Row = ({ images, text1, text2 }) => (
-  <div className="marqueeScroll-container">
-    <div className="marqueeScroll-marquee">
-      {images.slice(0, 2).map((img, i) => (
-        <div className="marqueeScroll-item" key={i}>
-          <img src={img} alt="" loading="eager" />
-        </div>
-      ))}
+// ✅ Row component with duplicated content in JSX
+const Row = ({ images, text1, text2 }) => {
+  // Combine images + text for duplication
+  const items = [
+    ...images.slice(0, 2),
+    text1,
+    ...images.slice(2, 4),
+    text2,
+  ];
 
-      <div className="marqueeScroll-item marqueeScroll-text">
-        <h1>{text1}</h1>
-      </div>
-
-      {images.slice(2, 4).map((img, i) => (
-        <div className="marqueeScroll-item" key={i + 2}>
-          <img src={img} alt="" loading="eager" />
-        </div>
-      ))}
-
-      <div className="marqueeScroll-item marqueeScroll-text">
-        <h1>{text2}</h1>
+  return (
+    <div className="marqueeScroll-container">
+      <div className="marqueeScroll-marquee">
+        {items.map((item, i) =>
+          typeof item === "string" ? (
+            <div className="marqueeScroll-item marqueeScroll-text" key={i}>
+              <h1>{item}</h1>
+            </div>
+          ) : (
+            <div className="marqueeScroll-item" key={i}>
+              <img src={item} alt="" loading="eager" />
+            </div>
+          )
+        )}
+        {/* Duplicate for seamless scroll */}
+        {items.map((item, i) =>
+          typeof item === "string" ? (
+            <div className="marqueeScroll-item marqueeScroll-text" key={i + items.length}>
+              <h1>{item}</h1>
+            </div>
+          ) : (
+            <div className="marqueeScroll-item" key={i + items.length}>
+              <img src={item} alt="" loading="eager" />
+            </div>
+          )
+        )}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default MarqueeScroll;

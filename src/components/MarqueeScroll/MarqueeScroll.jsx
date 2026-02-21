@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 const MarqueeScroll = () => {
   const containerRef = useRef(null);
 
-  // Load and SORT images properly (1 → 16)
   const images = Object.entries(
     import.meta.glob("../../assets/Image/*.jpg", { eager: true })
   )
@@ -23,67 +22,62 @@ const MarqueeScroll = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
-      // Text animation
-      function animateChars(chars, reverse = false) {
-        gsap.fromTo(
-          chars,
-          { fontWeight: 100 },
-          {
-            fontWeight: 900,
-            duration: 1,
-            ease: "none",
-            stagger: {
-              each: 0.15,
-              from: reverse ? "start" : "end",
-            },
-            scrollTrigger: {
-              trigger: chars[0].closest(".marqueeScroll-container"),
-              start: "top 80%",
-              end: "top 20%",
-              scrub: true,
-            },
-          }
-        );
-      }
-
-      new SplitType(".marqueeScroll-item h1", { types: "chars" });
-
       const containers = document.querySelectorAll(
         ".marqueeScroll-container"
       );
 
       containers.forEach((container, index) => {
         const marquee = container.querySelector(".marqueeScroll-marquee");
-        const words = marquee.querySelectorAll("h1");
 
-        // 🔥 STRONG HORIZONTAL MOVEMENT
+        // ✅ Duplicate content BEFORE SplitType
+        const clone = marquee.innerHTML;
+        marquee.innerHTML += clone;
+
+        // ✅ Split + Animate ALL texts (both originals + duplicates)
+        const headings = container.querySelectorAll("h1");
+
+        headings.forEach((heading) => {
+          const split = new SplitType(heading, { types: "chars" });
+
+          gsap.fromTo(
+            split.chars,
+            { fontWeight: 100 },
+            {
+              fontWeight: 900,
+              stagger: {
+                each: 0.15,
+                from: index % 2 !== 0 ? "start" : "end",
+              },
+              scrollTrigger: {
+                trigger: container,
+                start: "top 80%",
+                end: "top 20%",
+                scrub: true,
+              },
+            }
+          );
+        });
+
+        // ✅ Seamless horizontal movement
         gsap.fromTo(
           marquee,
           {
-            x: index % 2 === 0 ? -600 : 600,
+            xPercent: index % 2 === 0 ? -20 : 0,
           },
           {
-            x: index % 2 === 0 ? 600 : -600,
+            xPercent: index % 2 === 0 ? 0 : -20,
             ease: "none",
             scrollTrigger: {
               trigger: container,
               start: "top bottom",
               end: "200% top",
-              scrub: 1.2,
+              scrub: 1,
             },
           }
         );
-
-        words.forEach((word) => {
-          const chars = Array.from(word.querySelectorAll(".char"));
-          if (chars.length) {
-            animateChars(chars, index % 2 !== 0);
-          }
-        });
       });
 
-      // Smooth Scroll Setup (Lenis)
+      // ✅ Lenis smooth scroll
       const lenis = new Lenis({
         smooth: true,
         lerp: 0.08,
@@ -96,7 +90,6 @@ const MarqueeScroll = () => {
       });
 
       gsap.ticker.lagSmoothing(0);
-
     }, containerRef);
 
     return () => ctx.revert();
@@ -106,91 +99,63 @@ const MarqueeScroll = () => {
     <div className="marqueeScroll-wrapper" ref={containerRef}>
       <section className="marqueeScroll-section">
 
-        {/* ROW 1 */}
-        <div className="marqueeScroll-container">
-          <div className="marqueeScroll-marquee">
-            <div className="marqueeScroll-item">
-              <img src={images[0]} alt="" />
-            </div>
-            <div className="marqueeScroll-item marqueeScroll-text">
-              <h1>Unique</h1>
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[1]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[2]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[3]} alt="" />
-            </div>
-          </div>
-        </div>
+        <Row
+          images={images.slice(0, 4)}
+          text1="Unique"
+          text2="Design"
+        />
 
-        {/* ROW 2 */}
-        <div className="marqueeScroll-container">
-          <div className="marqueeScroll-marquee">
-            <div className="marqueeScroll-item">
-              <img src={images[4]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[5]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[6]} alt="" />
-            </div>
-            <div className="marqueeScroll-item marqueeScroll-text">
-              <h1>Release</h1>
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[7]} alt="" />
-            </div>
-          </div>
-        </div>
+        <Row
+          images={images.slice(4, 8)}
+          text1="Release"
+          text2="Drop"
+        />
 
-        {/* ROW 3 */}
-        <div className="marqueeScroll-container">
-          <div className="marqueeScroll-marquee">
-            <div className="marqueeScroll-item">
-              <img src={images[8]} alt="" />
-            </div>
-            <div className="marqueeScroll-item marqueeScroll-text">
-              <h1>2500</h1>
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[9]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[10]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[11]} alt="" />
-            </div>
-          </div>
-        </div>
+        <Row
+          images={images.slice(8, 12)}
+          text1="2500"
+          text2="Limited"
+        />
 
-        {/* ROW 4 */}
-        <div className="marqueeScroll-container">
-          <div className="marqueeScroll-marquee">
-            <div className="marqueeScroll-item">
-              <img src={images[12]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[13]} alt="" />
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[14]} alt="" />
-            </div>
-            <div className="marqueeScroll-item marqueeScroll-text">
-              <h1>Rarity</h1>
-            </div>
-            <div className="marqueeScroll-item">
-              <img src={images[15]} alt="" />
-            </div>
-          </div>
-        </div>
+        <Row
+          images={images.slice(12, 16)}
+          text1="Rarity"
+          text2="Exclusive"
+        />
 
       </section>
+    </div>
+  );
+};
+
+const Row = ({ images, text1, text2 }) => {
+  return (
+    <div className="marqueeScroll-container">
+      <div className="marqueeScroll-marquee">
+
+        {/* First two images */}
+        {images.slice(0, 2).map((img, i) => (
+          <div className="marqueeScroll-item" key={i}>
+            <img src={img} alt="" />
+          </div>
+        ))}
+
+        <div className="marqueeScroll-item marqueeScroll-text">
+          <h1>{text1}</h1>
+        </div>
+
+        {/* Next two images */}
+        {images.slice(2, 4).map((img, i) => (
+          <div className="marqueeScroll-item" key={i + 2}>
+            <img src={img} alt="" />
+          </div>
+        ))}
+
+        <div className="marqueeScroll-item marqueeScroll-text">
+          <h1>{text2}</h1>
+        </div>
+
+      </div>
     </div>
   );
 };

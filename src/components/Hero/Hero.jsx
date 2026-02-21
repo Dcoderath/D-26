@@ -1267,19 +1267,238 @@
 //     </header>
 //   );
 // }
-import React, { useEffect, useRef, useState } from "react";
-import "./Hero.css";
+
+
+
+// import React, { useEffect, useRef, useState } from "react";
+// import "./Hero.css";
+
+// export default function Hero() {
+//   const canvasRef = useRef(null);
+//   const servicesRef = useRef(null);
+//   const [hoveredButtons, setHoveredButtons] = useState({});
+
+//   useEffect(() => {
+//     const canvas = canvasRef.current;
+//     const ctx = canvas.getContext("2d");
+
+//     // ===== PIXEL CANVAS CODE UNCHANGED =====
+//     const resize = () => {
+//       canvas.width = window.innerWidth;
+//       canvas.height = window.innerHeight;
+//       drawPixels();
+//     };
+
+//     window.addEventListener("resize", resize);
+//     resize();
+
+//     function drawPixels() {
+//       const { width, height } = canvas;
+//       ctx.fillStyle = "#1B1C1F";
+//       ctx.fillRect(0, 0, width, height);
+
+//       const size = 30;
+//       const rows = Math.ceil(height / size);
+//       const cols = Math.ceil(width / size);
+
+//       let seed = 10101;
+//       function random() {
+//         seed = (seed * 1664525 + 1013904223) % 4294967296;
+//         return seed / 4294967296;
+//       }
+
+//       const drawnPixels = new Set();
+
+//       for (let y = 0; y < rows; y++) {
+//         for (let x = 0; x < cols; x++) {
+//           const normalizedX = x / cols;
+//           const normalizedY = y / rows;
+
+//           const heightLimit = 0.6 - normalizedX * 0.3;
+//           if (normalizedY < heightLimit && normalizedX < 0.4) {
+//             ctx.fillStyle = "#ffffff";
+//             ctx.fillRect(x * size, y * size, size, size);
+//             drawnPixels.add(`${x},${y}`);
+//           } else if (
+//             normalizedX < 0.45 &&
+//             normalizedY >= heightLimit &&
+//             normalizedY < heightLimit + 0.12 &&
+//             Math.random() > 0.92
+//           ) {
+//             ctx.fillStyle = "#ffffff";
+//             ctx.fillRect(x * size, y * size, size, size);
+//             drawnPixels.add(`${x},${y}`);
+//             if (Math.random() > 0.7) {
+//               let cx = x;
+//               let cy = y;
+//               const snakeLength = Math.floor(Math.random() * 2) + 2;
+//               for (let i = 0; i < snakeLength; i++) {
+//                 cx += Math.floor(Math.random() * 3) - 1;
+//                 cy += Math.floor(Math.random() * 2);
+//                 if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
+//                 ctx.fillRect(cx * size, cy * size, size, size);
+//                 drawnPixels.add(`${cx},${cy}`);
+//               }
+//             }
+//           } else if (normalizedX >= 0.4 && normalizedX < 0.8) {
+//             const waveLimit =
+//               0.4 + Math.sin(normalizedX * 6) * 0.05 + Math.cos(normalizedX * 3) * 0.03;
+//             if (normalizedY < waveLimit && random() > 0.8) {
+//               ctx.fillStyle = "#ffffff";
+//               let cx = x;
+//               let cy = y;
+//               const snakeLength = Math.floor(random() * 4) + 5;
+//               for (let i = 0; i < snakeLength; i++) {
+//                 ctx.fillRect(cx * size, cy * size, size, size);
+//                 drawnPixels.add(`${cx},${cy}`);
+//                 cx += Math.floor(random() * 3) - 1;
+//                 cy += Math.floor(random() * 2) - 1;
+//                 if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
+//               }
+//             }
+//           } else if (normalizedX >= 0.8 && normalizedY < 0.3 && random() > 0.95) {
+//             ctx.fillStyle = "#ffffff";
+//             let cx = x;
+//             let cy = y;
+//             const snakeLength = Math.floor(Math.random() * 3) + 4;
+//             for (let i = 0; i < snakeLength; i++) {
+//               ctx.fillRect(cx * size, cy * size, size, size);
+//               drawnPixels.add(`${cx},${cy}`);
+//               cx += Math.floor(random() * 3) - 1;
+//               cy += Math.floor(random() * 3) - 1;
+//               if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
+//             }
+//           } else if (normalizedX > 0.7 && normalizedY > 0.7) {
+//             if (random() > 0.1) {
+//               ctx.fillStyle = "#ffffff";
+//               ctx.fillRect(x * size, y * size, size, size);
+//               drawnPixels.add(`${x},${y}`);
+//             }
+//           }
+
+//           const bottomRightLimit = 0.6 - (1 - normalizedX) * 0.3;
+//           if (normalizedY > 1 - bottomRightLimit && normalizedX > 0.6) {
+//             ctx.fillStyle = "#ffffff";
+//             ctx.fillRect(x * size, y * size, size, size);
+//             drawnPixels.add(`${x},${y}`);
+//           } else if (
+//             normalizedX > 0.55 &&
+//             normalizedY <= 1 - bottomRightLimit &&
+//             normalizedY > 1 - bottomRightLimit - 0.12 &&
+//             Math.random() > 0.92
+//           ) {
+//             ctx.fillStyle = "#ffffff";
+//             ctx.fillRect(x * size, y * size, size, size);
+//             drawnPixels.add(`${x},${y}`);
+
+//             if (Math.random() > 0.7) {
+//               let cx = x;
+//               let cy = y;
+//               const snakeLength = Math.floor(Math.random() * 2) + 2;
+//               for (let i = 0; i < snakeLength; i++) {
+//                 cx += Math.floor(Math.random() * 3) - 1;
+//                 cy -= Math.floor(Math.random() * 2);
+//                 if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
+//                 ctx.fillRect(cx * size, cy * size, size, size);
+//                 drawnPixels.add(`${cx},${cy}`);
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     // Add hover event listeners to buttons
+//     const setupButtonHovers = () => {
+//       if (!servicesRef.current) return;
+
+//       const container = servicesRef.current;
+//       const buttons = container.querySelectorAll("span");
+      
+//       buttons.forEach((button, index) => {
+//         // Remove any existing event listeners first
+//         const newButton = button.cloneNode(true);
+//         button.parentNode.replaceChild(newButton, button);
+
+//         // Mouse enter event
+//         newButton.addEventListener("mouseenter", () => {
+//           setHoveredButtons(prev => ({ ...prev, [index]: true }));
+//           newButton.style.background = "#FF3300";
+//           newButton.style.color = "white";
+//           newButton.style.transform = "scale(1.05)";
+//           newButton.style.transition = "all 0.2s ease";
+//         });
+
+//         // Mouse leave event
+//         newButton.addEventListener("mouseleave", () => {
+//           setHoveredButtons(prev => ({ ...prev, [index]: false }));
+//           newButton.style.background = "";
+//           newButton.style.color = "";
+//           newButton.style.transform = "";
+//         });
+//       });
+//     };
+
+//     // Setup button hovers
+//     setTimeout(setupButtonHovers, 100);
+
+//     return () => {
+//       window.removeEventListener("resize", resize);
+//     };
+//   }, []);
+
+//   return (
+// <header id="Hero" className="term-hero-root">
+
+//       <canvas ref={canvasRef} className="pixel-screen" />
+
+//       <div className="term-hero__overlay">
+//         {/* LEFT - UNCHANGED */}
+//         <div className="term-hero__overlay-left">
+//           <div className="term-hero__intro">
+//             <span className="term-hero__availability">
+//               Available for Projects Jan ’26
+//             </span>
+//             <h1 className="term-hero__headline">
+//               Helping Brands & Startups <br />
+//               Build Design That Solves Problems <br />
+//               And Stands Bold.
+//             </h1>
+//           </div>
+//         </div>
+
+//         {/* RIGHT - BUTTONS STACKED LIKE BRICKS AT BOTTOM */}
+//         <div className="term-hero__overlay-right">
+//           <div className="term-hero__services" ref={servicesRef}>
+//             <span className={hoveredButtons[0] ? "stuck" : ""}>Brand Identity</span>
+//             <span className={hoveredButtons[1] ? "stuck" : ""}>UI / UX Design</span>
+//             <span className={hoveredButtons[2] ? "stuck" : ""}>Product Design</span>
+//             <span className={hoveredButtons[3] ? "stuck" : ""}>Web Design</span>
+//             <span className={hoveredButtons[4] ? "stuck" : ""}>Mobile App Design</span>
+//             <span className={hoveredButtons[5] ? "stuck" : ""}>Design Systems</span>
+//             <span className={hoveredButtons[6] ? "stuck" : ""}>Visual Direction</span>
+//             <span className={hoveredButtons[7] ? "stuck" : ""}>Brand Strategy</span>
+//             <span className={hoveredButtons[8] ? "stuck" : ""}>Creative Consulting</span>
+//           </div>
+//         </div>
+//       </div>
+//     </header>
+//   );
+// }
+
+
+
+
+
+import React, { useEffect, useRef } from "react";
 
 export default function Hero() {
   const canvasRef = useRef(null);
-  const servicesRef = useRef(null);
-  const [hoveredButtons, setHoveredButtons] = useState({});
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    // ===== PIXEL CANVAS CODE UNCHANGED =====
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -1291,18 +1510,19 @@ export default function Hero() {
 
     function drawPixels() {
       const { width, height } = canvas;
-      ctx.fillStyle = "#ffffff";
+
+      ctx.fillStyle = "#242021";
       ctx.fillRect(0, 0, width, height);
 
       const size = 30;
-      const rows = Math.ceil(height / size);
-      const cols = Math.ceil(width / size);
+      const rows = Math.floor(height / size);
+      const cols = Math.floor(width / size);
 
       let seed = 10101;
-      function random() {
+      const random = () => {
         seed = (seed * 1664525 + 1013904223) % 4294967296;
         return seed / 4294967296;
-      }
+      };
 
       const drawnPixels = new Set();
 
@@ -1311,174 +1531,198 @@ export default function Hero() {
           const normalizedX = x / cols;
           const normalizedY = y / rows;
 
+          const w = x === cols - 1 ? width - x * size : size;
+          const h = y === rows - 1 ? height - y * size : size;
+
+          // Top dense block
+          if (normalizedY <= 0.2) {
+            ctx.fillStyle = "#F1F1F1";
+            ctx.fillRect(x * size, y * size, w, h);
+            drawnPixels.add(`${x},${y}`);
+            continue;
+          }
+
           const heightLimit = 0.6 - normalizedX * 0.3;
+
+
           if (normalizedY < heightLimit && normalizedX < 0.4) {
-            ctx.fillStyle = "#3300FF";
-            ctx.fillRect(x * size, y * size, size, size);
+            ctx.fillStyle = "#F1F1F1";
+            ctx.fillRect(x * size, y * size, w, h);
             drawnPixels.add(`${x},${y}`);
           } else if (
             normalizedX < 0.45 &&
             normalizedY >= heightLimit &&
             normalizedY < heightLimit + 0.12 &&
-            Math.random() > 0.92
+            random() > 0.92
           ) {
-            ctx.fillStyle = "#3300FF";
-            ctx.fillRect(x * size, y * size, size, size);
+            ctx.fillStyle = "#F1F1F1";
+            ctx.fillRect(x * size, y * size, w, h);
             drawnPixels.add(`${x},${y}`);
-            if (Math.random() > 0.7) {
+
+            if (random() > 0.7) {
               let cx = x;
               let cy = y;
-              const snakeLength = Math.floor(Math.random() * 2) + 2;
+              const snakeLength = Math.floor(random() * 2) + 2;
+
               for (let i = 0; i < snakeLength; i++) {
-                cx += Math.floor(Math.random() * 3) - 1;
-                cy += Math.floor(Math.random() * 2);
-                if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
-                ctx.fillRect(cx * size, cy * size, size, size);
+                cx += Math.floor(random() * 3) - 1;
+                cy += Math.floor(random() * 2);
+
+                if (cx < 0 || cx >= cols || cy >= rows) break;
+
+                const sw = cx === cols - 1 ? width - cx * size : size;
+                const sh = cy === rows - 1 ? height - cy * size : size;
+
+                ctx.fillRect(cx * size, cy * size, sw, sh);
                 drawnPixels.add(`${cx},${cy}`);
               }
             }
           } else if (normalizedX >= 0.4 && normalizedX < 0.8) {
             const waveLimit =
-              0.4 + Math.sin(normalizedX * 6) * 0.05 + Math.cos(normalizedX * 3) * 0.03;
+              0.4 +
+              Math.sin(normalizedX * 6) * 0.05 +
+              Math.cos(normalizedX * 3) * 0.03;
+
             if (normalizedY < waveLimit && random() > 0.8) {
-              ctx.fillStyle = "#3300FF";
+              ctx.fillStyle = "#F1F1F1";
+
               let cx = x;
               let cy = y;
               const snakeLength = Math.floor(random() * 4) + 5;
+
               for (let i = 0; i < snakeLength; i++) {
-                ctx.fillRect(cx * size, cy * size, size, size);
+                const sw = cx === cols - 1 ? width - cx * size : size;
+                const sh = cy === rows - 1 ? height - cy * size : size;
+
+                ctx.fillRect(cx * size, cy * size, sw, sh);
                 drawnPixels.add(`${cx},${cy}`);
+
                 cx += Math.floor(random() * 3) - 1;
                 cy += Math.floor(random() * 2) - 1;
+
                 if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
               }
             }
-          } else if (normalizedX >= 0.8 && normalizedY < 0.3 && random() > 0.95) {
-            ctx.fillStyle = "#3300FF";
+          } else if (
+            normalizedX >= 0.8 &&
+            normalizedY < 0.3 &&
+            random() > 0.95
+          ) {
+            ctx.fillStyle = "#F1F1F1";
+
             let cx = x;
             let cy = y;
-            const snakeLength = Math.floor(Math.random() * 3) + 4;
+            const snakeLength = Math.floor(random() * 3) + 4;
+
             for (let i = 0; i < snakeLength; i++) {
-              ctx.fillRect(cx * size, cy * size, size, size);
+              const sw = cx === cols - 1 ? width - cx * size : size;
+              const sh = cy === rows - 1 ? height - cy * size : size;
+
+              ctx.fillRect(cx * size, cy * size, sw, sh);
               drawnPixels.add(`${cx},${cy}`);
+
               cx += Math.floor(random() * 3) - 1;
               cy += Math.floor(random() * 3) - 1;
+
               if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
             }
           } else if (normalizedX > 0.7 && normalizedY > 0.7) {
             if (random() > 0.1) {
-              ctx.fillStyle = "#3300FF";
-              ctx.fillRect(x * size, y * size, size, size);
+              ctx.fillStyle = "#F1F1F1";
+              ctx.fillRect(x * size, y * size, w, h);
               drawnPixels.add(`${x},${y}`);
             }
           }
 
-          const bottomRightLimit = 0.6 - (1 - normalizedX) * 0.3;
+          const bottomRightLimit = 0.35 - (1 - normalizedX) * 0.1;
+
           if (normalizedY > 1 - bottomRightLimit && normalizedX > 0.6) {
-            ctx.fillStyle = "#3300FF";
-            ctx.fillRect(x * size, y * size, size, size);
-            drawnPixels.add(`${x},${y}`);
-          } else if (
-            normalizedX > 0.55 &&
-            normalizedY <= 1 - bottomRightLimit &&
-            normalizedY > 1 - bottomRightLimit - 0.12 &&
-            Math.random() > 0.92
-          ) {
-            ctx.fillStyle = "#3300FF";
-            ctx.fillRect(x * size, y * size, size, size);
+            ctx.fillStyle = "#F1F1F1";
+            ctx.fillRect(x * size, y * size, w, h);
             drawnPixels.add(`${x},${y}`);
 
-            if (Math.random() > 0.7) {
-              let cx = x;
+            if (random() > 0.7) {
+              let cx = x - 1;
               let cy = y;
-              const snakeLength = Math.floor(Math.random() * 2) + 2;
+              const snakeLength = Math.floor(random() * 3) + 2;
+
               for (let i = 0; i < snakeLength; i++) {
-                cx += Math.floor(Math.random() * 3) - 1;
-                cy -= Math.floor(Math.random() * 2);
-                if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
-                ctx.fillRect(cx * size, cy * size, size, size);
+                if (cx < 0) break;
+
+                const sw = cx === cols - 1 ? width - cx * size : size;
+                const sh = cy === rows - 1 ? height - cy * size : size;
+
+                ctx.fillRect(cx * size, cy * size, sw, sh);
                 drawnPixels.add(`${cx},${cy}`);
+
+                cx -= 1;
+                cy += Math.floor(random() * 2) - 1;
               }
             }
           }
         }
       }
+
+      // 🔥 Binary (NO extreme edges)
+      ctx.font = `${size * 0.55}px monospace`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      drawnPixels.forEach((pos) => {
+        const [x, y] = pos.split(",").map(Number);
+
+        // Skip extreme outer border
+        if (
+          x === 0 ||
+          x === cols - 1 ||
+          y === 0 ||
+          y === rows - 1
+        ) {
+          return;
+        }
+
+        const neighbors = [
+          `${x + 1},${y}`,
+          `${x - 1},${y}`,
+          `${x},${y + 1}`,
+          `${x},${y - 1}`,
+        ];
+
+        const touchingDark = neighbors.some(
+          (n) => !drawnPixels.has(n)
+        );
+
+        if (touchingDark) {
+          ctx.fillStyle = "#000000";
+          ctx.fillText(
+            random() > 0.5 ? "1" : "0",
+            x * size + size / 2,
+            y * size + size / 2
+          );
+        }
+      });
     }
 
-    // Add hover event listeners to buttons
-    const setupButtonHovers = () => {
-      if (!servicesRef.current) return;
-
-      const container = servicesRef.current;
-      const buttons = container.querySelectorAll("span");
-      
-      buttons.forEach((button, index) => {
-        // Remove any existing event listeners first
-        const newButton = button.cloneNode(true);
-        button.parentNode.replaceChild(newButton, button);
-
-        // Mouse enter event
-        newButton.addEventListener("mouseenter", () => {
-          setHoveredButtons(prev => ({ ...prev, [index]: true }));
-          newButton.style.background = "#FF3300";
-          newButton.style.color = "white";
-          newButton.style.transform = "scale(1.05)";
-          newButton.style.transition = "all 0.2s ease";
-        });
-
-        // Mouse leave event
-        newButton.addEventListener("mouseleave", () => {
-          setHoveredButtons(prev => ({ ...prev, [index]: false }));
-          newButton.style.background = "";
-          newButton.style.color = "";
-          newButton.style.transform = "";
-        });
-      });
-    };
-
-    // Setup button hovers
-    setTimeout(setupButtonHovers, 100);
-
-    return () => {
-      window.removeEventListener("resize", resize);
-    };
+    return () => window.removeEventListener("resize", resize);
   }, []);
 
   return (
-<header id="Hero" className="term-hero-root">
-
-      <canvas ref={canvasRef} className="pixel-screen" />
-
-      <div className="term-hero__overlay">
-        {/* LEFT - UNCHANGED */}
-        <div className="term-hero__overlay-left">
-          <div className="term-hero__intro">
-            <span className="term-hero__availability">
-              Available for Projects Jan ’26
-            </span>
-            <h1 className="term-hero__headline">
-              Helping Brands & Startups <br />
-              Build Design That Solves Problems <br />
-              And Stands Bold.
-            </h1>
-          </div>
-        </div>
-
-        {/* RIGHT - BUTTONS STACKED LIKE BRICKS AT BOTTOM */}
-        <div className="term-hero__overlay-right">
-          <div className="term-hero__services" ref={servicesRef}>
-            <span className={hoveredButtons[0] ? "stuck" : ""}>Brand Identity</span>
-            <span className={hoveredButtons[1] ? "stuck" : ""}>UI / UX Design</span>
-            <span className={hoveredButtons[2] ? "stuck" : ""}>Product Design</span>
-            <span className={hoveredButtons[3] ? "stuck" : ""}>Web Design</span>
-            <span className={hoveredButtons[4] ? "stuck" : ""}>Mobile App Design</span>
-            <span className={hoveredButtons[5] ? "stuck" : ""}>Design Systems</span>
-            <span className={hoveredButtons[6] ? "stuck" : ""}>Visual Direction</span>
-            <span className={hoveredButtons[7] ? "stuck" : ""}>Brand Strategy</span>
-            <span className={hoveredButtons[8] ? "stuck" : ""}>Creative Consulting</span>
-          </div>
-        </div>
-      </div>
+    <header
+      style={{
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        style={{
+          display: "block",
+          width: "100%",
+          height: "100%",
+        }}
+      />
     </header>
   );
 }

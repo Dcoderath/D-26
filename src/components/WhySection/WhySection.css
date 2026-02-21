@@ -1,0 +1,86 @@
+.why-section {
+  width: 100%;
+  padding: 120px 5%;
+  background: #F1F1F1;
+}
+
+.why-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ===== Heading Layout ===== */
+.why-heading {
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 48px);
+}
+
+/* ===== List Items ===== */
+.why-list {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.why-item {
+  width: 100%;
+}
+
+/* ===== Grid Layout Fix ===== */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 3fr;
+  /* 🔥 Forces all boxes in the row to be the same height */
+  align-items: stretch; 
+}
+
+/* Box Padding */
+.why-box {
+  padding: clamp(20px, 3vw, 40px);
+}
+
+/* 🔥 Bottom border on Title & Description only */
+.why-title,
+.why-description {
+  border-bottom: 1px solid #000000;
+}
+
+/* Vertical divider after Title column */
+.why-grid > div:nth-child(2) {
+  border-right: 1px solid #e5e5e5;
+}
+
+/* ===== Number Styling ===== */
+.why-number {
+  font-size: clamp(32px, 6vw, 64px);
+  font-weight: 700;
+  color: #000000;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-start;
+  text-align: left;
+  /* Number stays clear of borders */
+  border: none;
+}
+
+/* ===== Title Styling ===== */
+.why-title {
+  /* Updated to 46px */
+  font-size: clamp(24px, 3.5vw, 46px); 
+  font-weight: 600;
+  display: flex;
+  align-items: center; /* Keeps text vertically centered in the taller box */
+}
+
+/* ===== Description Styling ===== */
+.why-description {
+  font-size: clamp(14px, 1.5vw, 16px);
+  color: #000000;
+  line-height: 1.7;
+  display: flex;
+  align-items: center; /* Keeps text centered even if the box grows */
+}

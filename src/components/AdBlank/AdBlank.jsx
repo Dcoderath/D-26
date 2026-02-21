@@ -71,7 +71,7 @@ const handleSubmit = async () => {
 
     function drawPixels() {
       const { width, height } = canvas;
-      ctx.fillStyle = '#3300FF';
+      ctx.fillStyle = '#1B1C1F';
       ctx.fillRect(0, 0, width, height);
 
       const size = 30;
@@ -188,7 +188,7 @@ const handleSubmit = async () => {
             <div className="adblank__form">
               <input
                 type="text"
-                placeholder="Enter name..."
+                placeholder="[Enter name]"
                 className="adblank__navigator-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -196,14 +196,14 @@ const handleSubmit = async () => {
 
               <input
                 type="email"
-                placeholder="Enter email..."
+                placeholder="[Enter email]"
                 className="adblank__navigator-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
 
               <textarea
-                placeholder="Your message..."
+                placeholder="[Your message]"
                 className="adblank__navigator-input"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -223,7 +223,7 @@ const handleSubmit = async () => {
                 disabled={!isFormValid || loading}
                 onClick={handleSubmit}
               >
-                {loading ? 'Sending...' : "Let's Talk"}
+                {loading ? 'Sending}' : "Let's Talk"}
               </button>
             </div>
           </li>

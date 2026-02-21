@@ -235,27 +235,180 @@
 // export default App;
 
 
-import React from "react";
+// import React from "react";
+// import "./App.css";
+// import Hero from "./components/Hero/Hero";
+// import NewGrid from "./components/NewGrid/NewGrid";
+// import PricingCard from "./components/PricingCard/PricingCard";
+// import AdBlank from "./components/AdBlank/AdBlank";
+// import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
+// import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
+
+// const App = () => {
+//   return (
+//     <div className="App">
+//       {/* ArtTechNav is a standalone fullscreen navigation overlay */}
+//         <ArtTechNav />
+//         <JunniLandingPage/>
+//         <Hero id="hero" />
+//         <NewGrid id="newgrid" />
+//         <PricingCard id="pricing" />
+//         <AdBlank id="adblank" />
+//       </div>
+  
+//   );
+// };
+
+// export default App;
+
+
+// import React from "react";
+// import "./App.css";
+// import Hero from "./components/Hero/Hero";
+// import NewGrid from "./components/NewGrid/NewGrid";
+// import PricingCard from "./components/PricingCard/PricingCard";
+// import AdBlank from "./components/AdBlank/AdBlank";
+// import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
+// import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
+// import Project from "./Project/Project";
+
+
+// const App = () => {
+//   return (
+//     <div className="App">
+//       {/* ArtTechNav is a standalone fullscreen navigation overlay */}
+//         <ArtTechNav />
+//         <JunniLandingPage/>
+//         <Project />
+//         <Hero id="hero" />
+//         <NewGrid id="newgrid" />
+//         <PricingCard id="pricing" />
+//         <AdBlank id="adblank" />
+//       </div>
+  
+//   );
+// };
+
+// export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useRef, useCallback } from "react";
 import "./App.css";
 import Hero from "./components/Hero/Hero";
-import NewGrid from "./components/NewGrid/NewGrid";
-import PricingCard from "./components/PricingCard/PricingCard";
-import AdBlank from "./components/AdBlank/AdBlank";
+// import NewGrid from "./components/NewGrid/NewGrid";
+// import PricingCard from "./components/PricingCard/PricingCard";
+// import AdBlank from "./components/AdBlank/AdBlank";
 import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
 import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
+import Project from "./components/Project/Project";
+import Services from "./components/Services/Services";
+import { Footer } from "./components/Footer/Footer";
+import WhySection from "./components/WhySection/WhySection";
+import MarqueeScroll from "./components/MarqueeScroll/MarqueeScroll";
+
+
+
+const BLOCK_SIZE = 30;
 
 const App = () => {
+  const blocksRef = useRef(null);
+  const rafIdRef = useRef(null);
+  const mousePosRef = useRef({ x: 0, y: 0 });
+
+  const createBlocks = useCallback(() => {
+    if (!blocksRef.current) return;
+
+    const numCols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+    const numRows = Math.ceil(window.innerHeight / BLOCK_SIZE);
+
+    blocksRef.current.innerHTML = "";
+    blocksRef.current.style.gridTemplateColumns = `repeat(${numCols}, ${BLOCK_SIZE}px)`;
+
+    for (let i = 0; i < numCols * numRows; i++) {
+      const block = document.createElement("div");
+      block.className = "app-block";
+      blocksRef.current.appendChild(block);
+    }
+  }, []);
+
+  const highlightBlock = useCallback((event) => {
+    if (!blocksRef.current || rafIdRef.current) return;
+
+    mousePosRef.current = { x: event.clientX, y: event.clientY };
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      const rect = blocksRef.current.getBoundingClientRect();
+      const x = mousePosRef.current.x - rect.left;
+      const y = mousePosRef.current.y - rect.top;
+
+      const col = Math.floor(x / BLOCK_SIZE);
+      const row = Math.floor(y / BLOCK_SIZE);
+
+      const numCols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+      const index = row * numCols + col;
+
+      const block = blocksRef.current.children[index];
+
+      if (block && !block.classList.contains("app-highlight")) {
+        block.classList.add("app-highlight");
+        setTimeout(() => block.classList.remove("app-highlight"), 300);
+      }
+
+      rafIdRef.current = null;
+    });
+  }, []);
+
+  useEffect(() => {
+    createBlocks();
+    window.addEventListener("resize", createBlocks);
+    window.addEventListener("mousemove", highlightBlock);
+
+    return () => {
+      window.removeEventListener("resize", createBlocks);
+      window.removeEventListener("mousemove", highlightBlock);
+    };
+  }, [createBlocks, highlightBlock]);
+
   return (
     <div className="App">
-      {/* ArtTechNav is a standalone fullscreen navigation overlay */}
-        <ArtTechNav />
-        <JunniLandingPage/>
-        <Hero id="hero" />
-        <NewGrid id="newgrid" />
-        <PricingCard id="pricing" />
-        <AdBlank id="adblank" />
+
+      {/* Global Mouse Grid Overlay */}
+      <div className="app-blocks-container">
+        <div ref={blocksRef} className="app-blocks-grid"></div>
       </div>
-  
+
+      <ArtTechNav />
+      <JunniLandingPage />
+    
+      <Hero />
+      < Services/>
+      <Project />
+      {/* <NewGrid />
+      <PricingCard /> */}
+      {/* <AdBlank /> */}
+      <WhySection/>
+      <MarqueeScroll/>
+      <Footer/>
+    </div>
   );
 };
 

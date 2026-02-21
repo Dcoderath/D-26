@@ -170,10 +170,7 @@ canvas.pixel-screen {
 }
  */
 
-/* ============================= */
-/* HERO ROOT */
-/* ============================= */
-
+/* 
 .term-hero-root {
   position: relative;
   width: 100%;
@@ -182,16 +179,14 @@ canvas.pixel-screen {
   background: #0b0b0b;
 }
 
-/* Canvas */
+
 .term-hero-root canvas.pixel-screen {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* ============================= */
-/* OVERLAY */
-/* ============================= */
+
 
 .term-hero__overlay {
   position: absolute;
@@ -201,7 +196,6 @@ canvas.pixel-screen {
   pointer-events: none;
 }
 
-/* Overlay sides */
 .term-hero__overlay-left,
 .term-hero__overlay-right {
   width: 50%;
@@ -210,9 +204,7 @@ canvas.pixel-screen {
   pointer-events: auto;
 }
 
-/* ============================= */
-/* LEFT SIDE */
-/* ============================= */
+
 
 .term-hero__overlay-left {
   align-items: flex-start;
@@ -221,9 +213,7 @@ canvas.pixel-screen {
   box-sizing: border-box;
 }
 
-/* ============================= */
-/* LEFT TEXT BACKGROUND BLUR */
-/* ============================= */
+
 
 .term-hero__intro {
   position: relative;
@@ -241,16 +231,14 @@ canvas.pixel-screen {
   box-sizing: border-box;
 }
 
-/* Fallback for no blur support */
+
 @supports not (backdrop-filter: blur(1px)) {
   .term-hero__intro {
     background: rgba(0, 0, 0, 0.45);
   }
 }
 
-/* ============================= */
-/* TEXT */
-/* ============================= */
+
 
 .term-hero__availability {
   display: inline-block;
@@ -268,9 +256,6 @@ canvas.pixel-screen {
   color: #000000;
 }
 
-/* ============================= */
-/* RIGHT SIDE */
-/* ============================= */
 
 .term-hero__overlay-right {
   align-items: center;
@@ -278,9 +263,7 @@ canvas.pixel-screen {
   position: relative;
 }
 
-/* ============================= */
-/* SERVICES BUTTONS */
-/* ============================= */
+
 
 .term-hero__services {
   display: flex;
@@ -290,7 +273,7 @@ canvas.pixel-screen {
   gap: 8px;
 }
 
-/* Buttons */
+
 .term-hero__services span {
   display: block;
   padding: 10px 20px;
@@ -315,7 +298,6 @@ canvas.pixel-screen {
   z-index: 0;
 }
 
-/* Hover */
 .term-hero__services span:hover {
   background: #FF4C24;
   color: #ffffff;
@@ -323,7 +305,7 @@ canvas.pixel-screen {
   box-shadow: 0 4px 0 rgb(0, 0, 0);
 }
 
-/* Stuck reset */
+
 .term-hero__services span.stuck {
   background: #000000 !important;
   color: #ffffff !important;
@@ -331,11 +313,7 @@ canvas.pixel-screen {
   box-shadow: 0 4px 0 rgb(0, 0, 0) !important;
 }
 
-/* ============================= */
-/* RESPONSIVE BREAKPOINTS */
-/* ============================= */
 
-/* Tablets & below */
 @media (max-width: 900px) {
   .term-hero__overlay {
     flex-direction: column;
@@ -362,7 +340,7 @@ canvas.pixel-screen {
   }
 }
 
-/* Mobile */
+
 @media (max-width: 480px) {
   .term-hero-root {
   
@@ -377,4 +355,35 @@ canvas.pixel-screen {
     max-width: 100%;
     padding: 1rem;
   }
+} */
+
+
+
+/* Root wrapper */
+.term-hero-root {
+  
+  position: relative;
+  width: 100%;
+  height: 100vh;          /* Full screen hero */
+  overflow: hidden;       /* Prevent scroll from canvas */
+  background: #000000;    /* Fallback background */
+}
+
+/* Canvas */
+.pixel-screen {
+  padding-top: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;            /* Makes canvas responsive */
+  height: 100%;
+  display: block;         /* Removes inline spacing */
+}
+
+/* Optional: if you want hero content later */
+.term-hero-root .hero-content {
+  position: relative;
+  z-index: 2;             /* Above canvas */
+  color: #d1cfcf;
+  text-align: center;
 }

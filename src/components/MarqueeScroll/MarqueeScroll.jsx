@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const MarqueeScroll = () => {
   const containerRef = useRef(null);
 
+  // ✅ Preload images immediately
   const images = Object.entries(
     import.meta.glob("../../assets/Image/*.jpg", { eager: true })
   )
@@ -18,36 +19,34 @@ const MarqueeScroll = () => {
       const numB = parseInt(b[0].match(/\((\d+)\)/)[1]);
       return numA - numB;
     })
-    .map(([, mod]) => mod.default);
+    .map(([, mod]) => {
+      const img = new Image();
+      img.src = mod.default; // preload
+      return mod.default;
+    });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const containers = document.querySelectorAll(
+      const containers = containerRef.current.querySelectorAll(
         ".marqueeScroll-container"
       );
 
       containers.forEach((container, index) => {
         const marquee = container.querySelector(".marqueeScroll-marquee");
 
-        // ✅ Duplicate content BEFORE SplitType
-        const clone = marquee.innerHTML;
-        marquee.innerHTML += clone;
+        // Duplicate content for seamless marquee
+        marquee.innerHTML += marquee.innerHTML;
 
-        // ✅ Split + Animate ALL texts (both originals + duplicates)
+        // Split and animate text
         const headings = container.querySelectorAll("h1");
-
         headings.forEach((heading) => {
           const split = new SplitType(heading, { types: "chars" });
-
           gsap.fromTo(
             split.chars,
             { fontWeight: 100 },
             {
               fontWeight: 900,
-              stagger: {
-                each: 0.15,
-                from: index % 2 !== 0 ? "start" : "end",
-              },
+              stagger: { each: 0.15, from: index % 2 !== 0 ? "start" : "end" },
               scrollTrigger: {
                 trigger: container,
                 start: "top 80%",
@@ -58,12 +57,10 @@ const MarqueeScroll = () => {
           );
         });
 
-        // ✅ Seamless horizontal movement
+        // Horizontal marquee movement
         gsap.fromTo(
           marquee,
-          {
-            xPercent: index % 2 === 0 ? -20 : 0,
-          },
+          { xPercent: index % 2 === 0 ? -20 : 0 },
           {
             xPercent: index % 2 === 0 ? 0 : -20,
             ease: "none",
@@ -77,17 +74,14 @@ const MarqueeScroll = () => {
         );
       });
 
-      // ✅ Lenis smooth scroll
-      const lenis = new Lenis({
-        smooth: true,
-        lerp: 0.08,
-      });
-
+      // Lenis smooth scroll
+      const lenis = new Lenis({ smooth: true, lerp: 0.08 });
       lenis.on("scroll", ScrollTrigger.update);
-
-      gsap.ticker.add((time) => {
+      const raf = (time) => {
         lenis.raf(time * 1000);
-      });
+        requestAnimationFrame(raf);
+      };
+      requestAnimationFrame(raf);
 
       gsap.ticker.lagSmoothing(0);
     }, containerRef);
@@ -98,66 +92,39 @@ const MarqueeScroll = () => {
   return (
     <div className="marqueeScroll-wrapper" ref={containerRef}>
       <section className="marqueeScroll-section">
-
-        <Row
-          images={images.slice(0, 4)}
-          text1="Unique"
-          text2="Design"
-        />
-
-        <Row
-          images={images.slice(4, 8)}
-          text1="Release"
-          text2="Drop"
-        />
-
-        <Row
-          images={images.slice(8, 12)}
-          text1="2500"
-          text2="Limited"
-        />
-
-        <Row
-          images={images.slice(12, 16)}
-          text1="Rarity"
-          text2="Exclusive"
-        />
-
+        <Row images={images.slice(0, 4)} text1="Unique" text2="Design" />
+        <Row images={images.slice(4, 8)} text1="Release" text2="Drop" />
+        <Row images={images.slice(8, 12)} text1="2500" text2="Limited" />
+        <Row images={images.slice(12, 16)} text1="Rarity" text2="Exclusive" />
       </section>
     </div>
   );
 };
 
-const Row = ({ images, text1, text2 }) => {
-  return (
-    <div className="marqueeScroll-container">
-      <div className="marqueeScroll-marquee">
-
-        {/* First two images */}
-        {images.slice(0, 2).map((img, i) => (
-          <div className="marqueeScroll-item" key={i}>
-            <img src={img} alt="" />
-          </div>
-        ))}
-
-        <div className="marqueeScroll-item marqueeScroll-text">
-          <h1>{text1}</h1>
+const Row = ({ images, text1, text2 }) => (
+  <div className="marqueeScroll-container">
+    <div className="marqueeScroll-marquee">
+      {images.slice(0, 2).map((img, i) => (
+        <div className="marqueeScroll-item" key={i}>
+          <img src={img} alt="" loading="eager" />
         </div>
+      ))}
 
-        {/* Next two images */}
-        {images.slice(2, 4).map((img, i) => (
-          <div className="marqueeScroll-item" key={i + 2}>
-            <img src={img} alt="" />
-          </div>
-        ))}
+      <div className="marqueeScroll-item marqueeScroll-text">
+        <h1>{text1}</h1>
+      </div>
 
-        <div className="marqueeScroll-item marqueeScroll-text">
-          <h1>{text2}</h1>
+      {images.slice(2, 4).map((img, i) => (
+        <div className="marqueeScroll-item" key={i + 2}>
+          <img src={img} alt="" loading="eager" />
         </div>
+      ))}
 
+      <div className="marqueeScroll-item marqueeScroll-text">
+        <h1>{text2}</h1>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 export default MarqueeScroll;

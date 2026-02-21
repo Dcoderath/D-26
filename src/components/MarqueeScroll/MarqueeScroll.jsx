@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const MarqueeScroll = () => {
   const containerRef = useRef(null);
 
-  // ✅ Load and SORT images properly (1 → 16)
+  // Load and SORT images properly (1 → 16)
   const images = Object.entries(
     import.meta.glob("../../assets/Image/*.jpg", { eager: true })
   )
@@ -23,6 +23,8 @@ const MarqueeScroll = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+
+      // Text animation
       function animateChars(chars, reverse = false) {
         gsap.fromTo(
           chars,
@@ -32,13 +34,13 @@ const MarqueeScroll = () => {
             duration: 1,
             ease: "none",
             stagger: {
-              each: 0.35,
+              each: 0.15,
               from: reverse ? "start" : "end",
             },
             scrollTrigger: {
               trigger: chars[0].closest(".marqueeScroll-container"),
-              start: "50% bottom",
-              end: "top top",
+              start: "top 80%",
+              end: "top 20%",
               scrub: true,
             },
           }
@@ -55,19 +57,20 @@ const MarqueeScroll = () => {
         const marquee = container.querySelector(".marqueeScroll-marquee");
         const words = marquee.querySelectorAll("h1");
 
-        const start = "0%";
-        const end = index % 2 === 0 ? "10%" : "-15%";
-
+        // 🔥 STRONG HORIZONTAL MOVEMENT
         gsap.fromTo(
           marquee,
-          { x: start },
           {
-            x: end,
+            x: index % 2 === 0 ? -600 : 600,
+          },
+          {
+            x: index % 2 === 0 ? 600 : -600,
+            ease: "none",
             scrollTrigger: {
               trigger: container,
               start: "top bottom",
-              end: "150% top",
-              scrub: true,
+              end: "200% top",
+              scrub: 1.2,
             },
           }
         );
@@ -80,10 +83,20 @@ const MarqueeScroll = () => {
         });
       });
 
-      const lenis = new Lenis();
+      // Smooth Scroll Setup (Lenis)
+      const lenis = new Lenis({
+        smooth: true,
+        lerp: 0.08,
+      });
+
       lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add((time) => lenis.raf(time * 1000));
+
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+
       gsap.ticker.lagSmoothing(0);
+
     }, containerRef);
 
     return () => ctx.revert();

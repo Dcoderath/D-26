@@ -84,3 +84,83 @@
   display: flex;
   align-items: center; /* Keeps text centered even if the box grows */
 }
+/* =====================================
+   PERFECT RESPONSIVE FIX
+===================================== */
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+
+  .why-section {
+    padding: 90px 5%;
+  }
+
+  .why-list {
+    gap: 40px; /* Reduce vertical space between items */
+  }
+
+  .why-grid {
+    grid-template-columns: 120px 1fr; /* Fixed number width */
+    row-gap: 15px;
+    column-gap: 20px;
+  }
+
+  /* Description goes full width */
+  .why-grid > div:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  /* Remove vertical divider */
+  .why-grid > div:nth-child(2) {
+    border-right: none;
+  }
+
+  /* Remove vertical centering to prevent tall boxes */
+  .why-title,
+  .why-description {
+    align-items: flex-start;
+  }
+}
+
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+
+  .why-section {
+    padding: 70px 5%;
+  }
+
+  .why-heading {
+    margin-bottom: 40px;
+  }
+
+  .why-list {
+    gap: 30px; /* Smaller gap */
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Remove all borders for cleaner mobile */
+  .why-title,
+  .why-description {
+    border-bottom: none;
+    align-items: flex-start;
+  }
+
+  .why-grid > div:nth-child(2) {
+    border-right: none;
+  }
+
+  /* Reduce padding inside boxes */
+  .why-box {
+    padding: 15px 0;
+  }
+
+  /* Make number tighter */
+  .why-number {
+    font-size: 40px;
+  }
+}

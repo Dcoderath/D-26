@@ -4,24 +4,29 @@
   font-family: "Big Shoulders Display", sans-serif;
 }
 
+/* SECTION */
 .marqueeScroll-section {
-  height: 150vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background:#F1F1F1;
+  background: #F1F1F1;
+  padding: 2rem 0;
+  margin: 5rem 0 ;
 }
 
+/* CONTAINER */
 .marqueeScroll-container {
   position: relative;
-  width: 125%;
-  height: 250px;
+  width: 120%;
+  height: clamp(150px, 20vw, 250px);
   display: flex;
-  gap: 1em;
-  margin-bottom: 1em;
+  gap: 1rem;
+  margin-bottom: 1rem;
   overflow: hidden;
 }
 
+/* MARQUEE */
 .marqueeScroll-marquee {
   width: 100%;
   height: 100%;
@@ -30,11 +35,12 @@
   left: 0;
   transform: translateY(-50%);
   display: flex;
-  gap: 1em;
+  gap: 1rem;
 }
 
+/* ITEMS */
 .marqueeScroll-item {
-  flex: 1;
+  flex: 1 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,20 +50,33 @@
   flex: 1.5;
 }
 
+/* IMAGES */
 .marqueeScroll-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* HEADINGS */
 .marqueeScroll-item h1 {
   text-transform: uppercase;
-  font-size: 70px;
+  font-size: clamp(2rem, 6vw, 70px);
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
 }
 
-@media (max-width: 900px) {
+/* TABLET */
+@media (max-width: 1024px) {
+  .marqueeScroll-container {
+    width: 180%;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
   .marqueeScroll-section {
-    height: 100vh;
+    min-height: 100vh;
   }
 
   .marqueeScroll-container {
@@ -66,6 +85,18 @@
   }
 
   .marqueeScroll-item h1 {
-    font-size: 60px;
+    font-size: clamp(1.5rem, 8vw, 60px);
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .marqueeScroll-container {
+    width: 300%;
+    height: 120px;
+  }
+
+  .marqueeScroll-item h1 {
+    font-size: clamp(1.2rem, 9vw, 40px);
   }
 }

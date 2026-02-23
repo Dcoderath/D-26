@@ -157,7 +157,7 @@ const toggleProject = (index) => {
   ];
 
   return (
-    <section className="project-section">
+    <section id="Project" className="project-section">
       <canvas ref={topRightCanvas} className="canvas-top" />
       <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
 

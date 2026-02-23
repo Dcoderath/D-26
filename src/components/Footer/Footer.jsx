@@ -685,18 +685,16 @@
 
 
 
-
 import React, { useState } from 'react';
 import './Footer.css';
 
 export const Footer = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('Pre-register request'); // fixed message like AdBlank
+  const [message] = useState('Pre-register request');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Environment variables like AdBlank
   const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
   const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -717,14 +715,13 @@ export const Footer = () => {
       formData.append("name", name.trim());
       formData.append("email", email.trim());
       formData.append("message", message);
-      formData.append("website", ""); // honeypot
+      formData.append("website", "");
 
-      const res = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: "POST",
         body: formData
       });
 
-      // AdBlank does not check response because of CORS/no-cors
       setSubmitted(true);
       setName('');
       setEmail('');
@@ -737,26 +734,43 @@ export const Footer = () => {
   };
 
   return (
-    <div className="mita-wrapper">
+    // ✅ IMPORTANT FIX HERE
+    <div id="Footer" className="mita-wrapper">
+      
       <nav className="mita-top-nav">
-        <div className="nav-socials"><span>IG</span> <span>TT</span> <span>X</span> <span>IN</span></div>
-        <div className="nav-menu"><span>MITA</span> <span>THE APP</span> <span>NOT NFTS</span> <span>FAQ IT</span> <span>FOUNDERS</span></div>
+        <div className="nav-socials">
+          <span>IG</span> <span>TT</span> <span>X</span> <span>IN</span>
+        </div>
+        <div className="nav-menu">
+          <span>MITA</span>
+          <span>THE APP</span>
+          <span>NOT NFTS</span>
+          <span>FAQ IT</span>
+          <span>FOUNDERS</span>
+        </div>
         <div className="nav-access">↗ EARLY ACCESS</div>
       </nav>
 
       <div className="mita-content">
         <section className="mita-hero">
           <h1 className="mita-title">JOIN US</h1>
-          <div className="mita-subtitles"><span>A MOVEMENT</span><span>IN</span><span>MUSIC</span></div>
+          <div className="mita-subtitles">
+            <span>A MOVEMENT</span>
+            <span>IN</span>
+            <span>MUSIC</span>
+          </div>
         </section>
 
         <section className="mita-form-zone">
           <p className="mita-instruction">
-            TYPE YOUR NAME AND EMAIL BELOW TO <br /> PRE-REGISTER FOR EARLY ACCESS...
+            TYPE YOUR NAME AND EMAIL BELOW TO <br />
+            PRE-REGISTER FOR EARLY ACCESS...
           </p>
 
           {submitted ? (
-            <p className="mita-spam-text">THANK YOU FOR PRE-REGISTERING!</p>
+            <p className="mita-spam-text">
+              THANK YOU FOR PRE-REGISTERING!
+            </p>
           ) : (
             <form onSubmit={handleSubmit}>
               <div className="mita-input-row">
@@ -782,7 +796,9 @@ export const Footer = () => {
               </div>
 
               {!isFormValid && email !== '' && (
-                <p style={{ color: 'red', marginTop: '5px' }}>⚠️ Please enter a valid name and email</p>
+                <p style={{ color: 'red', marginTop: '5px' }}>
+                  ⚠️ Please enter a valid name and email
+                </p>
               )}
 
               <button
@@ -795,13 +811,26 @@ export const Footer = () => {
             </form>
           )}
 
-          {!submitted && <p className="mita-spam-text">DON'T WORRY, WE WON'T SPAM YOU</p>}
+          {!submitted && (
+            <p className="mita-spam-text">
+              DON'T WORRY, WE WON'T SPAM YOU
+            </p>
+          )}
         </section>
 
         <footer className="mita-bottom-bar">
-          <div className="mita-links-group"><span>MORE QUESTIONS? <a href="#">CONTACT US</a></span><span>WANNA <a href="#">JOIN THE TEAM?</a></span></div>
-          <div className="mita-links-group"><a href="#">TERMS OF SERVICE</a><a href="#">PRIVACY POLICY</a><span>MADE BY <a href="#">SOMEFOLK</a></span></div>
+          <div className="mita-links-group">
+            <span>MORE QUESTIONS? <a href="#">CONTACT US</a></span>
+            <span>WANNA <a href="#">JOIN THE TEAM?</a></span>
+          </div>
+
+          <div className="mita-links-group">
+            <a href="#">TERMS OF SERVICE</a>
+            <a href="#">PRIVACY POLICY</a>
+            <span>MADE BY <a href="#">SOMEFOLK</a></span>
+          </div>
         </footer>
+
       </div>
     </div>
   );

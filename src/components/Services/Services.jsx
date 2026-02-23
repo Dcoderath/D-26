@@ -146,7 +146,7 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="services-main">
+    <div id="Services" className="services-main">
       {/* Main heading */}
       <h1 className="main-title" ref={mainTitleRef}>
         Services

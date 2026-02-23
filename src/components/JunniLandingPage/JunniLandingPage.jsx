@@ -344,7 +344,7 @@ const JunniLandingPage = () => {
   }, [isGsapLoaded, createBoard]);
 
   return (
-    <main className="junni-landing-page limelight-regular">
+    <main id="Home" className="junni-landing-page limelight-regular">
       <nav className="junni-nav">
         <a href="#" className="junni-nav-link"></a>
       </nav>

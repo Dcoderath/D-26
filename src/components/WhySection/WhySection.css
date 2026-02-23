@@ -94,13 +94,20 @@
 }
 
 .why-title {
-  color: #ff2323;
+  padding: 0;
+  padding-left: 10px;
+  color: #ff3232;
   font-size: clamp(20px, 3vw, 36px);
   font-weight: 600;
   display: flex;
   align-items: center;
 }
-
+.why-icon {
+  margin-right: 32px; /* gap between icon and text */
+  color: #000000;
+  font-size: 1.5em;
+  vertical-align: middle;
+}
 .why-description {
 font-family: 'Inter', sans-serif;
   color: #000;

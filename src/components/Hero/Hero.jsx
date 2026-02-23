@@ -1489,130 +1489,323 @@
 
 
 
+// import React, { useEffect, useRef } from "react";
 
-import React, { useEffect, useRef } from "react";
+// export default function Hero() {
+//   const canvasRef = useRef(null);
+
+//   useEffect(() => {
+//     const canvas = canvasRef.current;
+//     const ctx = canvas.getContext("2d");
+
+//     // 🔥 SET SIZE ONLY ONCE (NO RESIZE LISTENER)
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+
+//     drawPixels();
+
+//     function drawPixels() {
+//       const { width, height } = canvas;
+
+//       ctx.fillStyle = "#242021";
+//       ctx.fillRect(0, 0, width, height);
+
+//       const size = 30;
+//       const rows = Math.floor(height / size);
+//       const cols = Math.floor(width / size);
+
+//       let seed = 10101;
+//       const random = () => {
+//         seed = (seed * 1664525 + 1013904223) % 4294967296;
+//         return seed / 4294967296;
+//       };
+
+//       const drawnPixels = new Set();
+
+//       for (let y = 0; y < rows; y++) {
+//         for (let x = 0; x < cols; x++) {
+//           const normalizedX = x / cols;
+//           const normalizedY = y / rows;
+
+//           const w = x === cols - 1 ? width - x * size : size;
+//           const h = y === rows - 1 ? height - y * size : size;
+
+//           // Top dense block
+//           if (normalizedY <= 0.2) {
+//             ctx.fillStyle = "#F1F1F1";
+//             ctx.fillRect(x * size, y * size, w, h);
+//             drawnPixels.add(`${x},${y}`);
+//             continue;
+//           }
+
+//           const heightLimit = 0.6 - normalizedX * 0.3;
+
+//           if (normalizedY < heightLimit && normalizedX < 0.4) {
+//             ctx.fillStyle = "#F1F1F1";
+//             ctx.fillRect(x * size, y * size, w, h);
+//             drawnPixels.add(`${x},${y}`);
+//           } else if (
+//             normalizedX < 0.45 &&
+//             normalizedY >= heightLimit &&
+//             normalizedY < heightLimit + 0.12 &&
+//             random() > 0.92
+//           ) {
+//             ctx.fillStyle = "#F1F1F1";
+//             ctx.fillRect(x * size, y * size, w, h);
+//             drawnPixels.add(`${x},${y}`);
+
+//             if (random() > 0.7) {
+//               let cx = x;
+//               let cy = y;
+//               const snakeLength = Math.floor(random() * 2) + 2;
+
+//               for (let i = 0; i < snakeLength; i++) {
+//                 cx += Math.floor(random() * 3) - 1;
+//                 cy += Math.floor(random() * 2);
+
+//                 if (cx < 0 || cx >= cols || cy >= rows) break;
+
+//                 const sw = cx === cols - 1 ? width - cx * size : size;
+//                 const sh = cy === rows - 1 ? height - cy * size : size;
+
+//                 ctx.fillRect(cx * size, cy * size, sw, sh);
+//                 drawnPixels.add(`${cx},${cy}`);
+//               }
+//             }
+//           } else if (normalizedX >= 0.4 && normalizedX < 0.8) {
+//             const waveLimit =
+//               0.4 +
+//               Math.sin(normalizedX * 6) * 0.05 +
+//               Math.cos(normalizedX * 3) * 0.03;
+
+//             if (normalizedY < waveLimit && random() > 0.8) {
+//               ctx.fillStyle = "#F1F1F1";
+
+//               let cx = x;
+//               let cy = y;
+//               const snakeLength = Math.floor(random() * 4) + 5;
+
+//               for (let i = 0; i < snakeLength; i++) {
+//                 const sw = cx === cols - 1 ? width - cx * size : size;
+//                 const sh = cy === rows - 1 ? height - cy * size : size;
+
+//                 ctx.fillRect(cx * size, cy * size, sw, sh);
+//                 drawnPixels.add(`${cx},${cy}`);
+
+//                 cx += Math.floor(random() * 3) - 1;
+//                 cy += Math.floor(random() * 2) - 1;
+
+//                 if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
+//               }
+//             }
+//           } else if (
+//             normalizedX >= 0.8 &&
+//             normalizedY < 0.3 &&
+//             random() > 0.95
+//           ) {
+//             ctx.fillStyle = "#F1F1F1";
+
+//             let cx = x;
+//             let cy = y;
+//             const snakeLength = Math.floor(random() * 3) + 4;
+
+//             for (let i = 0; i < snakeLength; i++) {
+//               const sw = cx === cols - 1 ? width - cx * size : size;
+//               const sh = cy === rows - 1 ? height - cy * size : size;
+
+//               ctx.fillRect(cx * size, cy * size, sw, sh);
+//               drawnPixels.add(`${cx},${cy}`);
+
+//               cx += Math.floor(random() * 3) - 1;
+//               cy += Math.floor(random() * 3) - 1;
+
+//               if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
+//             }
+//           } else if (normalizedX > 0.7 && normalizedY > 0.7) {
+//             if (random() > 0.1) {
+//               ctx.fillStyle = "#F1F1F1";
+//               ctx.fillRect(x * size, y * size, w, h);
+//               drawnPixels.add(`${x},${y}`);
+//             }
+//           }
+
+//           const bottomRightLimit = 0.35 - (1 - normalizedX) * 0.1;
+
+//           if (normalizedY > 1 - bottomRightLimit && normalizedX > 0.6) {
+//             ctx.fillStyle = "#F1F1F1";
+//             ctx.fillRect(x * size, y * size, w, h);
+//             drawnPixels.add(`${x},${y}`);
+
+//             if (random() > 0.7) {
+//               let cx = x - 1;
+//               let cy = y;
+//               const snakeLength = Math.floor(random() * 3) + 2;
+
+//               for (let i = 0; i < snakeLength; i++) {
+//                 if (cx < 0) break;
+
+//                 const sw = cx === cols - 1 ? width - cx * size : size;
+//                 const sh = cy === rows - 1 ? height - cy * size : size;
+
+//                 ctx.fillRect(cx * size, cy * size, sw, sh);
+//                 drawnPixels.add(`${cx},${cy}`);
+
+//                 cx -= 1;
+//                 cy += Math.floor(random() * 2) - 1;
+//               }
+//             }
+//           }
+//         }
+//       }
+
+//       // Binary numbers
+//       ctx.font = `${size * 0.55}px monospace`;
+//       ctx.textAlign = "center";
+//       ctx.textBaseline = "middle";
+
+//       drawnPixels.forEach((pos) => {
+//         const [x, y] = pos.split(",").map(Number);
+
+//         if (x === 0 || x === cols - 1 || y === 0 || y === rows - 1) return;
+
+//         const neighbors = [
+//           `${x + 1},${y}`,
+//           `${x - 1},${y}`,
+//           `${x},${y + 1}`,
+//           `${x},${y - 1}`,
+//         ];
+
+//         const touchingDark = neighbors.some(
+//           (n) => !drawnPixels.has(n)
+//         );
+
+//         if (touchingDark) {
+//           ctx.fillStyle = "#000000";
+//           ctx.fillText(
+//             random() > 0.5 ? "1" : "0",
+//             x * size + size / 2,
+//             y * size + size / 2
+//           );
+//         }
+//       });
+//     }
+//   }, []);
+
+//   return (
+//     <header
+//       style={{
+//         width: "100vw",
+//         height: "100dvh", // stable mobile height
+//         overflow: "hidden",
+//         position: "relative",
+//       }}
+//     >
+//       <canvas
+//         ref={canvasRef}
+//         style={{
+//           display: "block",
+//           width: "100%",
+//           height: "100%",
+//         }}
+//       />
+//     </header>
+//   );
+// }
+
+
+import React, { useEffect, useRef, useCallback } from "react";
 
 export default function Hero() {
   const canvasRef = useRef(null);
 
-  useEffect(() => {
+  const drawPixels = useCallback(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    
     const ctx = canvas.getContext("2d");
+    const { width, height } = canvas;
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      drawPixels();
+    ctx.fillStyle = "#242021";
+    ctx.fillRect(0, 0, width, height);
+
+    // 📐 Calculate pixel size based on screen width
+    // This makes pixels scale with screen size
+    const baseSize = Math.min(width, height) * 0.035; // 3.5% of smallest dimension
+    const size = Math.max(20, Math.min(40, Math.floor(baseSize))); // Clamp between 20-40px
+    
+    const rows = Math.floor(height / size);
+    const cols = Math.floor(width / size);
+
+    let seed = 10101;
+    const random = () => {
+      seed = (seed * 1664525 + 1013904223) % 4294967296;
+      return seed / 4294967296;
     };
 
-    window.addEventListener("resize", resize);
-    resize();
+    const drawnPixels = new Set();
 
-    function drawPixels() {
-      const { width, height } = canvas;
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        const normalizedX = x / cols;
+        const normalizedY = y / rows;
 
-      ctx.fillStyle = "#242021";
-      ctx.fillRect(0, 0, width, height);
+        const w = x === cols - 1 ? width - x * size : size;
+        const h = y === rows - 1 ? height - y * size : size;
 
-      const size = 30;
-      const rows = Math.floor(height / size);
-      const cols = Math.floor(width / size);
+        // Top dense block
+        if (normalizedY <= 0.2) {
+          ctx.fillStyle = "#F1F1F1";
+          ctx.fillRect(x * size, y * size, w, h);
+          drawnPixels.add(`${x},${y}`);
+          continue;
+        }
 
-      let seed = 10101;
-      const random = () => {
-        seed = (seed * 1664525 + 1013904223) % 4294967296;
-        return seed / 4294967296;
-      };
+        const heightLimit = 0.6 - normalizedX * 0.3;
 
-      const drawnPixels = new Set();
+        if (normalizedY < heightLimit && normalizedX < 0.4) {
+          ctx.fillStyle = "#F1F1F1";
+          ctx.fillRect(x * size, y * size, w, h);
+          drawnPixels.add(`${x},${y}`);
+        } else if (
+          normalizedX < 0.45 &&
+          normalizedY >= heightLimit &&
+          normalizedY < heightLimit + 0.12 &&
+          random() > 0.92
+        ) {
+          ctx.fillStyle = "#F1F1F1";
+          ctx.fillRect(x * size, y * size, w, h);
+          drawnPixels.add(`${x},${y}`);
 
-      for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-          const normalizedX = x / cols;
-          const normalizedY = y / rows;
+          if (random() > 0.7) {
+            let cx = x;
+            let cy = y;
+            const snakeLength = Math.floor(random() * 2) + 2;
 
-          const w = x === cols - 1 ? width - x * size : size;
-          const h = y === rows - 1 ? height - y * size : size;
+            for (let i = 0; i < snakeLength; i++) {
+              cx += Math.floor(random() * 3) - 1;
+              cy += Math.floor(random() * 2);
 
-          // Top dense block
-          if (normalizedY <= 0.2) {
-            ctx.fillStyle = "#F1F1F1";
-            ctx.fillRect(x * size, y * size, w, h);
-            drawnPixels.add(`${x},${y}`);
-            continue;
+              if (cx < 0 || cx >= cols || cy >= rows) break;
+
+              const sw = cx === cols - 1 ? width - cx * size : size;
+              const sh = cy === rows - 1 ? height - cy * size : size;
+
+              ctx.fillRect(cx * size, cy * size, sw, sh);
+              drawnPixels.add(`${cx},${cy}`);
+            }
           }
+        } else if (normalizedX >= 0.4 && normalizedX < 0.8) {
+          const waveLimit =
+            0.4 +
+            Math.sin(normalizedX * 6) * 0.05 +
+            Math.cos(normalizedX * 3) * 0.03;
 
-          const heightLimit = 0.6 - normalizedX * 0.3;
-
-
-          if (normalizedY < heightLimit && normalizedX < 0.4) {
-            ctx.fillStyle = "#F1F1F1";
-            ctx.fillRect(x * size, y * size, w, h);
-            drawnPixels.add(`${x},${y}`);
-          } else if (
-            normalizedX < 0.45 &&
-            normalizedY >= heightLimit &&
-            normalizedY < heightLimit + 0.12 &&
-            random() > 0.92
-          ) {
-            ctx.fillStyle = "#F1F1F1";
-            ctx.fillRect(x * size, y * size, w, h);
-            drawnPixels.add(`${x},${y}`);
-
-            if (random() > 0.7) {
-              let cx = x;
-              let cy = y;
-              const snakeLength = Math.floor(random() * 2) + 2;
-
-              for (let i = 0; i < snakeLength; i++) {
-                cx += Math.floor(random() * 3) - 1;
-                cy += Math.floor(random() * 2);
-
-                if (cx < 0 || cx >= cols || cy >= rows) break;
-
-                const sw = cx === cols - 1 ? width - cx * size : size;
-                const sh = cy === rows - 1 ? height - cy * size : size;
-
-                ctx.fillRect(cx * size, cy * size, sw, sh);
-                drawnPixels.add(`${cx},${cy}`);
-              }
-            }
-          } else if (normalizedX >= 0.4 && normalizedX < 0.8) {
-            const waveLimit =
-              0.4 +
-              Math.sin(normalizedX * 6) * 0.05 +
-              Math.cos(normalizedX * 3) * 0.03;
-
-            if (normalizedY < waveLimit && random() > 0.8) {
-              ctx.fillStyle = "#F1F1F1";
-
-              let cx = x;
-              let cy = y;
-              const snakeLength = Math.floor(random() * 4) + 5;
-
-              for (let i = 0; i < snakeLength; i++) {
-                const sw = cx === cols - 1 ? width - cx * size : size;
-                const sh = cy === rows - 1 ? height - cy * size : size;
-
-                ctx.fillRect(cx * size, cy * size, sw, sh);
-                drawnPixels.add(`${cx},${cy}`);
-
-                cx += Math.floor(random() * 3) - 1;
-                cy += Math.floor(random() * 2) - 1;
-
-                if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
-              }
-            }
-          } else if (
-            normalizedX >= 0.8 &&
-            normalizedY < 0.3 &&
-            random() > 0.95
-          ) {
+          if (normalizedY < waveLimit && random() > 0.8) {
             ctx.fillStyle = "#F1F1F1";
 
             let cx = x;
             let cy = y;
-            const snakeLength = Math.floor(random() * 3) + 4;
+            const snakeLength = Math.floor(random() * 4) + 5;
 
             for (let i = 0; i < snakeLength; i++) {
               const sw = cx === cols - 1 ? width - cx * size : size;
@@ -1622,95 +1815,139 @@ export default function Hero() {
               drawnPixels.add(`${cx},${cy}`);
 
               cx += Math.floor(random() * 3) - 1;
-              cy += Math.floor(random() * 3) - 1;
+              cy += Math.floor(random() * 2) - 1;
 
               if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
             }
-          } else if (normalizedX > 0.7 && normalizedY > 0.7) {
-            if (random() > 0.1) {
-              ctx.fillStyle = "#F1F1F1";
-              ctx.fillRect(x * size, y * size, w, h);
-              drawnPixels.add(`${x},${y}`);
-            }
           }
+        } else if (
+          normalizedX >= 0.8 &&
+          normalizedY < 0.3 &&
+          random() > 0.95
+        ) {
+          ctx.fillStyle = "#F1F1F1";
 
-          const bottomRightLimit = 0.35 - (1 - normalizedX) * 0.1;
+          let cx = x;
+          let cy = y;
+          const snakeLength = Math.floor(random() * 3) + 4;
 
-          if (normalizedY > 1 - bottomRightLimit && normalizedX > 0.6) {
+          for (let i = 0; i < snakeLength; i++) {
+            const sw = cx === cols - 1 ? width - cx * size : size;
+            const sh = cy === rows - 1 ? height - cy * size : size;
+
+            ctx.fillRect(cx * size, cy * size, sw, sh);
+            drawnPixels.add(`${cx},${cy}`);
+
+            cx += Math.floor(random() * 3) - 1;
+            cy += Math.floor(random() * 3) - 1;
+
+            if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
+          }
+        } else if (normalizedX > 0.7 && normalizedY > 0.7) {
+          if (random() > 0.1) {
             ctx.fillStyle = "#F1F1F1";
             ctx.fillRect(x * size, y * size, w, h);
             drawnPixels.add(`${x},${y}`);
+          }
+        }
 
-            if (random() > 0.7) {
-              let cx = x - 1;
-              let cy = y;
-              const snakeLength = Math.floor(random() * 3) + 2;
+        const bottomRightLimit = 0.35 - (1 - normalizedX) * 0.1;
 
-              for (let i = 0; i < snakeLength; i++) {
-                if (cx < 0) break;
+        if (normalizedY > 1 - bottomRightLimit && normalizedX > 0.6) {
+          ctx.fillStyle = "#F1F1F1";
+          ctx.fillRect(x * size, y * size, w, h);
+          drawnPixels.add(`${x},${y}`);
 
-                const sw = cx === cols - 1 ? width - cx * size : size;
-                const sh = cy === rows - 1 ? height - cy * size : size;
+          if (random() > 0.7) {
+            let cx = x - 1;
+            let cy = y;
+            const snakeLength = Math.floor(random() * 3) + 2;
 
-                ctx.fillRect(cx * size, cy * size, sw, sh);
-                drawnPixels.add(`${cx},${cy}`);
+            for (let i = 0; i < snakeLength; i++) {
+              if (cx < 0) break;
 
-                cx -= 1;
-                cy += Math.floor(random() * 2) - 1;
-              }
+              const sw = cx === cols - 1 ? width - cx * size : size;
+              const sh = cy === rows - 1 ? height - cy * size : size;
+
+              ctx.fillRect(cx * size, cy * size, sw, sh);
+              drawnPixels.add(`${cx},${cy}`);
+
+              cx -= 1;
+              cy += Math.floor(random() * 2) - 1;
             }
           }
         }
       }
-
-      // 🔥 Binary (NO extreme edges)
-      ctx.font = `${size * 0.55}px monospace`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      drawnPixels.forEach((pos) => {
-        const [x, y] = pos.split(",").map(Number);
-
-        // Skip extreme outer border
-        if (
-          x === 0 ||
-          x === cols - 1 ||
-          y === 0 ||
-          y === rows - 1
-        ) {
-          return;
-        }
-
-        const neighbors = [
-          `${x + 1},${y}`,
-          `${x - 1},${y}`,
-          `${x},${y + 1}`,
-          `${x},${y - 1}`,
-        ];
-
-        const touchingDark = neighbors.some(
-          (n) => !drawnPixels.has(n)
-        );
-
-        if (touchingDark) {
-          ctx.fillStyle = "#000000";
-          ctx.fillText(
-            random() > 0.5 ? "1" : "0",
-            x * size + size / 2,
-            y * size + size / 2
-          );
-        }
-      });
     }
 
-    return () => window.removeEventListener("resize", resize);
+    // Binary numbers - scale font with pixel size
+    ctx.font = `${Math.floor(size * 0.55)}px monospace`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    drawnPixels.forEach((pos) => {
+      const [x, y] = pos.split(",").map(Number);
+
+      if (x === 0 || x === cols - 1 || y === 0 || y === rows - 1) return;
+
+      const neighbors = [
+        `${x + 1},${y}`,
+        `${x - 1},${y}`,
+        `${x},${y + 1}`,
+        `${x},${y - 1}`,
+      ];
+
+      const touchingDark = neighbors.some(
+        (n) => !drawnPixels.has(n)
+      );
+
+      if (touchingDark) {
+        ctx.fillStyle = "#000000";
+        ctx.fillText(
+          random() > 0.5 ? "1" : "0",
+          x * size + size / 2,
+          y * size + size / 2
+        );
+      }
+    });
   }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    
+    const handleResize = () => {
+      // Update canvas size on resize
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      // Redraw with new dimensions
+      drawPixels();
+    };
+
+    // Initial setup
+    handleResize();
+
+    // Add resize listener with debounce for better performance
+    let timeoutId;
+    const debouncedResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleResize, 100);
+    };
+
+    window.addEventListener("resize", debouncedResize);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(timeoutId);
+    };
+  }, [drawPixels]);
 
   return (
     <header
       style={{
         width: "100vw",
-        height: "100vh",
+        height: "100dvh",
         overflow: "hidden",
         position: "relative",
       }}

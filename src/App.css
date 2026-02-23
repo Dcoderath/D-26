@@ -99,11 +99,12 @@ html, body {
 /* ROOT */
 html,
 body {
+    background: #F1F1F1;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden; /* 🚀 Prevent horizontal scroll */
   font-family: "Limelight", sans-serif;
-    background: #F1F1F1;
+    /* background: #F1F1F1; */
 }
 
 /* MAIN APP */

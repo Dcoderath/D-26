@@ -7,32 +7,86 @@
 import { motion } from "framer-motion";
 import "./WhySection.css";
 
+
+
 const features = [
   {
     id: "01",
-    title: "Equipment",
+    title: "We Think Like Founders",
     description:
-      "We use advanced technologies and modern dental equipment at all stages of diagnosis and treatment.",
+      "We don’t just build projects — we think like business owners. Every decision we make is focused on growth, profitability, and long-term success for your company.",
   },
   {
     id: "02",
-    title: "Offices",
+    title: "Results Over Hype",
     description:
-      "Our rooms are designed in a comfortable style to make you feel safe and relaxed during procedures and treatment.",
+      "We focus on real outcomes, not empty promises. Our work is driven by strategy, performance, and measurable impact that helps your business move forward.",
   },
   {
     id: "03",
-    title: "Professionalism",
+    title: "Clear Communication",
     description:
-      "Our specialists have the latest treatment methods, modern knowledge, and extensive experience.",
+      "No confusion, no technical overwhelm. We keep the process simple, transparent, and collaborative so you always know what’s happening and why.",
   },
   {
     id: "04",
-    title: "Individuality",
+    title: "Long-Term Partnership",
     description:
-      "We offer an individual approach to each patient, ensure anonymity, and provide psycho-emotional support.",
+      "We build relationships, not one-time projects. Our goal is to grow with you, support your evolution, and help you build a business that lasts.",
   },
 ];
+// const features = [
+//   {
+//     id: "01",
+//     title: "Business Architecture",
+//     description:
+//       "We design and structure your online business from the ground up — offer creation, positioning, pricing, and scalable revenue models.",
+//   },
+//   {
+//     id: "02",
+//     title: "Growth Infrastructure",
+//     description:
+//       "We implement high-converting funnels, automation systems, and digital assets that work 24/7 to drive consistent growth.",
+//   },
+//   {
+//     id: "03",
+//     title: "Authority & Brand Building",
+//     description:
+//       "We help you stand out in competitive markets by building a powerful brand presence and market authority.",
+//   },
+//   {
+//     id: "04",
+//     title: "Long-Term Scaling",
+//     description:
+//       "Our focus is not short-term wins. We help you scale sustainably, optimize operations, and build a company that lasts.",
+//   },
+// ];
+// const features = [
+//   {
+//     id: "01",
+//     title: "Equipment",
+//     description:
+//       "We use advanced technologies and modern dental equipment at all stages of diagnosis and treatment.",
+//   },
+//   {
+//     id: "02",
+//     title: "Offices",
+//     description:
+//       "Our rooms are designed in a comfortable style to make you feel safe and relaxed during procedures and treatment.",
+//   },
+//   {
+//     id: "03",
+//     title: "Professionalism",
+//     description:
+//       "Our specialists have the latest treatment methods, modern knowledge, and extensive experience.",
+//   },
+//   {
+//     id: "04",
+//     title: "Individuality",
+//     description:
+//       "We offer an individual approach to each patient, ensure anonymity, and provide psycho-emotional support.",
+//   },
+// ];
 
 export default function WhyWeBestSolutionSection() {
   return (
@@ -45,9 +99,9 @@ export default function WhyWeBestSolutionSection() {
           viewport={{ once: true }}
           className="why-heading"
         >
-          <div className="heading-left">WHY ARE WE</div>
+          <div className="heading-left">[ WHY ARE WE</div>
           <div className="heading-right">THE BEST SOLUTION</div>
-          <div className="heading-center">FOR YOU?</div>
+          <div className="heading-center">FOR YOU? ] </div>
         </motion.div>
 
         <div className="why-list">

@@ -827,7 +827,7 @@ export const Footer = () => {
           <div className="mita-links-group">
             <a href="#">TERMS OF SERVICE</a>
             <a href="#">PRIVACY POLICY</a>
-            <span>MADE BY <a href="#">SOMEFOLK</a></span>
+            <span>MADE BY <a href="#">Dcoderath</a></span>
           </div>
         </footer>
 

@@ -399,7 +399,7 @@ const App = () => {
       <ArtTechNav />
       <JunniLandingPage />
     
-      <Hero />
+      {/* <Hero /> */}
       < Services/>
       <Project />
       {/* <NewGrid />

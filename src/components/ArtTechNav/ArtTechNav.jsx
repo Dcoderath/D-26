@@ -7,11 +7,38 @@ const ArtTechNav = () => {
   const overlayRef = useRef(null);
   const menuRef = useRef(null);
 
-  // GSAP animation
   useEffect(() => {
     const loadGSAP = async () => {
       const gsap = (await import("gsap")).default;
 
+      // --- PAGE LOAD REVEAL ---
+      // 1. Set blocks to full and logos to hidden immediately
+      gsap.set(".block", { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" });
+      gsap.set(".logo, .logo-main, .toggle-btn", { opacity: 0, y: -10 });
+
+      const introTl = gsap.timeline();
+
+      introTl
+        // First, animate the blocks away
+        .to(".block", {
+          duration: 1,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+          stagger: 0.075,
+          ease: "power3.inOut",
+          onComplete: () => {
+            if (overlayRef.current) overlayRef.current.style.display = "none";
+          }
+        })
+        // THEN, show the logos and buttons
+        .to(".logo, .logo-main, .toggle-btn", {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out"
+        }, "-=0.2"); // Starts slightly before blocks finish moving
+
+      // --- YOUR ORIGINAL MENU TIMELINE ---
       timelineRef.current = gsap.timeline({
         paused: true,
         onReverseComplete: () => {
@@ -20,7 +47,6 @@ const ArtTechNav = () => {
             overlayRef.current.style.display = "none";
           }
           if (menuRef.current) {
-            menuRef.current.style.pointerEvents = "none";
             menuRef.current.style.display = "none";
           }
         },
@@ -30,7 +56,6 @@ const ArtTechNav = () => {
         },
       });
 
-      // Animate overlay blocks
       timelineRef.current.to(".block", {
         duration: 1,
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
@@ -38,7 +63,6 @@ const ArtTechNav = () => {
         ease: "power3.inOut",
       });
 
-      // Animate menu items
       timelineRef.current.to(
         ".menu-title, .menu-item",
         { duration: 0.3, opacity: 1, stagger: 0.05, pointerEvents: "auto" },
@@ -51,18 +75,12 @@ const ArtTechNav = () => {
 
   const handleToggle = () => {
     if (!timelineRef.current) return;
-
-    if (!isOpen) {
-      timelineRef.current.play();
-    } else {
-      timelineRef.current.reverse();
-    }
-
+    !isOpen ? timelineRef.current.play() : timelineRef.current.reverse();
     setIsOpen(!isOpen);
   };
 
   const menuItems = [
-        { year: "1", name: "Home", target: "Home" },
+    { year: "1", name: "Home", target: "Home" },
     { year: "2", name: "Design Works", target: "Project" },
     { year: "3", name: "Professional Services", target: "Services" },
     { year: "26", name: "Let’s Talk", target: "Footer" },
@@ -71,68 +89,42 @@ const ArtTechNav = () => {
   const handleScrollAndClose = (targetId) => {
     const element = document.getElementById(targetId);
     if (!timelineRef.current) return;
-
     timelineRef.current.reverse();
-
     timelineRef.current.eventCallback("onReverseComplete", () => {
       if (element) element.scrollIntoView({ behavior: "smooth" });
       timelineRef.current.eventCallback("onReverseComplete", null);
     });
-
     setIsOpen(false);
   };
 
   return (
     <div className={`art-tech-nav-container ${isOpen ? "menu-open" : ""}`}>
-      {/* Navigation */}
       <nav>
         <div className="logo text-logo">
-          <span>web</span>
-          <span>design</span>
-          <span>elite</span>
-          <span>+23</span>
+          <span>web</span><span>design</span><span>elite</span><span>+23</span>
         </div>
-
         <div className="logo-main">
           <button className="elite-btn">Elite Web Design</button>
         </div>
-
         <div className="toggle-btn">
-          <button
-            className={`burger ${isOpen ? "active" : ""}`}
-            onClick={handleToggle}
-          />
+          <button className={`burger ${isOpen ? "active" : ""}`} onClick={handleToggle} />
         </div>
       </nav>
 
-      {/* Overlay animation blocks */}
-      <div ref={overlayRef} className="overlay">
+      <div ref={overlayRef} className="overlay" style={{ display: 'flex' }}>
         {[...Array(8)].map((_, i) => (
           <div key={i} className="block"></div>
         ))}
       </div>
 
-      {/* Menu overlay */}
       <div ref={menuRef} className="overlay-menu">
-        <div className="menu-title">
-          <p>[menu]</p>
-        </div>
-
+        <div className="menu-title"><p>[menu]</p></div>
         {menuItems.map((item, i) => (
           <div key={i} className="menu-item">
-            <div className="menu-item-year">
-              <p>{item.year}</p>
-            </div>
-            <div className="menu-item-name">
-              <p>{item.name}</p>
-            </div>
+            <div className="menu-item-year"><p>{item.year}</p></div>
+            <div className="menu-item-name"><p>{item.name}</p></div>
             <div className="menu-item-link">
-              <button
-                className="menu-link-btn"
-                onClick={() => handleScrollAndClose(item.target)}
-              >
-                Go
-              </button>
+              <button className="menu-link-btn" onClick={() => handleScrollAndClose(item.target)}>Go</button>
             </div>
           </div>
         ))}

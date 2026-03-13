@@ -136,11 +136,9 @@
 // }
 
 
-
 "use client";
 
 import { motion } from "framer-motion";
-import { FiUsers, FiTrendingUp, FiMessageCircle, FiBriefcase } from "react-icons/fi"; // all valid icons
 import "./WhySection.css";
 
 const features = [
@@ -149,28 +147,24 @@ const features = [
     title: "We Think Like Founders",
     description:
       "We don’t just build projects — we think like business owners. Every decision we make is focused on growth, profitability, and long-term success for your company.",
-    icon: FiUsers,
   },
   {
     id: "02",
     title: "Results Over Hype",
     description:
       "We focus on real outcomes, not empty promises. Our work is driven by strategy, performance, and measurable impact that helps your business move forward.",
-    icon: FiTrendingUp,
   },
   {
     id: "03",
     title: "Clear Communication",
     description:
       "No confusion, no technical overwhelm. We keep the process simple, transparent, and collaborative so you always know what’s happening and why.",
-    icon: FiMessageCircle,
   },
   {
     id: "04",
     title: "Long-Term Partnership",
     description:
       "We build relationships, not one-time projects. Our goal is to grow with you, support your evolution, and help you build a business that lasts.",
-    icon: FiBriefcase,
   },
 ];
 
@@ -192,7 +186,6 @@ export default function WhyWeBestSolutionSection() {
 
         <div className="why-list">
           {features.map((feature, index) => {
-            const Icon = feature.icon;
             return (
               <motion.div
                 key={feature.id}
@@ -206,7 +199,6 @@ export default function WhyWeBestSolutionSection() {
                   <div className="why-box why-number">{feature.id}</div>
 
                   <div className="why-box why-title">
-                    <Icon className="why-icon" />
                     {feature.title}
                   </div>
 

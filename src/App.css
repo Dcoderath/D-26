@@ -84,10 +84,8 @@ html, body {
 
 
 
-
 @import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
 
-/* RESET */
 *,
 *::before,
 *::after {
@@ -96,26 +94,29 @@ html, body {
   box-sizing: border-box;
 }
 
-/* ROOT */
 html,
 body {
-    background: #F1F1F1;
+  background: #F1F1F1;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* 🚀 Prevent horizontal scroll */
+  overflow-x: hidden;
   font-family: "Limelight", sans-serif;
-    /* background: #F1F1F1; */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* MAIN APP */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .App {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden; /* 🚀 Extra safety */
+  overflow-x: hidden;
 }
 
-/* BLOCK GRID CONTAINER */
 .app-blocks-container {
   position: fixed;
   inset: 0;
@@ -123,9 +124,8 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  overflow: hidden; /* 🚀 Prevent spill */
+  overflow: hidden;
 }
-
 
 .app-blocks-grid {
   display: grid;
@@ -136,7 +136,6 @@ body {
   overflow: hidden;
 }
 
-
 .app-block {
   width: 30px;
   height: 30px;
@@ -145,13 +144,11 @@ body {
   flex-shrink: 0;
 }
 
-/* HIGHLIGHT */
 .app-highlight {
   border: 2px solid white;
   background: rgb(24, 117, 255);
 }
 
-/* FULL SCREEN SECTIONS */
 .Hero,
 .NewGrid,
 .PricingCard,
@@ -164,30 +161,19 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden; /* 🚀 stop child overflow */
+  overflow-x: hidden;
 }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+::selection {
+  background: orange;
+  color: white;
 }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #000000, #444);
-  border-radius: 999px;
-  opacity: 0.8;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #888, #555);
-  opacity: 1;
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
+::-moz-selection {
+  background: orange;
+  color: white;
 }

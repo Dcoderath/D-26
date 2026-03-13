@@ -1,6 +1,3 @@
-/* ===============================
-   GLOBAL NAV CONTAINER
-================================ */
 .art-tech-nav-container {
   width: 100%;
   position: relative;
@@ -16,9 +13,6 @@
   font-family: inherit;
 }
 
-/* ===============================
-   TEXT LOGO
-================================ */
 .text-logo {
   background-color: #000;
   max-width: max-content;
@@ -31,11 +25,9 @@
   position: relative;
   z-index: 10001;
   letter-spacing: 0.08em;
+  opacity: 0;
 }
 
-/* ===============================
-   NAV BAR
-================================ */
 nav {
   position: fixed;
   width: 100%;
@@ -48,9 +40,6 @@ nav {
   pointer-events: auto;
 }
 
-/* ===============================
-   CENTER LOGO
-================================ */
 .logo-main {
   position: absolute;
   left: 50%;
@@ -59,6 +48,7 @@ nav {
   justify-content: center;
   align-items: center;
   z-index: 10001;
+  opacity: 0;
 }
 
 .logo-main img {
@@ -67,9 +57,6 @@ nav {
   z-index: inherit;
 }
 
-/* ===============================
-   BUTTONS
-================================ */
 .elite-btn {
   background-color: #000;
   border: 1px solid #fff;
@@ -88,15 +75,13 @@ nav {
   color: #000;
 }
 
-/* ===============================
-   TOGGLE / BURGER
-================================ */
 .toggle-btn {
   display: flex;
   justify-content: flex-end;
   padding: 0 1.5em;
   position: relative;
   z-index: 10002;
+  opacity: 0;
 }
 
 .burger {
@@ -142,16 +127,13 @@ nav {
   background: #000;
 }
 
-/* ===============================
-   OVERLAY BLOCKS
-================================ */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: none;
+  display: flex;
   flex-direction: row;
   z-index: 9998;
   pointer-events: none;
@@ -161,13 +143,14 @@ nav {
   flex: 1;
   height: 100%;
   background: #000;
-  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   margin-right: -2px;
 }
 
-/* ===============================
-   OVERLAY MENU
-================================ */
+.reveal-content {
+  opacity: 0;
+}
+
 .overlay-menu {
   position: fixed;
   top: 0;
@@ -184,9 +167,6 @@ nav {
   pointer-events: none;
 }
 
-/* ===============================
-   MENU ITEMS
-================================ */
 .menu-title,
 .menu-item {
   flex: 1;
@@ -230,9 +210,6 @@ nav {
   justify-content: flex-end;
 }
 
-/* ===============================
-   MENU BUTTONS
-================================ */
 .menu-link-btn {
   background: none;
   border: none;
@@ -249,9 +226,6 @@ nav {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* ===============================
-   WEBSITE CONTENT
-================================ */
 .website-content {
   position: relative;
   width: 100%;
@@ -263,9 +237,6 @@ nav {
   margin: 50px auto;
 }
 
-/* ===============================
-   OVERLAY ACTIVE BOOST
-================================ */
 body.overlay-active .art-tech-nav-container,
 body.overlay-active nav,
 body.overlay-active .text-logo,
@@ -275,34 +246,12 @@ body.overlay-active .burger {
   z-index: 10010 !important;
 }
 
-/* ===============================
-   RESPONSIVE
-================================ */
 @media (max-width: 900px) {
   .logo-main img { display: none; }
-
-  .website-content .header {
-    width: 300px;
-  }
-
-  .overlay-menu {
-    padding: 5em 2em;
-  }
-
-  .menu-item-name p {
-    font-size: 4vw;
-  }
-
-  nav {
-    padding: 15px;
-  }
-
-  .text-logo {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  body.overlay-active .burger {
-    z-index: 10011 !important;
-  }
+  .website-content .header { width: 300px; }
+  .overlay-menu { padding: 5em 2em; }
+  .menu-item-name p { font-size: 4vw; }
+  nav { padding: 15px; }
+  .text-logo { font-size: 14px; padding: 8px; }
+  body.overlay-active .burger { z-index: 10011 !important; }
 }

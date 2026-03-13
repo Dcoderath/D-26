@@ -82,7 +82,7 @@ const ArtTechNav = () => {
   const menuItems = [
     { year: "1", name: "Home", target: "Home" },
     { year: "2", name: "Design Works", target: "Project" },
-    { year: "3", name: "Professional Services", target: "Services" },
+    { year: "3", name: "Services", target: "Services" },
     { year: "26", name: "Let’s Talk", target: "Footer" },
   ];
 

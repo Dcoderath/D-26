@@ -178,12 +178,39 @@ nav {
 }
 
 .menu-item {
-  padding: 1em;
+  padding: 3em;
   cursor: pointer;
+  position: relative; /* Required for the pseudo-element to be positioned correctly */
+  overflow: hidden;   /* Ensures the wipe stays inside the menu item borders */
+  transition: color 0.4s ease; /* Smooth text color transition */
+  z-index: 1;
 }
 
+/* The wipe element */
+.menu-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 81, 255, 0.74); /* Your wipe color */
+  
+  /* Left-to-right wipe logic */
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: -1; /* Keeps the wipe behind the text */
+}
+
+/* Hover trigger */
+.menu-item:hover::before {
+  transform: scaleX(1);
+}
+
+/* Optional: Invert text color on hover if needed */
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  color: #000; 
 }
 
 .menu-item-year,

@@ -78,16 +78,21 @@ const Services = () => {
       el.dataset.wrapped = "true";
     };
 
-    // Animation Logic
-    const animateText = (el) => {
+const animateText = (el) => {
       const wrappers = el.querySelectorAll(".char-wrapper");
       
+      // Create the timeline
       const tl = gsap.timeline({ paused: true });
+      
       tl.to(wrappers, {
         yPercent: -100,
-        duration: 0.6,
-        ease: "power3.inOut",
-        stagger: 0.03, // This creates the "wave" effect
+        duration: 0.5,
+        ease: "power2.inOut",
+        // Positive stagger value ensures left-to-right sequence
+        stagger: {
+          each: 0.04, 
+          from: "start" // Explicitly start from the first character
+        },
       });
 
       // ScrollTrigger for initial entry
@@ -97,10 +102,11 @@ const Services = () => {
         onEnter: () => tl.play(),
       });
 
-      // Hover effect
-      el.addEventListener("mouseenter", () => tl.restart());
+      // Hover effect: restarting from 0 ensures the left-to-right flow repeats
+      el.addEventListener("mouseenter", () => {
+        tl.restart();
+      });
     };
-
     // Initialize Main Title
     if (mainTitleRef.current) {
       splitText(mainTitleRef.current);

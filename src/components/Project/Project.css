@@ -1,40 +1,31 @@
-/* =========================
-   PROJECT SECTION (ISOLATED)
-========================= */
-
 .project-section {
   position: relative;
   width: 100%;
-  padding:80px 5%;
-  background: #242021;
+  padding: 80px 5%;
+  /* background: #242021; */
+  background-color: black;
   color: white;
-
-  overflow: hidden; /* This hides the 1px overflow */
+  overflow: hidden;
 }
 
-/* =========================
-   CANVAS PIXELS (BACKGROUND)
-========================= */
-/* Update your CSS to this */
 .canvas-bottom {
   position: absolute;
-  bottom: -1px; /* Slight overlap to kill the gap */
+  bottom: -1px;
   left: 0;
   width: 100%;
-  pointer-events: none; /* Ensure it doesn't block clicks */
-  z-index: 1; 
+  pointer-events: none;
+  z-index: 1;
 }
+
 .canvas-top,
 .canvas-bottom {
   position: absolute;
   width: 400px;
   height: 400px;
-
   pointer-events: none;
   user-select: none;
-
   z-index: 0;
-  display: block; /* Prevent inline spacing issues */
+  display: block;
 }
 
 .canvas-top {
@@ -47,18 +38,10 @@
   left: 0;
 }
 
-/* =========================
-   CONTENT ABOVE CANVAS
-========================= */
-
 .project-content-wrapper {
   position: relative;
   z-index: 2;
 }
-
-/* =========================
-   HEADING
-========================= */
 
 .project-heading {
   margin-bottom: 80px;
@@ -66,7 +49,7 @@
 
 .project-heading h1 {
   display: inline-block;
-  background: #FFA63D;
+  background: #ff8800;
   color: black;
   padding: 8px 16px;
   line-height: 1.2;
@@ -76,20 +59,17 @@
 
 .project-heading p {
   display: inline-block;
-  background: #3d81ff;
+  background: #0059ff;
   color: black;
   padding: 8px 16px;
   line-height: 1.2;
   font-size: clamp(28px, 6vw, 68px);
 }
 
-/* =========================
-   PROJECT ROW
-========================= */
-
 .project-row {
   border-bottom: 1px solid #333;
-  padding: 60px 0;
+  padding: 20px;
+  transition: background-color 0.5s ease;
 }
 
 .project-grid {
@@ -98,10 +78,6 @@
   gap: 40px;
   align-items: start;
 }
-
-/* =========================
-   CATEGORY
-========================= */
 
 .project-category {
   font-size: 14px;
@@ -117,16 +93,13 @@
   height: 10px;
   border-radius: 50%;
   border: 1px solid white;
-  transition: 0.3s;
+  transition: transform 0.4s ease, background-color 0.4s ease;
 }
 
 .dot.active {
+  transform: scale(1.2);
   background: white;
 }
-
-/* =========================
-   CONTENT
-========================= */
 
 .project-content h3 {
   font-size: 30px;
@@ -153,17 +126,13 @@
   padding: 8px 16px;
   border: 1px solid white;
   border-radius: 30px;
-  transition: 0.3s;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .project-tags span:hover {
   background: white;
   color: black;
 }
-
-/* =========================
-   ACTIONS
-========================= */
 
 .project-actions {
   display: flex;
@@ -186,10 +155,6 @@
   color: black;
 }
 
-/* =========================
-   DETAIL IMAGES
-========================= */
-
 .detail-images {
   grid-column: 2 / 4;
   display: grid;
@@ -205,10 +170,6 @@
   border-radius: 12px;
 }
 
-/* =========================
-   BOTTOM SECTION
-========================= */
-
 .project-bottom {
   margin-top: 120px;
 }
@@ -222,40 +183,21 @@
 
 .project-big-title {
   display: inline-block;
-  background: #FFA63D;
+  background: #ff8800;
   color: black;
   padding: 8px 16px;
   line-height: 1.2;
   font-size: clamp(60px, 10vw, 120px);
   position: relative;
 }
-/* Smooth transition for the project row background */
-.project-row {
-padding: 20px;
-  transition: background-color 0.5s ease;
-}
 
 .project-row:hover {
-  background-color: rgba(255, 255, 255, 0.088); /* Very subtle highlight */
+  background-color: rgba(255, 255, 255, 0.088);
 }
 
-/* Make the tags transition faster but smoother */
-.project-tags span {
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-/* Smooth dot expansion */
-.dot {
-  transition: transform 0.4s ease, background-color 0.4s ease;
-}
-
-.dot.active {
-  transform: scale(1.2);
-  background: white;
-}
 .project-count {
   display: inline-block;
-  background: #ffa63d;
+  background: #ff8800;
   color: rgb(0, 0, 0);
   padding: 8px 16px;
   line-height: 1.2;
@@ -269,9 +211,9 @@ padding: 20px;
   width: clamp(70px, 10vw, 120px);
   height: clamp(70px, 10vw, 120px);
   border-radius: 50%;
-  background: #ffa63d;
+  background: #ff8800;
   color: black;
-    margin-left: 70px; 
+  margin-left: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -284,10 +226,6 @@ padding: 20px;
 .arrow-circle-big:hover {
   transform: rotate(35deg) scale(1.05);
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 1024px) {
   .project-grid {

@@ -321,7 +321,7 @@ import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
 import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
 import Project from "./components/Project/Project";
 import Services from "./components/Services/Services";
-import { Footer } from "./components/Footer/Footer";
+import Footer from "./components/Footer/Footer";
 import WhySection from "./components/WhySection/WhySection";
 import MarqueeScroll from "./components/MarqueeScroll/MarqueeScroll";
 

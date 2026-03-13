@@ -684,159 +684,346 @@
  
  
  
+// import React, { useState } from "react";
+// import "./Footer.css";
+
+// export const Footer = () => {
+// const [name, setName] = useState("");
+// const [email, setEmail] = useState("");
+// const [message] = useState("Pre-register request");
+// const [loading, setLoading] = useState(false);
+// const [submitted, setSubmitted] = useState(false);
+
+// const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
+// const API_KEY = import.meta.env.VITE_API_KEY;
+
+// const isFormValid =
+// name.trim() !== "" &&
+// email.trim() !== "" &&
+// /^[^\s@]+@[^\s@]+.[^\s@]+$/.test(email.trim());
+
+// const handleSubmit = async (e) => {
+// e.preventDefault();
+// if (!isFormValid || loading) return;
+
+// ```
+// setLoading(true);
+
+// try {
+//   const formData = new FormData();
+//   formData.append("key", API_KEY);
+//   formData.append("name", name.trim());
+//   formData.append("email", email.trim());
+//   formData.append("message", message);
+//   formData.append("website", "");
+
+//   await fetch(SCRIPT_URL, {
+//     method: "POST",
+//     body: formData,
+//   });
+
+//   setSubmitted(true);
+//   setName("");
+//   setEmail("");
+// } catch (err) {
+//   console.error("Form submission error:", err);
+//   alert("❌ Submission failed.");
+// } finally {
+//   setLoading(false);
+// }
+// ```
+
+// };
+
+// return ( <div id="Footer" className="mita-wrapper"> <nav className="mita-top-nav"> <div className="nav-socials"> <span>IG</span> <span>TT</span> <span>X</span> <span>IN</span> </div>
+
+//     <div className="nav-menu">
+//       <span>MITA</span>
+//       <span>THE APP</span>
+//       <span>NOT NFTS</span>
+//       <span>FAQ IT</span>
+//       <span>FOUNDERS</span>
+//     </div>
+
+//     <div className="nav-access">↗ EARLY ACCESS</div>
+//   </nav>
+
+//   <div className="mita-content">
+//     <section className="mita-hero">
+//       <h1 className="mita-title">JOIN US</h1>
+//       <div className="mita-subtitles">
+//         <span>A MOVEMENT</span>
+//         <span>INDIA</span>
+//         <span>Developer</span>
+//       </div>
+//     </section>
+
+//     <section className="mita-form-zone">
+//       <p className="mita-instruction">
+//         TYPE YOUR NAME AND EMAIL BELOW TO <br />
+//         PRE-REGISTER FOR EARLY ACCESS...
+//       </p>
+
+//       {submitted ? (
+//         <p className="mita-spam-text">
+//           THANK YOU FOR PRE-REGISTERING!
+//         </p>
+//       ) : (
+//         <form onSubmit={handleSubmit}>
+//           <div className="mita-input-row">
+//             <input
+//               type="text"
+//               placeholder="YOUR NAME..."
+//               value={name}
+//               onChange={(e) => setName(e.target.value)}
+//               required
+//             />
+//             <span className="mita-star">*</span>
+//           </div>
+
+//           <div className="mita-input-row">
+//             <input
+//               type="email"
+//               placeholder="YOUR EMAIL..."
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               required
+//             />
+//             <span className="mita-star">*</span>
+//           </div>
+
+//           {!isFormValid && email !== "" && (
+//             <p style={{ color: "red", marginTop: "5px" }}>
+//               ⚠️ Please enter a valid name and email
+//             </p>
+//           )}
+
+//           <button
+//             className="mita-submit-btn"
+//             type="submit"
+//             disabled={!isFormValid || loading}
+//           >
+//             {loading ? "SENDING..." : "PRE-REGISTER ↗"}
+//           </button>
+//         </form>
+//       )}
+
+//       {!submitted && (
+//         <p className="mita-spam-text">
+//           DON'T WORRY, WE WON'T SPAM YOU
+//         </p>
+//       )}
+//     </section>
+
+//     <footer className="mita-bottom-bar">
+//       <div className="mita-links-group">
+//         <span>
+//           MORE QUESTIONS? <a href="#">CONTACT US</a>
+//         </span>
+//         <span>
+//           WANNA <a href="#">JOIN THE TEAM?</a>
+//         </span>
+//       </div>
+
+//       <div className="mita-links-group">
+//         <a href="#">TERMS OF SERVICE</a>
+//         <a href="#">PRIVACY POLICY</a>
+//         <span>
+//           MADE BY <a href="#">Dcoderath</a>
+//         </span>
+//       </div>
+//     </footer>
+//   </div>
+// </div>
+
+
+// );
+// };
+
+
+
 import React, { useState } from "react";
 import "./Footer.css";
 
-export const Footer = () => {
-const [name, setName] = useState("");
-const [email, setEmail] = useState("");
-const [message] = useState("Pre-register request");
-const [loading, setLoading] = useState(false);
-const [submitted, setSubmitted] = useState(false);
+export default function Footer() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message] = useState("Pre-register request");
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+  const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
-const isFormValid =
-name.trim() !== "" &&
-email.trim() !== "" &&
-/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(email.trim());
+  const isFormValid =
+    name.trim() !== "" &&
+    email.trim() !== "" &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
-const handleSubmit = async (e) => {
-e.preventDefault();
-if (!isFormValid || loading) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isFormValid || loading) return;
 
-```
-setLoading(true);
+    setLoading(true);
 
-try {
-  const formData = new FormData();
-  formData.append("key", API_KEY);
-  formData.append("name", name.trim());
-  formData.append("email", email.trim());
-  formData.append("message", message);
-  formData.append("website", "");
+    try {
+      const formData = new FormData();
+      formData.append("key", API_KEY);
+      formData.append("name", name.trim());
+      formData.append("email", email.trim());
+      formData.append("message", message);
+      formData.append("website", "");
 
-  await fetch(SCRIPT_URL, {
-    method: "POST",
-    body: formData,
-  });
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+      });
 
-  setSubmitted(true);
-  setName("");
-  setEmail("");
-} catch (err) {
-  console.error("Form submission error:", err);
-  alert("❌ Submission failed.");
-} finally {
-  setLoading(false);
-}
-```
+      setSubmitted(true);
+      setName("");
+      setEmail("");
+    } catch (err) {
+      console.error("Form submission error:", err);
+      alert("❌ Submission failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-};
+  return (
+    <div id="Footer" className="mita-wrapper">
 
-return ( <div id="Footer" className="mita-wrapper"> <nav className="mita-top-nav"> <div className="nav-socials"> <span>IG</span> <span>TT</span> <span>X</span> <span>IN</span> </div>
+      <nav className="mita-top-nav">
 
-```
-    <div className="nav-menu">
-      <span>MITA</span>
-      <span>THE APP</span>
-      <span>NOT NFTS</span>
-      <span>FAQ IT</span>
-      <span>FOUNDERS</span>
-    </div>
+        <div className="nav-socials">
 
-    <div className="nav-access">↗ EARLY ACCESS</div>
-  </nav>
+          <a
+            href="https://github.com/Dcoderath"
+          
+            rel="noopener noreferrer"
+          >
+            GITHUB
+          </a>
 
-  <div className="mita-content">
-    <section className="mita-hero">
-      <h1 className="mita-title">JOIN US</h1>
-      <div className="mita-subtitles">
-        <span>A MOVEMENT</span>
-        <span>IN</span>
-        <span>MUSIC</span>
-      </div>
-    </section>
+          <a
+            href="https://www.linkedin.com/in/divakar-trivedi-85326a376/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LINKEDIN
+          </a>
 
-    <section className="mita-form-zone">
-      <p className="mita-instruction">
-        TYPE YOUR NAME AND EMAIL BELOW TO <br />
-        PRE-REGISTER FOR EARLY ACCESS...
-      </p>
+        </div>
 
-      {submitted ? (
-        <p className="mita-spam-text">
-          THANK YOU FOR PRE-REGISTERING!
-        </p>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="mita-input-row">
-            <input
-              type="text"
-              placeholder="YOUR NAME..."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <span className="mita-star">*</span>
+        <div className="nav-menu">
+          <span>MITA</span>
+          <span>THE APP</span>
+          <span>NOT NFTS</span>
+          <span>FAQ IT</span>
+          <span>FOUNDERS</span>
+        </div>
+
+        <div className="nav-access">↗ EARLY ACCESS</div>
+
+      </nav>
+
+      <div className="mita-content">
+
+        <section className="mita-hero">
+          <h1 className="mita-title">JOIN US</h1>
+
+          <div className="mita-subtitles">
+            <span>A MOVEMENT</span>
+            <span>INDIA</span>
+            <span>DEVELOPER</span>
           </div>
+        </section>
 
-          <div className="mita-input-row">
-            <input
-              type="email"
-              placeholder="YOUR EMAIL..."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <span className="mita-star">*</span>
-          </div>
+        <section className="mita-form-zone">
 
-          {!isFormValid && email !== "" && (
-            <p style={{ color: "red", marginTop: "5px" }}>
-              ⚠️ Please enter a valid name and email
+          <p className="mita-instruction">
+            TYPE YOUR NAME AND EMAIL BELOW TO <br />
+            PRE-REGISTER FOR EARLY ACCESS...
+          </p>
+
+          {submitted ? (
+            <p className="mita-spam-text">
+              THANK YOU FOR PRE-REGISTERING!
+            </p>
+          ) : (
+            <form onSubmit={handleSubmit}>
+
+              <div className="mita-input-row">
+                <input
+                  type="text"
+                  placeholder="YOUR NAME..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+                <span className="mita-star">*</span>
+              </div>
+
+              <div className="mita-input-row">
+                <input
+                  type="email"
+                  placeholder="YOUR EMAIL..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <span className="mita-star">*</span>
+              </div>
+
+              {!isFormValid && email !== "" && (
+                <p style={{ color: "red", marginTop: "5px" }}>
+                  ⚠️ Please enter a valid name and email
+                </p>
+              )}
+
+              <button
+                className="mita-submit-btn"
+                type="submit"
+                disabled={!isFormValid || loading}
+              >
+                {loading ? "SENDING..." : "PRE-REGISTER ↗"}
+              </button>
+
+            </form>
+          )}
+
+          {!submitted && (
+            <p className="mita-spam-text">
+              DON'T WORRY, WE WON'T SPAM YOU
             </p>
           )}
 
-          <button
-            className="mita-submit-btn"
-            type="submit"
-            disabled={!isFormValid || loading}
-          >
-            {loading ? "SENDING..." : "PRE-REGISTER ↗"}
-          </button>
-        </form>
-      )}
+        </section>
 
-      {!submitted && (
-        <p className="mita-spam-text">
-          DON'T WORRY, WE WON'T SPAM YOU
-        </p>
-      )}
-    </section>
+        <footer className="mita-bottom-bar">
 
-    <footer className="mita-bottom-bar">
-      <div className="mita-links-group">
-        <span>
-          MORE QUESTIONS? <a href="#">CONTACT US</a>
-        </span>
-        <span>
-          WANNA <a href="#">JOIN THE TEAM?</a>
-        </span>
+          <div className="mita-links-group">
+            <span>
+              MORE QUESTIONS? <a href="#">CONTACT US</a>
+            </span>
+
+            <span>
+              WANNA <a href="#">JOIN THE TEAM?</a>
+            </span>
+          </div>
+
+          <div className="mita-links-group">
+            <a href="#">TERMS OF SERVICE</a>
+            <a href="#">PRIVACY POLICY</a>
+
+            <span>
+              MADE BY <a href="https://github.com/Dcoderath">Dcoderath</a>
+            </span>
+          </div>
+
+        </footer>
+
       </div>
-
-      <div className="mita-links-group">
-        <a href="#">TERMS OF SERVICE</a>
-        <a href="#">PRIVACY POLICY</a>
-        <span>
-          MADE BY <a href="#">Dcoderath</a>
-        </span>
-      </div>
-    </footer>
-  </div>
-</div>
-
-
-);
-};
+    </div>
+  );
+}

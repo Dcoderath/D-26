@@ -1,7 +1,9 @@
+/* WRAPPER */
 .marqueeScroll-wrapper {
   width: 100%;
   overflow: hidden;
   font-family: "Big Shoulders Display", sans-serif;
+  background: #F1F1F1;
 }
 
 /* SECTION */
@@ -10,7 +12,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #F1F1F1;
   padding: 4rem 0;
   gap: 2rem;
 }
@@ -20,7 +21,9 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  height: clamp(150px, 18vw, 250px);
+  height: clamp(100px, 18vw, 250px);
+  display: flex;
+  align-items: center;
 }
 
 /* MARQUEE TRACK */
@@ -28,13 +31,13 @@
   display: flex;
   align-items: center;
   gap: clamp(1rem, 2vw, 2rem);
-  width: max-content; /* IMPORTANT */
-  height: 100%;
+  white-space: nowrap;
+  will-change: transform;
 }
 
-/* ITEMS */
+/* ITEM */
 .marqueeScroll-item {
-  flex: 0 0 auto; /* VERY IMPORTANT */
+  flex: 0 0 auto;
   height: 100%;
   display: flex;
   align-items: center;
@@ -43,7 +46,7 @@
 
 /* TEXT BLOCK */
 .marqueeScroll-text {
-  padding: 0 clamp(2rem, 4vw, 4rem);
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
 }
 
 /* TEXT STYLE */
@@ -51,43 +54,38 @@
   text-transform: uppercase;
   font-size: clamp(2rem, 6vw, 70px);
   line-height: 1.1;
-  white-space: nowrap;
-  display: inline-block; /* IMPORTANT FOR GSAP */
+  display: inline-block;
+  margin: 0;
 }
 
-/* IMAGES */
+.marqueeScroll-item h1 .char {
+  display: inline-block;
+  will-change: font-weight;
+}
+
+/* IMAGE */
 .marqueeScroll-item img {
-  height: 100%;
-  width: clamp(200px, 22vw, 350px);
+  height: 90%;
+  width: auto;
+  max-width: clamp(150px, 22vw, 350px);
   object-fit: cover;
- 
+  border-radius: 4px;
 }
 
-/* TABLET */
+/* RESPONSIVE OVERRIDES */
 @media (max-width: 1024px) {
-  .marqueeScroll-item img {
-    width: clamp(180px, 30vw, 280px);
-  }
+  .marqueeScroll-container { height: 160px; }
 }
 
-/* MOBILE */
 @media (max-width: 768px) {
-  .marqueeScroll-container {
-    height: 140px;
-  }
-
-  .marqueeScroll-item h1 {
-    font-size: clamp(1.5rem, 8vw, 50px);
-  }
+  .marqueeScroll-container { height: 130px; }
+  .marqueeScroll-item h1 { font-size: clamp(1.5rem, 8vw, 45px); }
 }
 
-/* SMALL MOBILE */
 @media (max-width: 480px) {
-  .marqueeScroll-container {
-    height: 120px;
-  }
-
-  .marqueeScroll-item h1 {
-    font-size: clamp(1.2rem, 9vw, 38px);
-  }
+  .marqueeScroll-container { height: 100px; }
+  .marqueeScroll-item img { max-width: 130px; }
+  .marqueeScroll-item h1 { font-size: 28px; }
+  .marqueeScroll-text { padding: 0 1rem; }
+  .marqueeScroll-section { gap: 1rem; padding: 2rem 0; }
 }

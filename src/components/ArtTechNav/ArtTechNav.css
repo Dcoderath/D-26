@@ -281,4 +281,65 @@ body.overlay-active .burger {
   nav { padding: 15px; }
   .text-logo { font-size: 14px; padding: 8px; }
   body.overlay-active .burger { z-index: 10011 !important; }
+}/* Responsive adjustments for mobile (480px and below) */
+@media (max-width: 480px) {
+  nav {
+    padding: 10px;
+    /* Keeps items spread to the edges */
+    justify-content: space-between; 
+  }
+
+  .text-logo {
+    font-size: 12px;
+    padding: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Ensure the "Elite" button doesn't take too much space */
+  .elite-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  /* Adjust the burger size for easier tapping */
+  .burger {
+    padding: 1.2em 1.5em;
+    width: 24px;
+  }
+  
+  .burger:before, 
+  .burger:after {
+    width: 24px;
+  }
+
+  /* Stack the menu items vertically for better readability */
+  .menu-item {
+    flex-direction: column;
+    padding: 1.5em 1em;
+    gap: 10px;
+    height: auto;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-item-name p {
+    font-size: 24px; /* Fixed size is often better than vw on tiny screens */
+    letter-spacing: 0.05em;
+  }
+
+  .menu-item-year, 
+  .menu-item-link {
+    font-size: 10px;
+    justify-content: center; /* Center these elements when stacked */
+  }
+
+  .menu-link-btn {
+    padding: 5px 10px;
+  }
+
+  /* Ensure the overlay menu allows for scrolling if the list is long */
+  .overlay-menu {
+    padding: 4em 1em;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
 }

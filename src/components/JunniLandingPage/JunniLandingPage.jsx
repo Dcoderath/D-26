@@ -189,39 +189,51 @@
 
 
 
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './JunniLandingPage.css';
 
 const ROWS = 6;
 const COLS = 6;
 const SNAKE_LENGTH = 5;
-const SNAKE_SPEED = 80;
+const SNAKE_SPEED = 25;
+
 const TILT_MAP = { 0: -25, 1: -12, 2: -3, 3: 3, 4: 12, 5: 25 };
 
 const JunniLandingPage = () => {
+
   const isFlipped = useRef(false);
   const boardRef = useRef(null);
   const gsapRef = useRef(null);
+
   const snakeQueueRef = useRef([]);
-  const [isGsapLoaded, setIsGsapLoaded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const processingRef = useRef(false);
   const hoveredTilesSet = useRef(new Set());
   const tileElementsRef = useRef([]);
+
+  const processingRef = useRef(false);
+
+  const [isGsapLoaded, setIsGsapLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  /* Detect screen size */
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
+
     window.addEventListener('resize', checkMobile);
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  /* Snake animation */
+
   const animateSnakeTile = useCallback((tile, index, segmentIndex) => {
+
     if (!gsapRef.current || !tile) return;
 
     const col = index % COLS;
     const tiltY = TILT_MAP[col] || 0;
+
     const intensity = 1 - (segmentIndex / SNAKE_LENGTH) * 0.5;
 
     gsapRef.current.killTweensOf(tile);
@@ -230,25 +242,32 @@ const JunniLandingPage = () => {
 
     gsapRef.current.timeline()
       .to(tile, {
-        rotateX: baseRotation + (360 * intensity),
+        rotateX: baseRotation + (220 * intensity),
         rotateY: tiltY,
-        duration: 0.3,
-        ease: "power2.out"
+        duration: 0.15,
+        ease: "power1.out"
       })
       .to(tile, {
         rotateX: baseRotation,
         rotateY: 0,
-        duration: 0.2,
-        delay: 0.1,
-        ease: "power1.inOut",
+        duration: 0.12,
+        ease: "power1.in",
         onComplete: () => hoveredTilesSet.current.delete(index)
       });
+
   }, []);
 
+  /* Handle hover interaction */
+
   const handleTileInteraction = useCallback((tile, index) => {
-    if (!gsapRef.current || isMobile || processingRef.current || hoveredTilesSet.current.has(index)) return;
+
+    if (!gsapRef.current || isMobile) return;
+
+    if (processingRef.current) return;
+    if (hoveredTilesSet.current.has(index)) return;
 
     processingRef.current = true;
+
     hoveredTilesSet.current.add(index);
 
     snakeQueueRef.current.push({ tile, index });
@@ -258,32 +277,51 @@ const JunniLandingPage = () => {
       if (removed) hoveredTilesSet.current.delete(removed.index);
     }
 
-    snakeQueueRef.current.forEach((seg, i) =>
-      setTimeout(() => animateSnakeTile(seg.tile, seg.index, i), i * SNAKE_SPEED)
-    );
+    snakeQueueRef.current.forEach((seg, i) => {
 
-    setTimeout(() => { processingRef.current = false; }, 100);
+      setTimeout(() => {
+        animateSnakeTile(seg.tile, seg.index, i);
+      }, i * SNAKE_SPEED);
+
+    });
+
+    setTimeout(() => {
+      processingRef.current = false;
+    }, 30);
+
   }, [isMobile, animateSnakeTile]);
 
+  /* Flip all tiles */
+
   const flipAllTiles = useCallback(() => {
+
     if (!gsapRef.current) return;
 
     isFlipped.current = !isFlipped.current;
+
     const targetRotation = isFlipped.current ? 180 : 0;
 
     gsapRef.current.to(tileElementsRef.current, {
+
       rotateX: targetRotation,
-      duration: 0.6,
+      duration: 0.45,
+
       stagger: {
         grid: [ROWS, COLS],
         from: "center",
-        amount: 0.5
+        amount: 0.35
       },
-      ease: "elastic.out(1, 0.5)"
+
+      ease: "power2.out"
+
     });
+
   }, []);
 
+  /* Create tile */
+
   const createTile = useCallback((row, col, index) => {
+
     const tile = document.createElement("div");
     tile.className = "junni-tile";
 
@@ -297,67 +335,107 @@ const JunniLandingPage = () => {
     tile.appendChild(back);
 
     const bgPos = `${(col / (COLS - 1)) * 100}% ${(row / (ROWS - 1)) * 100}%`;
+
     front.style.backgroundPosition = bgPos;
     back.style.backgroundPosition = bgPos;
 
-    tile.addEventListener("mouseenter", () =>
-      handleTileInteraction(tile, index)
-    );
+    /* Faster pointer detection */
+
+    tile.addEventListener("pointerenter", () => {
+      handleTileInteraction(tile, index);
+    });
 
     return tile;
+
   }, [handleTileInteraction]);
 
+  /* Create board */
+
   const createBoard = useCallback(() => {
+
     if (!boardRef.current) return;
 
     boardRef.current.innerHTML = '';
     tileElementsRef.current = [];
 
     for (let i = 0; i < ROWS; i++) {
+
       const row = document.createElement("div");
       row.className = "junni-row";
 
       for (let j = 0; j < COLS; j++) {
+
         const tile = createTile(i, j, i * COLS + j);
+
         tileElementsRef.current.push(tile);
+
         row.appendChild(tile);
+
       }
 
       boardRef.current.appendChild(row);
+
     }
+
   }, [createTile]);
 
+  /* Load GSAP */
+
   useEffect(() => {
+
     const script = document.createElement('script');
+
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+
     script.onload = () => {
       gsapRef.current = window.gsap;
       setIsGsapLoaded(true);
     };
+
     document.head.appendChild(script);
+
   }, []);
 
+  /* Initialize board */
+
   useEffect(() => {
+
     if (isGsapLoaded) {
       createBoard();
     }
+
   }, [isGsapLoaded, createBoard]);
 
   return (
+
     <main id="Home" className="junni-landing-page limelight-regular">
+
       <nav className="junni-nav">
         <a href="#" className="junni-nav-link"></a>
       </nav>
 
-      <section className="junni-board" ref={boardRef}></section>
+      <section
+        className="junni-board"
+        ref={boardRef}
+      ></section>
 
       <div className="junni-flip-button-container">
-        <button className="junni-flip-button" onClick={flipAllTiles}>
+
+        <button
+          className="junni-flip-button"
+          onClick={flipAllTiles}
+        >
+
           {isMobile ? 'Tap to Flip' : 'Flip Tiles'}
+
         </button>
+
       </div>
+
     </main>
+
   );
+
 };
 
 export default JunniLandingPage;

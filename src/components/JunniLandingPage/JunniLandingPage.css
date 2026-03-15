@@ -1,10 +1,12 @@
 .junni-landing-page {
-  position: relative; /* REQUIRED to keep the button inside */
+  position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
   background-color: #000;
 }
+
+/* ---------------- NAV ---------------- */
 
 .junni-nav {
   position: absolute;
@@ -26,9 +28,10 @@
   pointer-events: all;
 }
 
-/* THE BUTTON: Stays at the bottom of THIS component only */
+/* ---------------- BUTTON ---------------- */
+
 .junni-flip-button-container {
-  position: absolute; 
+  position: absolute;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
@@ -51,6 +54,7 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
+/* ---------------- BOARD ---------------- */
 
 .junni-board {
   width: 100%;
@@ -104,8 +108,10 @@
   transform: rotateX(180deg);
 }
 
+/* ---------------- BLOCKS ---------------- */
+
 .junni-blocks-container {
-  position: absolute; /* Stay relative to component */
+  position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 2;
@@ -127,4 +133,92 @@
 
 .junni-highlight {
   border-color: #fff;
+}
+
+/* ================================================= */
+/* ================= RESPONSIVE ==================== */
+/* ================================================= */
+
+/* Tablets */
+
+@media (max-width: 1024px) {
+
+  .junni-nav {
+    padding: 1.5em;
+  }
+
+  .junni-nav-link {
+    font-size: 22px;
+  }
+
+  .junni-flip-button {
+    font-size: 20px;
+    padding: 0.6em 0.9em 0.3em;
+  }
+
+  .junni-block {
+    width: 40px;
+    height: 40px;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .junni-nav {
+    padding: 1em;
+  }
+
+  .junni-nav-link {
+    font-size: 18px;
+  }
+
+  .junni-flip-button-container {
+    bottom: 25px;
+  }
+
+  .junni-flip-button {
+    font-size: 16px;
+    padding: 0.5em 0.8em;
+  }
+
+  .junni-board {
+    gap: 0.1em;
+  }
+
+  .junni-row {
+    gap: 0.1em;
+  }
+
+  .junni-block {
+    width: 28px;
+    height: 28px;
+  }
+
+}
+
+/* Small phones */
+
+@media (max-width: 480px) {
+
+  .junni-nav-link {
+    font-size: 16px;
+  }
+
+  .junni-flip-button {
+    font-size: 14px;
+    padding: 0.45em 0.7em;
+  }
+
+  .junni-flip-button-container {
+    bottom: 20px;
+  }
+
+  .junni-block {
+    width: 22px;
+    height: 22px;
+  }
+
 }

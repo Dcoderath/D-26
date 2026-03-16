@@ -841,14 +841,13 @@
 // };
 
 
-
 import React, { useState } from "react";
 import "./Footer.css";
 
 export default function Footer() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message] = useState("Pre-register request");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -858,6 +857,7 @@ export default function Footer() {
   const isFormValid =
     name.trim() !== "" &&
     email.trim() !== "" &&
+    message.trim() !== "" &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
   const handleSubmit = async (e) => {
@@ -871,17 +871,24 @@ export default function Footer() {
       formData.append("key", API_KEY);
       formData.append("name", name.trim());
       formData.append("email", email.trim());
-      formData.append("message", message);
+      formData.append("message", message.trim());
       formData.append("website", "");
 
       await fetch(SCRIPT_URL, {
         method: "POST",
         body: formData,
+        mode: "no-cors"
       });
 
       setSubmitted(true);
       setName("");
       setEmail("");
+      setMessage("");
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 5000);
+
     } catch (err) {
       console.error("Form submission error:", err);
       alert("❌ Submission failed.");
@@ -896,12 +903,7 @@ export default function Footer() {
       <nav className="mita-top-nav">
 
         <div className="nav-socials">
-
-          <a
-            href="https://github.com/Dcoderath"
-          
-            rel="noopener noreferrer"
-          >
+          <a href="https://github.com/Dcoderath" rel="noopener noreferrer">
             GITHUB
           </a>
 
@@ -912,7 +914,6 @@ export default function Footer() {
           >
             LINKEDIN
           </a>
-
         </div>
 
         <div className="nav-menu">
@@ -942,15 +943,18 @@ export default function Footer() {
         <section className="mita-form-zone">
 
           <p className="mita-instruction">
-            TYPE YOUR NAME AND EMAIL BELOW TO <br />
+            TYPE YOUR NAME, EMAIL AND MESSAGE BELOW TO <br />
             PRE-REGISTER FOR EARLY ACCESS...
           </p>
 
           {submitted ? (
-            <p className="mita-spam-text">
-              THANK YOU FOR PRE-REGISTERING!
-            </p>
+            <div className="success-box">
+              <h3>✅ SUCCESS!</h3>
+              <p>Thank you for joining MITA early access.</p>
+              <p>The form will reopen shortly...</p>
+            </div>
           ) : (
+
             <form onSubmit={handleSubmit}>
 
               <div className="mita-input-row">
@@ -975,9 +979,20 @@ export default function Footer() {
                 <span className="mita-star">*</span>
               </div>
 
+              <div className="mita-input-row">
+                <input
+                  type="text"
+                  placeholder="YOUR MESSAGE..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                />
+                <span className="mita-star">*</span>
+              </div>
+
               {!isFormValid && email !== "" && (
                 <p style={{ color: "red", marginTop: "5px" }}>
-                  ⚠️ Please enter a valid name and email
+                  ⚠️ Please fill all fields correctly
                 </p>
               )}
 
@@ -1024,6 +1039,8 @@ export default function Footer() {
         </footer>
 
       </div>
+
     </div>
   );
 }
+

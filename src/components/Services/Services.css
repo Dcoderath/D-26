@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 .services-main {
   width: 100%;
   display: flex;
@@ -41,7 +42,7 @@
   border-bottom: none;
 }
 .service-row {
-   padding: 20px;
+  padding: 20px;
   position: relative;
   overflow: hidden;
   transition: color 0.4s ease;

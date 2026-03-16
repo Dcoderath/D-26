@@ -431,7 +431,12 @@
   transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: -1;
 }
-
+.success-box{
+  text-align:center;
+  padding:20px;
+  border:1px solid white;
+  margin-top:20px;
+}
 .mita-input-row:hover::before {
   transform: scaleX(1);
 }

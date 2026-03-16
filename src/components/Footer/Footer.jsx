@@ -844,7 +844,7 @@
 import React, { useState } from "react";
 import "./Footer.css";
 
-export default function Footer() {
+export function FooterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -903,7 +903,7 @@ export default function Footer() {
       <nav className="mita-top-nav">
 
         <div className="nav-socials">
-          <a href="https://github.com/Dcoderath" rel="noopener noreferrer">
+          <a href="https://github.com/Dcoderath" target="_blank" rel="noopener noreferrer">
             GITHUB
           </a>
 
@@ -1044,3 +1044,4 @@ export default function Footer() {
   );
 }
 
+export default FooterPage;

@@ -30,16 +30,13 @@
 .why-list {
   display: flex;
   flex-direction: column;
-  
 }
 
 .why-item {
   width: 100%;
- 
 }
 
 /* MAIN ROW GRID */
-
 .why-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr 3fr;
@@ -48,15 +45,10 @@
   overflow: hidden;
   z-index: 1;
   transition: color 0.3s ease;
+  gap: 0; /* removed spacing if needed */
 }
 
 /* WIPE ANIMATION */
-.why-grid {
-  position: relative;
-  overflow: hidden;
-  transition: color 0.4s ease;
-}
-
 .why-grid::before {
   content: "";
   position: absolute;
@@ -86,6 +78,7 @@
 
 .why-box {
   padding: clamp(15px, 3vw, 40px);
+  margin: 0; /* reset margin */
 }
 
 .why-number {
@@ -122,12 +115,13 @@
   align-items: center;
 }
 
+/* Removed all borders */
 .why-grid > div:nth-child(2) {
-  border-right: 1px solid #e5e5e500;
+  border: none;
 }
 
+/* RESPONSIVE */
 @media (max-width: 1024px) {
-
   .why-grid {
     grid-template-columns: 80px 1fr;
     column-gap: 20px;
@@ -136,17 +130,9 @@
   .why-grid > div:nth-child(3) {
     grid-column: 1 / -1;
   }
-
-  .why-grid > div:nth-child(1),
-  .why-grid > div:nth-child(2) {
-    border-bottom: none;
-    border-right: none;
-  }
-
 }
 
 @media (max-width: 768px) {
-
   .why-section {
     padding: 50px 5%;
   }
@@ -177,15 +163,4 @@
   .why-box {
     padding: 10px 0;
   }
-
-  .why-grid > div:nth-child(1),
-  .why-grid > div:nth-child(2) {
-    border-bottom: none;
-  }
-
-  .why-grid > div:nth-child(3) {
-    border-bottom: 1px solid #000;
-    padding-bottom: 15px;
-  }
-
 }

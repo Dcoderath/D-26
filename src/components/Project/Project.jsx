@@ -231,7 +231,6 @@
 // }
 
 
-
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import "./Project.css";
@@ -244,36 +243,40 @@ import img5 from "../../assets/Image/img5.jpg";
 import img6 from "../../assets/Image/img6.jpg";
 
 function Project() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const topRightCanvas = useRef(null);
   const bottomLeftCanvas = useRef(null);
   const projectRefs = useRef([]);
 
+  // Toggle project open/close
   const toggleProject = (index) => {
-    const isOpening = activeIndex !== index;
-    setActiveIndex(isOpening ? index : null);
-
-    if (isOpening) {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          projectRefs.current[index]?.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
-        }, 300);
-      });
-    }
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
+  // Scroll into view when a project opens
+  useEffect(() => {
+    if (activeIndex !== null) {
+      const timer = setTimeout(() => {
+        projectRefs.current[activeIndex]?.scrollIntoView({
+          behavior: "smooth",
+          block: "start", // better for mobile
+        });
+      }, 400); // wait for motion div to render
+      return () => clearTimeout(timer);
+    }
+  }, [activeIndex]);
+
+  // Pixel canvas drawing
   const drawPixels = useCallback((canvas, type) => {
     const ctx = canvas.getContext("2d");
     const rect = canvas.getBoundingClientRect();
+    
+    // Minimum size to avoid disappearing on small screens
+    canvas.width = Math.max(rect.width, 300);
+    canvas.height = Math.max(rect.height, 300);
 
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-
-    const size = rect.width;
+    const size = canvas.width;
     const pixelSizeMultiplier = 0.06;
     const basePixelSize = size * pixelSizeMultiplier;
     const pixel = Math.max(25, Math.min(60, Math.floor(basePixelSize)));
@@ -282,18 +285,17 @@ function Project() {
     const cols = Math.floor(size / pixel);
 
     ctx.clearRect(0, 0, size, size);
-
     ctx.font = `${pixel * 0.6}px monospace`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
-    const edgeMargin = Math.max(2, Math.floor(cols * 0.08));
+    const coreRadius = 0.32;
+    const scatterRadius = 0.9;
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const nx = x / cols;
         const ny = y / rows;
-
         let distance;
 
         if (type === "top") {
@@ -306,20 +308,9 @@ function Project() {
           distance = Math.sqrt(dx * dx + dy * dy);
         }
 
-        const coreRadius = 0.32;
-        const scatterRadius = 0.9;
-
-        if (distance <= coreRadius) {
+        if (distance <= coreRadius || (distance <= scatterRadius && Math.random() < 1 - (distance - coreRadius) / (scatterRadius - coreRadius))) {
           ctx.fillStyle = "#f1f1f1";
           ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
-        } else if (distance <= scatterRadius) {
-          const fade = (distance - coreRadius) / (scatterRadius - coreRadius);
-          const density = 1 - fade;
-
-          if (Math.random() < density) {
-            ctx.fillStyle = "#f1f1f1";
-            ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
-          }
         }
       }
     }
@@ -330,19 +321,14 @@ function Project() {
       if (topRightCanvas.current) drawPixels(topRightCanvas.current, "top");
       if (bottomLeftCanvas.current) drawPixels(bottomLeftCanvas.current, "bottom");
     };
-
     handleResize();
 
     const debouncedResize = () => {
       clearTimeout(window.resizeTimer);
       window.resizeTimer = setTimeout(handleResize, 100);
     };
-
     window.addEventListener("resize", debouncedResize);
-
-    return () => {
-      window.removeEventListener("resize", debouncedResize);
-    };
+    return () => window.removeEventListener("resize", debouncedResize);
   }, [drawPixels]);
 
   const projects = [
@@ -398,7 +384,6 @@ function Project() {
               <div className="project-content">
                 <h3>{project.client}</h3>
                 <p className="project-title">{project.title}</p>
-
                 <div className="project-tags">
                   {project.tags.map((tag, i) => (
                     <span key={i}>{tag}</span>
@@ -408,7 +393,6 @@ function Project() {
 
               <div className="project-actions">
                 <button className="project-btn">View case</button>
-
                 <button
                   className="project-btn"
                   onClick={() => toggleProject(index)}
@@ -420,8 +404,8 @@ function Project() {
               {activeIndex === index && (
                 <motion.div
                   className="detail-images"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
+                  initial={{ opacity: 0, maxHeight: 0 }}
+                  animate={{ opacity: 1, maxHeight: 2000 }} // large maxHeight for responsive screens
                   transition={{ duration: 0.6 }}
                   style={{ overflow: "hidden" }}
                 >
@@ -429,19 +413,18 @@ function Project() {
                   <img src={project.img2} alt="" />
                 </motion.div>
               )}
-              
             </div>
           </div>
         ))}
-        <div className="project-bottom">
-  <div className="project-bottom-row">
-    <h2 className="project-big-title">
-      Projects <span className="project-count">[ 26 ]</span>
-    </h2>
 
-    <div className="arrow-circle-big">→</div>
-  </div>
-</div>
+        <div className="project-bottom">
+          <div className="project-bottom-row">
+            <h2 className="project-big-title">
+              Projects <span className="project-count">[ 26 ]</span>
+            </h2>
+            <div className="arrow-circle-big">→</div>
+          </div>
+        </div>
       </div>
     </section>
   );

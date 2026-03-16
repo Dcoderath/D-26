@@ -196,44 +196,48 @@
     height: 180px;
   }
 }
-
+/* Small screen adjustments */
 @media (max-width: 768px) {
+
+  .services-main {
+    padding: 0.9rem; /* reduce padding */
+  }
+
   .service-row {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;     /* smaller gap between rows */
+    padding: 10px; /* reduce vertical padding */
   }
 
   .main-title {
-    font-size: 4rem;
+    font-size: 3rem; /* reduce large title */
+    margin-bottom: 1rem;
   }
-
-  .image-box {
-    height: 150px;
-  }
-}
-/* --- Keep all your existing desktop code at the top UNCHANGED --- */
-@media (max-width: 768px) {
 
   .number-title-box {
-    display: flex;
-    align-items: flex-start;   /* align from top */
-    justify-content: flex-start;
-    gap: 8px;                  /* space between number and title */
+    gap: 4px; /* reduce space between number and title */
   }
 
   .service-number {
-    font-size: 2.2rem;
-    flex-shrink: 0;
+    font-size: 1.8rem; /* smaller number */
   }
 
   .service-title {
-    font-size: 1.9rem;
+    font-size: 1.5rem;  /* smaller title */
     line-height: 1.2;
-    margin: 0;
-    flex: 1;
-    min-width: 0;
-
-    overflow-wrap: anywhere;
   }
 
+  .description-box {
+    font-size: 1.1rem;  /* smaller description */
+    margin-right: 0;
+  }
+
+  .image-box {
+    height: 120px;       /* reduce image height */
+    margin-top: 1rem;
+  }
+
+  .subcategory-item {
+    font-size: 0.85rem;  /* smaller tags */
+  }
 }

@@ -135,11 +135,11 @@
 //   );
 // }
 
-
 "use client";
 
 import { motion } from "framer-motion";
 import "./WhySection.css";
+import D8 from "../../assets/D/d8.svg"; // make sure this path is correct
 
 const features = [
   {
@@ -168,11 +168,11 @@ const features = [
   },
 ];
 
-// Named export
 export function WhySection() {
   return (
     <section className="why-section">
       <div className="why-container">
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -185,6 +185,7 @@ export function WhySection() {
           <div className="heading-center">FOR YOU? ]</div>
         </motion.div>
 
+        {/* Features List */}
         <div className="why-list">
           {features.map((feature, index) => (
             <motion.div
@@ -203,10 +204,36 @@ export function WhySection() {
             </motion.div>
           ))}
         </div>
+
+        {/* Banners */}
+        <div className="why-banner-wrapper">
+          {/* Top banner: scroll left → right */}
+          <div className="why-banner why-banner-left">
+            <div className="why-banner-track">
+              {[...Array(40)].map((_, i) => (
+                <div className="why-banner-item" key={i}>
+                  <div className="why-banner-text">JUST IMAGINE, WE DESIGN</div>
+                  <img src={D8} alt="Logo" className="why-banner-image" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom banner: scroll right → left */}
+          <div className="why-banner why-banner-right">
+            <div className="why-banner-track">
+              {[...Array(40)].map((_, i) => (
+                <div className="why-banner-item" key={i}>
+                  <div className="why-banner-text">JUST IMAGINE, WE DESIGN</div>
+                  <img src={D8} alt="Logo" className="why-banner-image" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-// Default export
 export default WhySection;

@@ -1,283 +1,100 @@
-import React, { useEffect, useRef, useState } from 'react';
+"use client";
 
-import './AdBlank.css';
-import D8 from '../../assets/D/d8.svg';
-import { HiMiniArrowTrendingUp } from 'react-icons/hi2';
+import { motion } from "framer-motion";
+import "./WhySection.css";
+import D8 from "../../assets/D/d8.svg";
 
-const AdBlank = () => {
-  const canvasRef = useRef(null);
+const features = [
+  {
+    id: "01",
+    title: "We Think Like Founders",
+    description:
+      "We don’t just build projects — we think like business owners. Every decision we make is focused on growth, profitability, and long-term success for your company.",
+  },
+  {
+    id: "02",
+    title: "Results Over Hype",
+    description:
+      "We focus on real outcomes, not empty promises. Our work is driven by strategy, performance, and measurable impact that helps your business move forward.",
+  },
+  {
+    id: "03",
+    title: "Clear Communication",
+    description:
+      "No confusion, no technical overwhelm. We keep the process simple, transparent, and collaborative so you always know what’s happening and why.",
+  },
+  {
+    id: "04",
+    title: "Long-Term Partnership",
+    description:
+      "We build relationships, not one-time projects. Our goal is to grow with you, support your evolution, and help you build a business that lasts.",
+  },
+];
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const isFormValid =
-    name.trim() !== '' &&
-    email.trim() !== '' &&
-    message.trim() !== '';
-
-  // ================= FORM SUBMIT =================
-const handleSubmit = async () => {
-  if (!isFormValid || loading) return;
-
-  setLoading(true);
-
-  try {
-    const formData = new FormData();
-    formData.append("key", import.meta.env.VITE_API_KEY);
-    formData.append("name", name.trim());
-    formData.append("email", email.trim());
-    formData.append("message", message.trim());
-    formData.append("website", "");
-
-    const res = await fetch(import.meta.env.VITE_SCRIPT_URL, {
-      method: "POST",
-      body: formData
-    });
-
-    const text = await res.text();
-    console.log("SCRIPT RESPONSE:", text);
-
-    if (text.trim() !== "OK") {
-      throw new Error(text);
-    }
-
-    alert("✅ Message sent!");
-    setName("");
-    setEmail("");
-    setMessage("");
-
-  } catch (err) {
-    console.error("FORM ERROR:", err.message);
-    alert("❌ Message failed: " + err.message);
-  } finally {
-    setLoading(false);
-  }
-};
- // ================= PIXEL BACKGROUND (EXACT SAME) =================
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      drawPixels();
-    };
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    function drawPixels() {
-      const { width, height } = canvas;
-      ctx.fillStyle = '#1B1C1F';
-      ctx.fillRect(0, 0, width, height);
-
-      const size = 30;
-      const rows = Math.ceil(height / size);
-      const cols = Math.ceil(width / size);
-
-      let seed = 10101;
-      function random() {
-        seed = (seed * 1664525 + 1013904223) % 4294967296;
-        return seed / 4294967296;
-      }
-
-      for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-          const normalizedX = x / cols;
-          const normalizedY = y / rows;
-
-          const heightLimit = 0.6 - normalizedX * 0.3;
-
-          // LEFT BLOCK
-          if (normalizedY < heightLimit && normalizedX < 0.4) {
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(x * size, y * size, size, size);
-          }
-
-          // LEFT EDGE NOISE
-          else if (
-            normalizedX < 0.45 &&
-            normalizedY >= heightLimit &&
-            normalizedY < heightLimit + 0.12 &&
-            Math.random() > 0.92
-          ) {
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(x * size, y * size, size, size);
-
-            if (Math.random() > 0.7) {
-              let cx = x;
-              let cy = y;
-              const len = Math.floor(Math.random() * 2) + 2;
-              for (let i = 0; i < len; i++) {
-                cx += Math.floor(Math.random() * 3) - 1;
-                cy += Math.floor(Math.random() * 2);
-                if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
-                ctx.fillRect(cx * size, cy * size, size, size);
-              }
-            }
-          }
-
-          // CENTER WAVES
-          else if (normalizedX >= 0.4 && normalizedX < 0.8) {
-            const waveLimit =
-              0.4 +
-              Math.sin(normalizedX * 6) * 0.05 +
-              Math.cos(normalizedX * 3) * 0.03;
-
-            if (normalizedY < waveLimit && random() > 0.8) {
-              ctx.fillStyle = '#fff';
-              let cx = x;
-              let cy = y;
-              const len = Math.floor(random() * 4) + 5;
-              for (let i = 0; i < len; i++) {
-                ctx.fillRect(cx * size, cy * size, size, size);
-                cx += Math.floor(Math.random() * 3) - 1;
-                cy += Math.floor(Math.random() * 2) - 1;
-                if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
-              }
-            }
-          }
-
-          // TOP RIGHT
-          else if (normalizedX >= 0.8 && normalizedY < 0.3 && random() > 0.95) {
-            ctx.fillStyle = '#fff';
-            let cx = x;
-            let cy = y;
-            const len = Math.floor(random() * 3) + 4;
-            for (let i = 0; i < len; i++) {
-              ctx.fillRect(cx * size, cy * size, size, size);
-              cx += Math.floor(Math.random() * 3) - 1;
-              cy += Math.floor(Math.random() * 3) - 1;
-              if (cx < 0 || cx >= cols || cy < 0 || cy >= rows) break;
-            }
-          }
-
-          // BOTTOM RIGHT DENSE
-          else if (normalizedX > 0.7 && normalizedY > 0.7) {
-            if (random() > 0.1) {
-              ctx.fillStyle = '#fff';
-              ctx.fillRect(x * size, y * size, size, size);
-            }
-          }
-
-          // BOTTOM RIGHT BLOCK
-          const bottomRightLimit = 0.6 - (1 - normalizedX) * 0.3;
-          if (normalizedY > 1 - bottomRightLimit && normalizedX > 0.6) {
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(x * size, y * size, size, size);
-          }
-        }
-      }
-    }
-
-    return () => window.removeEventListener('resize', resize);
-  }, []);
-
-  // ================= JSX =================
+export function WhySection() {
   return (
-    <div id="AdBlank">
-      <nav className="adblank">
-        <canvas ref={canvasRef} className="pixel-screen" />
-        <div className="adblank__glass-bg" />
+    <section className="why-section">
+      <div className="why-container">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="why-heading"
+        >
+          <div className="heading-left">[ WHY ARE WE</div>
+          <div className="heading-right">THE BEST SOLUTION</div>
+          <div className="heading-center">FOR YOU? ]</div>
+        </motion.div>
 
-        <ul className="adblank__navigator">
-          <li className="adblank__navigator-item">
-            <div className="adblank__form">
-              <input
-                type="text"
-                placeholder="[Enter name]"
-                className="adblank__navigator-input"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-
-              <input
-                type="email"
-                placeholder="[Enter email]"
-                className="adblank__navigator-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <textarea
-                placeholder="[Your message]"
-                className="adblank__navigator-input"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-
-              {/* honeypot */}
-              <input
-                type="text"
-                name="website"
-                style={{ display: 'none' }}
-                tabIndex="-1"
-                autoComplete="off"
-              />
-
-              <button
-                className="adblank__navigator-button"
-                disabled={!isFormValid || loading}
-                onClick={handleSubmit}
-              >
-                {loading ? 'Sending}' : "Let's Talk"}
-              </button>
-            </div>
-          </li>
-
-          <li className="adblank__navigator-item">
-            <div className="adblank__horizontal-links">
-              <a
-                href="https://www.linkedin.com/in/divakar-trivedi-85326a376/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="adblank__navigator-link"
-              >
-                LinkedIn <HiMiniArrowTrendingUp />
-              </a>
-
-              <a
-                href="mailto:divakartrivedioffice@gmail.com"
-                className="adblank__navigator-link"
-              >
-                divakartrivedioffice@gmail.com <HiMiniArrowTrendingUp />
-              </a>
-            </div>
-          </li>
-        </ul>
-
-        {/* BANNERS */}
-        <div className="adblank__banner">
-          <div className="adblank__banner-track">
-            {[...Array(20)].map((_, i) => (
-              <div className="adblank__banner-item" key={i}>
-                <div className="adblank__banner-text">
-                  JUST IMAGINE, WE DESIGN
-                </div>
-                <img src={D8} alt="Logo" className="adblank__banner-image" />
+        {/* Features List */}
+        <div className="why-list">
+          {features.map((feature, index) => (
+            <motion.div
+              key={feature.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="why-item"
+            >
+              <div className="why-grid">
+                <div className="why-box why-number">{feature.id}</div>
+                <div className="why-box why-title">{feature.title}</div>
+                <div className="why-box why-description">{feature.description}</div>
               </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
 
-        <div className="adblank__banner adblank__banner--alt">
-          <div className="adblank__banner-track">
-            {[...Array(20)].map((_, i) => (
-              <div className="adblank__banner-item" key={i}>
-                <div className="adblank__banner-text">
-                  JUST IMAGINE, WE DESIGN
+        {/* Banner Section (copied from AdBlank) */}
+        <div className="adblank__banner-wrapper">
+          <div className="adblank__banner">
+            <div className="adblank__banner-track">
+              {[...Array(20)].map((_, i) => (
+                <div className="adblank__banner-item" key={i}>
+                  <div className="adblank__banner-text">JUST IMAGINE, WE DESIGN</div>
+                  <img src={D8} alt="Logo" className="adblank__banner-image" />
                 </div>
-                <img src={D8} alt="Logo" className="adblank__banner-image" />
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          <div className="adblank__banner adblank__banner--alt">
+            <div className="adblank__banner-track">
+              {[...Array(20)].map((_, i) => (
+                <div className="adblank__banner-item" key={i}>
+                  <div className="adblank__banner-text">JUST IMAGINE, WE DESIGN</div>
+                  <img src={D8} alt="Logo" className="adblank__banner-image" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </section>
   );
-};
+}
 
-export default AdBlank;
+export default WhySection;

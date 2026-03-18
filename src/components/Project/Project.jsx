@@ -233,7 +233,8 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { FaArrowTrendUp } from "react-icons/fa6";
+import { BsArrowRightSquareFill } from "react-icons/bs";
+
 import "./Project.css";
 
 import img11 from "../../assets/Image/img11.jpg";
@@ -424,16 +425,24 @@ useEffect(() => {
           </div>
         ))}
 
-        <div className="project-bottom">
-          <div className="project-bottom-row">
-            <h2 className="project-big-title">
-              Projects <span className="project-count">[ 26 ]</span>
-            </h2>
-            <div className="arrow-circle-big">
-  <FaArrowTrendUp />
+     <div className="project-bottom">
+  <div className="project-bottom-row">
+
+    <h2 className="project-big-title">
+      Projects
+    </h2>
+
+    <div className="project-count">
+     
+      <span>[ 26 ]</span>
+    </div>
+
+    <div className="arrow-circle-big">
+      <BsArrowRightSquareFill  />
+    </div>
+
+  </div>
 </div>
-          </div>
-        </div>
       </div>
     </section>
   );

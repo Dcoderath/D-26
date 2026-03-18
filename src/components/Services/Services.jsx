@@ -172,7 +172,7 @@ import "./Services.css";
 import img7 from "../../assets/Image/img7.jpg";
 import img8 from "../../assets/Image/img8.jpg";
 import img9 from "../../assets/Image/img9.jpg";
-import img10 from "../../assets/Image/img10.jpg";
+import img12 from "../../assets/Image/img12.jpg";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -216,7 +216,7 @@ const services = [
     subcategories: ["Updates", "Bug Fixes", "Performance", "Technical Help"],
     description:
       "We keep your website or app running smoothly with updates, improvements, and ongoing support.",
-    img: img10,
+    img: img12,
   },
 ];
 

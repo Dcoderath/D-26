@@ -233,17 +233,18 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import { FaArrowTrendUp } from "react-icons/fa6";
 import "./Project.css";
 
 import img11 from "../../assets/Image/img11.jpg";
 import img2 from "../../assets/Image/img2.jpg";
-import img3 from "../../assets/Image/img3.jpg";
+import img10 from "../../assets/Image/img10.jpg";
 import img4 from "../../assets/Image/img4.jpg";
 import img5 from "../../assets/Image/img5.jpg";
-import img6 from "../../assets/Image/img6.jpg";
+import img13 from "../../assets/Image/img13.jpg";
 
 function Project() {
-  const [activeIndex, setActiveIndex] = useState(null);
+ const [activeIndex, setActiveIndex] = useState(0);
 
   const topRightCanvas = useRef(null);
   const bottomLeftCanvas = useRef(null);
@@ -255,17 +256,17 @@ function Project() {
   };
 
   // Scroll into view when a project opens
-  useEffect(() => {
-    if (activeIndex !== null) {
-      const timer = setTimeout(() => {
-        projectRefs.current[activeIndex]?.scrollIntoView({
-          behavior: "smooth",
-          block: "start", // better for mobile
-        });
-      }, 400); // wait for motion div to render
-      return () => clearTimeout(timer);
-    }
-  }, [activeIndex]);
+useEffect(() => {
+  if (activeIndex !== null && activeIndex !== 0) {
+    const timer = setTimeout(() => {
+      projectRefs.current[activeIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 400);
+    return () => clearTimeout(timer);
+  }
+}, [activeIndex]);
 
   // Pixel canvas drawing
   const drawPixels = useCallback((canvas, type) => {
@@ -315,6 +316,7 @@ function Project() {
       }
     }
   }, []);
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -345,7 +347,7 @@ function Project() {
       client: "Mediaworks:",
       title: "Capturing the rebellious soul of radio",
       tags: ["CubeT", "Quietspaco® Panel"],
-      img1: img3,
+      img1: img10,
       img2: img4,
     },
     {
@@ -353,8 +355,8 @@ function Project() {
       client: "Custom Frontier™ system",
       title: "for Headingley Stadium's Emerald Suite",
       tags: ["FrontierTM"],
-      img1: img5,
-      img2: img6,
+      img1: img13,
+      img2: img5,
     },
   ];
 
@@ -409,8 +411,13 @@ function Project() {
                   transition={{ duration: 0.6 }}
                   style={{ overflow: "hidden" }}
                 >
-                  <img src={project.img1} alt="" />
-                  <img src={project.img2} alt="" />
+                 <div className="img-wrapper">
+  <img src={project.img1} alt="" />
+</div>
+
+<div className="img-wrapper">
+  <img src={project.img2} alt="" />
+</div>
                 </motion.div>
               )}
             </div>
@@ -422,7 +429,9 @@ function Project() {
             <h2 className="project-big-title">
               Projects <span className="project-count">[ 26 ]</span>
             </h2>
-            <div className="arrow-circle-big">→</div>
+            <div className="arrow-circle-big">
+  <FaArrowTrendUp />
+</div>
           </div>
         </div>
       </div>

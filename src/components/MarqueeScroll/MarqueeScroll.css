@@ -86,6 +86,6 @@
   .marqueeScroll-container { height: 100px; }
   .marqueeScroll-item img { max-width: 130px; }
   .marqueeScroll-item h1 { font-size: 28px; }
-  .marqueeScroll-text { padding: 0 1rem; }
+  .marqueeScroll-text { padding: 0 1.5rem; }
   .marqueeScroll-section { gap: 1rem; padding: 2rem 0; }
 }

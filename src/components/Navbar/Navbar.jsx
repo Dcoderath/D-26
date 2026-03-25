@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./ArtTechNav.css";
+import "./Navbar.css";
 
-const ArtTechNav = () => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const timelineRef = useRef(null);
   const overlayRef = useRef(null);
@@ -133,4 +133,4 @@ const ArtTechNav = () => {
   );
 };
 
-export default ArtTechNav;
+export default Navbar;

@@ -1,5 +1,5 @@
 // import React, { useEffect, useRef, useState, useCallback } from 'react';
-// import './JunniLandingPage.css';
+// import './Home.css';
 
 // const ROWS = 6;
 // const COLS = 6;
@@ -8,7 +8,7 @@
 // const SNAKE_SPEED = 80;
 // const TILT_MAP = { 0: -25, 1: -12, 2: -3, 3: 3, 4: 12, 5: 25 };
 
-// const JunniLandingPage = () => {
+// const Home = () => {
 //   const isFlipped = useRef(false);
 //   const boardRef = useRef(null);
 //   const blocksRef = useRef(null);
@@ -179,7 +179,7 @@
 //   );
 // };
 
-// export default JunniLandingPage;
+// export default Home;
 
 
 
@@ -190,7 +190,7 @@
 
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import './JunniLandingPage.css';
+import './Home.css';
 
 const ROWS = 6;
 const COLS = 6;
@@ -199,7 +199,7 @@ const SNAKE_SPEED = 25;
 
 const TILT_MAP = { 0: -25, 1: -12, 2: -3, 3: 3, 4: 12, 5: 25 };
 
-const JunniLandingPage = () => {
+const Home = () => {
 
   const isFlipped = useRef(false);
   const boardRef = useRef(null);
@@ -438,4 +438,4 @@ const JunniLandingPage = () => {
 
 };
 
-export default JunniLandingPage;
+export default Home;

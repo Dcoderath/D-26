@@ -164,7 +164,7 @@ nav {
   color: #fff;
   padding: 10em 5em;
   z-index: 9999;
-  pointer-events: none;
+ pointer-events: auto;
 }
 
 .menu-title,

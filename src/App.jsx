@@ -141,7 +141,7 @@
 // import Plusup from "./components/Plusup/Plusup";
 // import AdBlank from "./components/AdBlank/AdBlank";
 // import PricingCard from "./components/PricingCard/PricingCard";
-// import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
+// import Navbar from "./components/Navbar/Navbar";
 
 // const App = () => {
 //   const [hoveringButton, setHoveringButton] = useState(false);
@@ -220,7 +220,7 @@
 
 //       {/* ✅ Always show the full site (no mobile block) */}
 //       {/* <Navbar /> */}
-//       <ArtTechNav />
+//       <Navbar />
 //       <Hero />
 //       <NewGrid />
 //       <PricingCard />
@@ -241,15 +241,15 @@
 // import NewGrid from "./components/NewGrid/NewGrid";
 // import PricingCard from "./components/PricingCard/PricingCard";
 // import AdBlank from "./components/AdBlank/AdBlank";
-// import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
-// import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
+// import Navbar from "./components/Navbar/Navbar";
+// import Home from "./components/Home/Home";
 
 // const App = () => {
 //   return (
 //     <div className="App">
-//       {/* ArtTechNav is a standalone fullscreen navigation overlay */}
-//         <ArtTechNav />
-//         <JunniLandingPage/>
+//       {/* Navbar is a standalone fullscreen navigation overlay */}
+//         <Navbar />
+//         <Home/>
 //         <Hero id="hero" />
 //         <NewGrid id="newgrid" />
 //         <PricingCard id="pricing" />
@@ -268,18 +268,18 @@
 // import NewGrid from "./components/NewGrid/NewGrid";
 // import PricingCard from "./components/PricingCard/PricingCard";
 // import AdBlank from "./components/AdBlank/AdBlank";
-// import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
-// import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
-// import Project from "./Project/Project";
+// import Navbar from "./components/Navbar/Navbar";
+// import Home from "./components/Home/Home";
+// import Projects from "./Projects/Projects";
 
 
 // const App = () => {
 //   return (
 //     <div className="App">
-//       {/* ArtTechNav is a standalone fullscreen navigation overlay */}
-//         <ArtTechNav />
-//         <JunniLandingPage/>
-//         <Project />
+//       {/* Navbar is a standalone fullscreen navigation overlay */}
+//         <Navbar />
+//         <Home/>
+//         <Projects />
 //         <Hero id="hero" />
 //         <NewGrid id="newgrid" />
 //         <PricingCard id="pricing" />
@@ -317,9 +317,9 @@
 // // import NewGrid from "./components/NewGrid/NewGrid";
 // // import PricingCard from "./components/PricingCard/PricingCard";
 // // import AdBlank from "./components/AdBlank/AdBlank";
-// import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
-// import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
-// import Project from "./components/Project/Project";
+// import Navbar from "./components/Navbar/Navbar";
+// import Home from "./components/Home/Home";
+// import Projects from "./components/Projects/Projects";
 // import Services from "./components/Services/Services";
 // import Footer from "./components/Footer/Footer";
 // import WhySection from "./components/WhySection/WhySection";
@@ -396,12 +396,12 @@
 //         <div ref={blocksRef} className="app-blocks-grid"></div>
 //       </div>
 
-//       <ArtTechNav />
-//       <JunniLandingPage />
+//       <Navbar />
+//       <Home />
     
 //       {/* <Hero /> */}
 //       < Services/>
-//       <Project />
+//       <Projects />
 //       {/* <NewGrid />
 //       <PricingCard /> */}
 //       {/* <AdBlank /> */}
@@ -415,12 +415,166 @@
 // export default App;
 
 
-import React, { useEffect, useRef, useCallback } from "react";
+
+// import React, { useEffect, useRef, useCallback } from "react";
+// import "./App.css";
+
+// import Navbar from "./components/Navbar/Navbar";
+// import Home from "./components/Home/Home";
+// import Projects from "./components/Projects/Projects";
+// import Services from "./components/Services/Services";
+// import Footer from "./components/Footer/Footer";
+// import WhySection from "./components/WhySection/WhySection";
+// import MarqueeScroll from "./components/MarqueeScroll/MarqueeScroll";
+
+// import { Helmet } from "react-helmet";
+
+// const BLOCK_SIZE = 30;
+
+// const App = () => {
+//   const blocksRef = useRef(null);
+//   const rafIdRef = useRef(null);
+//   const mousePosRef = useRef({ x: 0, y: 0 });
+
+//   // Create grid blocks
+//   const createBlocks = useCallback(() => {
+//     if (!blocksRef.current) return;
+
+//     const numCols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+//     const numRows = Math.ceil(window.innerHeight / BLOCK_SIZE);
+
+//     blocksRef.current.innerHTML = "";
+//     blocksRef.current.style.gridTemplateColumns = `repeat(${numCols}, ${BLOCK_SIZE}px)`;
+
+//     for (let i = 0; i < numCols * numRows; i++) {
+//       const block = document.createElement("div");
+//       block.className = "app-block";
+//       blocksRef.current.appendChild(block);
+//     }
+//   }, []);
+
+//   // Highlight block under mouse
+//   const highlightBlock = useCallback((event) => {
+//     if (!blocksRef.current || rafIdRef.current) return;
+
+//     mousePosRef.current = { x: event.clientX, y: event.clientY };
+
+//     rafIdRef.current = requestAnimationFrame(() => {
+//       const rect = blocksRef.current.getBoundingClientRect();
+//       const x = mousePosRef.current.x - rect.left;
+//       const y = mousePosRef.current.y - rect.top;
+
+//       const col = Math.floor(x / BLOCK_SIZE);
+//       const row = Math.floor(y / BLOCK_SIZE);
+
+//       const numCols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+//       const index = row * numCols + col;
+
+//       const block = blocksRef.current.children[index];
+
+//       if (block && !block.classList.contains("app-highlight")) {
+//         block.classList.add("app-highlight");
+//         setTimeout(() => block.classList.remove("app-highlight"), 300);
+//       }
+
+//       rafIdRef.current = null;
+//     });
+//   }, []);
+
+//   useEffect(() => {
+//     createBlocks();
+//     window.addEventListener("resize", createBlocks);
+//     window.addEventListener("mousemove", highlightBlock);
+
+//     return () => {
+//       window.removeEventListener("resize", createBlocks);
+//       window.removeEventListener("mousemove", highlightBlock);
+//     };
+//   }, [createBlocks, highlightBlock]);
+
+//   return (
+//     <div className="App">
+//       {/* Default App Tab Title */}
+//       <Helmet>
+//         <title>Dcoderath | Divakar Trivedi</title>
+//         <meta name="description" content="DCoderAth Junni Landing Page" />
+//       </Helmet>
+
+//       {/* Global Mouse Grid Overlay */}
+//       <div className="app-blocks-container">
+//         <div ref={blocksRef} className="app-blocks-grid"></div>
+//       </div>
+
+//       {/* Navigation */}
+//       <Navbar />
+
+//       {/* Landing Section */}
+//       <section id="landing">
+//         <Helmet>
+//           <meta name="description" content="Welcome to Junni Landing Page" />
+//         </Helmet>
+//         <Home />
+//       </section>
+
+//       {/* Services Section */}
+//       <section id="services">
+//         <Helmet>
+//           <meta name="description" content="Learn about our Services" />
+//         </Helmet>
+//         <Services />
+//       </section>
+
+//       {/* Projectss Section */}
+//       <section id="Projectss">
+//         <Helmet>
+//           <meta name="description" content="Our latest Projectss" />
+//         </Helmet>
+//         <Projects />
+//       </section>
+
+//       {/* Why Choose Us Section */}
+//       <section id="why">
+//         <Helmet>
+//           <meta name="description" content="Reasons to choose us" />
+//         </Helmet>
+//         <WhySection />
+//       </section>
+
+//       {/* Marquee Section */}
+//       <section id="marquee">
+//         <Helmet>
+//           <meta name="description" content="Scrolling marquee content" />
+//         </Helmet>
+//         <MarqueeScroll />
+//       </section>
+
+//       {/* Footer Section */}
+//       <section id="footer">
+//         <Footer />
+//       </section>
+//     </div>
+//   );
+// };
+
+// export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import "./App.css";
 
-import ArtTechNav from "./components/ArtTechNav/ArtTechNav";
-import JunniLandingPage from "./components/JunniLandingPage/JunniLandingPage";
-import Project from "./components/Project/Project";
+import Navbar from "./components/Navbar/Navbar";
+import Home from "./components/Home/Home";
+import Projects from "./components/Projects/Projects";
 import Services from "./components/Services/Services";
 import Footer from "./components/Footer/Footer";
 import WhySection from "./components/WhySection/WhySection";
@@ -431,11 +585,14 @@ import { Helmet } from "react-helmet";
 const BLOCK_SIZE = 30;
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+
   const blocksRef = useRef(null);
   const rafIdRef = useRef(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
 
-  // Create grid blocks
+  // ---------------- GRID ----------------
   const createBlocks = useCallback(() => {
     if (!blocksRef.current) return;
 
@@ -447,12 +604,11 @@ const App = () => {
 
     for (let i = 0; i < numCols * numRows; i++) {
       const block = document.createElement("div");
-      block.className = "app-block";
+      block.className = "app-block-grid";
       blocksRef.current.appendChild(block);
     }
   }, []);
 
-  // Highlight block under mouse
   const highlightBlock = useCallback((event) => {
     if (!blocksRef.current || rafIdRef.current) return;
 
@@ -480,77 +636,133 @@ const App = () => {
     });
   }, []);
 
+  // ---------------- PRO LOADER ----------------
   useEffect(() => {
+    const MIN_DURATION = 3000; // 3 seconds minimum
+    const startTime = Date.now();
+
+    const images = Array.from(document.images);
+    let loadedCount = 0;
+    const totalImages = images.length;
+
+    let fakeProgress = 0;
+    let realProgress = 0;
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      fakeProgress = Math.min((elapsed / MIN_DURATION) * 100, 100);
+
+      const combined = Math.min(fakeProgress, realProgress);
+      setProgress(Math.floor(combined));
+
+      if (fakeProgress >= 100 && realProgress >= 100) {
+        clearInterval(interval);
+        setProgress(100);
+
+        setTimeout(() => setLoading(false), 200);
+      }
+    }, 30);
+
+    if (totalImages === 0) {
+      realProgress = 100;
+    } else {
+      const updateReal = () => {
+        loadedCount++;
+        realProgress = (loadedCount / totalImages) * 100;
+      };
+
+      images.forEach((img) => {
+        if (img.complete) updateReal();
+        else {
+          img.addEventListener("load", updateReal);
+          img.addEventListener("error", updateReal);
+        }
+      });
+    }
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // ---------------- AFTER LOAD ----------------
+  useEffect(() => {
+    if (loading) return;
+
     createBlocks();
     window.addEventListener("resize", createBlocks);
     window.addEventListener("mousemove", highlightBlock);
+
+    const loadGSAP = async () => {
+      const gsap = (await import("gsap")).default;
+
+      const overlay = document.getElementById("app-overlay");
+      if (!overlay) return;
+
+      const blocks = overlay.querySelectorAll(".app-block");
+
+      overlay.style.display = "grid";
+
+      gsap.set(blocks, {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+      });
+
+      setTimeout(() => {
+        gsap.to(blocks, {
+          duration: 1.2,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+          stagger: 0.08,
+          ease: "power3.inOut",
+          onComplete: () => {
+            overlay.style.display = "none";
+          }
+        });
+      }, 100);
+    };
+
+    loadGSAP();
 
     return () => {
       window.removeEventListener("resize", createBlocks);
       window.removeEventListener("mousemove", highlightBlock);
     };
-  }, [createBlocks, highlightBlock]);
+  }, [loading, createBlocks, highlightBlock]);
+
+  // ---------------- UI ----------------
+  if (loading) {
+    return (
+      <div className="loader-screen">
+        <div className="loader-bar">
+          <div className="loader-fill" style={{ width: `${progress}%` }}></div>
+        </div>
+        <h1 className="loader-text">{progress}%</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
-      {/* Default App Tab Title */}
+      {/* REVEAL BLOCKS */}
+      <div className="app-overlay" id="app-overlay">
+        {[...Array(8)].map((_, i) => (
+          <div key={i} className="app-block"></div>
+        ))}
+      </div>
+
       <Helmet>
         <title>Dcoderath | Divakar Trivedi</title>
-        <meta name="description" content="DCoderAth Junni Landing Page" />
       </Helmet>
 
-      {/* Global Mouse Grid Overlay */}
       <div className="app-blocks-container">
         <div ref={blocksRef} className="app-blocks-grid"></div>
       </div>
 
-      {/* Navigation */}
-      <ArtTechNav />
+      <Navbar />
 
-      {/* Landing Section */}
-      <section id="landing">
-        <Helmet>
-          <meta name="description" content="Welcome to Junni Landing Page" />
-        </Helmet>
-        <JunniLandingPage />
-      </section>
-
-      {/* Services Section */}
-      <section id="services">
-        <Helmet>
-          <meta name="description" content="Learn about our Services" />
-        </Helmet>
-        <Services />
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects">
-        <Helmet>
-          <meta name="description" content="Our latest Projects" />
-        </Helmet>
-        <Project />
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section id="why">
-        <Helmet>
-          <meta name="description" content="Reasons to choose us" />
-        </Helmet>
-        <WhySection />
-      </section>
-
-      {/* Marquee Section */}
-      <section id="marquee">
-        <Helmet>
-          <meta name="description" content="Scrolling marquee content" />
-        </Helmet>
-        <MarqueeScroll />
-      </section>
-
-      {/* Footer Section */}
-      <section id="footer">
-        <Footer />
-      </section>
+      <section id="Home"><Home /></section>
+      <section id="Services"><Services /></section>
+      <section id="Project"><Projects /></section>
+      <section id="why"><WhySection /></section>
+      <section id="marquee"><MarqueeScroll /></section>
+      <section id="Footer"><Footer /></section>
     </div>
   );
 };

@@ -233,9 +233,9 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { BsArrowRightSquareFill } from "react-icons/bs";
 
-import "./Project.css";
+
+import "./Projects.css";
 
 import img11 from "../../assets/Image/img11.jpg";
 import img2 from "../../assets/Image/img2.jpg";
@@ -367,10 +367,12 @@ useEffect(() => {
       <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
 
       <div className="project-content-wrapper">
-        <div className="project-heading">
-          <h1>Beautiful projects</h1>
-          <p>from around the world</p>
-        </div>
+<div className="project-heading">
+  <div className="heading-box">
+    <h1>Beautiful projects</h1> 
+    <p>from around the world</p> 
+  </div>
+</div>
 
         {projects.map((project, index) => (
           <div
@@ -425,22 +427,14 @@ useEffect(() => {
           </div>
         ))}
 
-     <div className="project-bottom">
-  <div className="project-bottom-row">
-
+<div className="project-bottom-row">
+  <div className="project-title-wrapper">
     <h2 className="project-big-title">
-      Projects
+      Projects <span className="project-count">26</span>
     </h2>
-
-    <div className="project-count">
-     
-      <span>[ 26 ]</span>
+    <div className="project-buttons">
+      <button className="project-buttons-button">All Projects</button>
     </div>
-
-    <div className="arrow-circle-big">
-      <BsArrowRightSquareFill  />
-    </div>
-
   </div>
 </div>
       </div>

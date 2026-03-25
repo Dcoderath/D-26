@@ -96,7 +96,7 @@ html, body {
 
 html,
 body {
-  background: #F1F1F1;
+  background: #000000;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
@@ -135,7 +135,36 @@ body::-webkit-scrollbar {
   height: 100%;
   overflow: hidden;
 }
+/* LOADER */
+.loader-screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  font-size: 60px;
+  font-weight: bold;
+}
 
+/* REVEAL */
+.app-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  grid-template-columns: repeat(8, 1fr);
+  z-index: 9999;
+}
+
+.app-overlay .app-block {
+  background: black;
+}
 .app-block {
   width: 30px;
   height: 30px;
@@ -176,4 +205,22 @@ body::-webkit-scrollbar {
 ::-moz-selection {
   background: rgb(255, 255, 255);
   color: rgb(0, 85, 255);
+}
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #0b0b0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader h1 {
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
 }

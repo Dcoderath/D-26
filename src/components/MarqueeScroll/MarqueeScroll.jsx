@@ -165,77 +165,76 @@ const MarqueeScroll = () => {
       return numA - numB;
     })
     .map(([, mod]) => mod.default);
+useEffect(() => {
+  const isMobile = window.innerWidth <= 480;
 
-  useEffect(() => {
-    // 2. Smooth Scroll Init
-    const lenis = new Lenis({
-      lerp: 0.1,
-      smoothWheel: true,
-    });
+  const lenis = new Lenis({
+    lerp: isMobile ? 0.2 : 0.1,
+    smoothWheel: true,
+  });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+  function raf(time) {
+    lenis.raf(time);
     requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
 
-    // 3. GSAP Context for clean cleanup
-    const ctx = gsap.context(() => {
-      const containers = document.querySelectorAll(".marqueeScroll-container");
+  const ctx = gsap.context(() => {
+    const containers = document.querySelectorAll(".marqueeScroll-container");
 
-      containers.forEach((container, index) => {
-        const marquee = container.querySelector(".marqueeScroll-marquee");
-        
-        // Duplicate content for seamless loop
-        const originalContent = marquee.innerHTML;
-        marquee.innerHTML = originalContent + originalContent;
+    containers.forEach((container, index) => {
+      const marquee = container.querySelector(".marqueeScroll-marquee");
 
-        // Weight Animation
-        const headings = container.querySelectorAll("h1");
-        headings.forEach((heading) => {
-          const split = new SplitType(heading, { types: "chars" });
-          gsap.fromTo(split.chars, 
-            { fontWeight: 100 },
-            {
-              fontWeight: 900,
-              stagger: 0.05,
-              scrollTrigger: {
-                trigger: container,
-                start: "top 90%",
-                end: "top 20%",
-                scrub: true,
-              },
-            }
-          );
-        });
+      const content = marquee.innerHTML;
+      marquee.innerHTML = content + content;
 
-        // Marquee Movement
-        const isEven = index % 2 === 0;
-        gsap.fromTo(marquee,
-          { xPercent: isEven ? 0 : -50 },
+      const headings = container.querySelectorAll("h1");
+      headings.forEach((heading) => {
+        const split = new SplitType(heading, { types: "chars" });
+
+        gsap.fromTo(
+          split.chars,
+          { fontWeight: 100 },
           {
-            xPercent: isEven ? -50 : 0,
-            ease: "none",
+            fontWeight: 900,
+            stagger: isMobile ? 0.02 : 0.05,
             scrollTrigger: {
               trigger: container,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
+              start: "top 95%",
+              end: "top 30%",
+              scrub: true,
             },
           }
         );
       });
 
-      // Refresh triggers once everything is rendered
-      ScrollTrigger.refresh();
-      setIsReady(true);
-    }, containerRef);
+      const isEven = index % 2 === 0;
 
-    return () => {
-      ctx.revert();
-      lenis.destroy();
-    };
-  }, []);
+      gsap.fromTo(
+        marquee,
+        { xPercent: isEven ? 0 : -50 },
+        {
+          xPercent: isEven ? -50 : 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: isMobile ? 0.5 : 1,
+          },
+        }
+      );
+    });
+
+    ScrollTrigger.refresh();
+    setIsReady(true);
+  }, containerRef);
+
+  return () => {
+    ctx.revert();
+    lenis.destroy();
+  };
+}, []);
 
   return (
     <div className={`marqueeScroll-wrapper ${isReady ? 'is-visible' : ''}`} ref={containerRef}>

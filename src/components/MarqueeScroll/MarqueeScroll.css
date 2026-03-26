@@ -127,6 +127,7 @@
 
   /* ✅ reduce gap for small screens */
   .marqueeScroll-marquee {
+       width: max-content;
     gap: 10px;
   }
 
@@ -159,5 +160,8 @@
   .marqueeScroll-section {
     gap: 1rem;
     padding: 2rem 0;
+  }
+    .marqueeScroll-wrapper {
+    overflow-x: hidden;
   }
 }

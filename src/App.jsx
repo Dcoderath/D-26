@@ -568,7 +568,6 @@
 
 
 
-
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import "./App.css";
 
@@ -592,27 +591,27 @@ const App = () => {
   const rafIdRef = useRef(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
 
-  // ---------------- GRID ----------------
+  /* ---------------- GRID ---------------- */
   const createBlocks = useCallback(() => {
     if (!blocksRef.current) return;
 
-    const numCols = Math.ceil(window.innerWidth / BLOCK_SIZE);
-    const numRows = Math.ceil(window.innerHeight / BLOCK_SIZE);
+    const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+    const rows = Math.ceil(window.innerHeight / BLOCK_SIZE);
 
     blocksRef.current.innerHTML = "";
-    blocksRef.current.style.gridTemplateColumns = `repeat(${numCols}, ${BLOCK_SIZE}px)`;
+    blocksRef.current.style.gridTemplateColumns = `repeat(${cols}, ${BLOCK_SIZE}px)`;
 
-    for (let i = 0; i < numCols * numRows; i++) {
-      const block = document.createElement("div");
-      block.className = "app-block-grid";
-      blocksRef.current.appendChild(block);
+    for (let i = 0; i < cols * rows; i++) {
+      const div = document.createElement("div");
+      div.className = "app-block-grid";
+      blocksRef.current.appendChild(div);
     }
   }, []);
 
-  const highlightBlock = useCallback((event) => {
+  const highlightBlock = useCallback((e) => {
     if (!blocksRef.current || rafIdRef.current) return;
 
-    mousePosRef.current = { x: event.clientX, y: event.clientY };
+    mousePosRef.current = { x: e.clientX, y: e.clientY };
 
     rafIdRef.current = requestAnimationFrame(() => {
       const rect = blocksRef.current.getBoundingClientRect();
@@ -622,68 +621,64 @@ const App = () => {
       const col = Math.floor(x / BLOCK_SIZE);
       const row = Math.floor(y / BLOCK_SIZE);
 
-      const numCols = Math.ceil(window.innerWidth / BLOCK_SIZE);
-      const index = row * numCols + col;
+      const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+      const index = row * cols + col;
 
       const block = blocksRef.current.children[index];
 
       if (block && !block.classList.contains("app-highlight")) {
         block.classList.add("app-highlight");
-        setTimeout(() => block.classList.remove("app-highlight"), 300);
+        setTimeout(() => block.classList.remove("app-highlight"), 250);
       }
 
       rafIdRef.current = null;
     });
   }, []);
 
-  // ---------------- PRO LOADER ----------------
+  /* ---------------- LOADER ---------------- */
   useEffect(() => {
-    const MIN_DURATION = 3000; // 3 seconds minimum
-    const startTime = Date.now();
+    const MIN_TIME = 3000;
+    const start = Date.now();
 
     const images = Array.from(document.images);
-    let loadedCount = 0;
-    const totalImages = images.length;
-
-    let fakeProgress = 0;
+    let loaded = 0;
     let realProgress = 0;
 
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      fakeProgress = Math.min((elapsed / MIN_DURATION) * 100, 100);
+    const updateReal = () => {
+      loaded++;
+      realProgress = (loaded / images.length) * 100;
+    };
 
-      const combined = Math.min(fakeProgress, realProgress);
+    images.forEach((img) => {
+      if (img.complete) updateReal();
+      else {
+        img.addEventListener("load", updateReal);
+        img.addEventListener("error", updateReal);
+      }
+    });
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - start;
+      const fake = Math.min((elapsed / MIN_TIME) * 100, 100);
+
+      const combined = Math.min(fake, realProgress || 100);
       setProgress(Math.floor(combined));
 
-      if (fakeProgress >= 100 && realProgress >= 100) {
+      if (fake >= 100 && (realProgress >= 100 || images.length === 0)) {
         clearInterval(interval);
-        setProgress(100);
 
-        setTimeout(() => setLoading(false), 200);
+        document.body.classList.add("loaded");
+
+        setTimeout(() => {
+          setLoading(false);
+        }, 600);
       }
     }, 30);
-
-    if (totalImages === 0) {
-      realProgress = 100;
-    } else {
-      const updateReal = () => {
-        loadedCount++;
-        realProgress = (loadedCount / totalImages) * 100;
-      };
-
-      images.forEach((img) => {
-        if (img.complete) updateReal();
-        else {
-          img.addEventListener("load", updateReal);
-          img.addEventListener("error", updateReal);
-        }
-      });
-    }
 
     return () => clearInterval(interval);
   }, []);
 
-  // ---------------- AFTER LOAD ----------------
+  /* ---------------- AFTER LOAD ---------------- */
   useEffect(() => {
     if (loading) return;
 
@@ -691,7 +686,7 @@ const App = () => {
     window.addEventListener("resize", createBlocks);
     window.addEventListener("mousemove", highlightBlock);
 
-    const loadGSAP = async () => {
+    const runAnimation = async () => {
       const gsap = (await import("gsap")).default;
 
       const overlay = document.getElementById("app-overlay");
@@ -701,24 +696,23 @@ const App = () => {
 
       overlay.style.display = "grid";
 
-      gsap.set(blocks, {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
-      });
-
-      setTimeout(() => {
-        gsap.to(blocks, {
+      gsap.fromTo(
+        blocks,
+        { y: 0 },
+        {
+          y: "-100%",
           duration: 1.2,
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-          stagger: 0.08,
-          ease: "power3.inOut",
+          stagger: 0.06,
+          ease: "power4.inOut",
+          delay: 0.2,
           onComplete: () => {
             overlay.style.display = "none";
           }
-        });
-      }, 100);
+        }
+      );
     };
 
-    loadGSAP();
+    runAnimation();
 
     return () => {
       window.removeEventListener("resize", createBlocks);
@@ -726,21 +720,27 @@ const App = () => {
     };
   }, [loading, createBlocks, highlightBlock]);
 
-  // ---------------- UI ----------------
-  if (loading) {
-    return (
-      <div className="loader-screen">
-        <div className="loader-bar">
-          <div className="loader-fill" style={{ width: `${progress}%` }}></div>
-        </div>
-        <h1 className="loader-text">{progress}%</h1>
-      </div>
-    );
-  }
+  /* ---------------- UI ---------------- */
+if (loading) {
+  return (
+    <div className="loader-screen">
+      <h1 className="loader-center">Codegrid</h1>
 
+      <div className="loader-bottom">
+        <span className="loader-percent">{progress}%</span>
+        <div className="loader-bar">
+          <div
+            className="loader-fill"
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="App">
-      {/* REVEAL BLOCKS */}
+      {/* BLOCK REVEAL */}
       <div className="app-overlay" id="app-overlay">
         {[...Array(8)].map((_, i) => (
           <div key={i} className="app-block"></div>
@@ -751,18 +751,18 @@ const App = () => {
         <title>Dcoderath | Divakar Trivedi</title>
       </Helmet>
 
+      {/* MOUSE GRID */}
       <div className="app-blocks-container">
         <div ref={blocksRef} className="app-blocks-grid"></div>
       </div>
 
       <Navbar />
-
-      <section id="Home"><Home /></section>
-      <section id="Services"><Services /></section>
-      <section id="Project"><Projects /></section>
-      <section id="why"><WhySection /></section>
-      <section id="marquee"><MarqueeScroll /></section>
-      <section id="Footer"><Footer /></section>
+      <Home />
+      <Services />
+      <Projects />
+      <WhySection />
+      <MarqueeScroll />
+      <Footer />
     </div>
   );
 };

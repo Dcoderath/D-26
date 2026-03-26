@@ -898,6 +898,7 @@ export function FooterPage() {
   };
 
   return (
+     <div className="footer-main">
     <div id="Footer" className="mita-wrapper">
 
       <nav className="mita-top-nav">
@@ -1039,7 +1040,7 @@ export function FooterPage() {
         </footer>
 
       </div>
-
+</div>
     </div>
   );
 }

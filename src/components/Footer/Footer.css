@@ -288,6 +288,9 @@
   .arrow-button { width: 35px; height: 35px; font-size: 14px; }
 } */
 
+.footer-main{
+ background: #F1F1F1;
+}
 .mita-wrapper {
   width: 100%;
   min-height: 100vh;
@@ -296,8 +299,8 @@
   flex-direction: column;
   background: #bad9f7;
   color: #000;
-  border-top-left-radius:  60px;
-  border-top-right-radius: 60px;
+  border-top-left-radius:  50px;
+  border-top-right-radius: 50px;
   font-family: var(--font-family);
   font-weight: 900;
   text-transform: uppercase;

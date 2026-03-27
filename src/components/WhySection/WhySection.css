@@ -4,8 +4,6 @@
 
 /* =================== SECTION STYLES =================== */
 .why-section {
-  
-  padding: 50px;
   width: 100%;
   border-top-right-radius:50px;
   background: #F1F1F1;
@@ -14,13 +12,15 @@
 }
 
 .why-container {
+  
   width: 100%;
   margin: 0 auto;
-  padding: 20px; /* content padding, NOT affecting banners */
+  padding: 0px; /* content padding, NOT affecting banners */
 }
 
 /* =================== HEADING =================== */
 .why-heading {
+  padding: 50px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -37,6 +37,7 @@
 
 /* =================== FEATURES LIST =================== */
 .why-list {
+  padding: 50px;
   display: flex;
   flex-direction: column;
  

@@ -843,6 +843,8 @@
 
 import React, { useState } from "react";
 import "./Footer.css";
+import { Link } from "react-router-dom";
+
 
 export function FooterPage() {
   const [name, setName] = useState("");
@@ -1016,28 +1018,46 @@ export function FooterPage() {
 
         </section>
 
-        <footer className="mita-bottom-bar">
+<footer className="mita-bottom-bar">
 
-          <div className="mita-links-group">
-            <span>
-              MORE QUESTIONS? <a href="#">CONTACT US</a>
-            </span>
+  {/* LEFT SIDE */}
+  <div className="mita-links-group">
+    <span>
+      MORE QUESTIONS?{" "}
+      <a href="#contact">CONTACT US</a>
+    </span>
 
-            <span>
-              WANNA <a href="#">JOIN THE TEAM?</a>
-            </span>
-          </div>
+    <span>
+      WANNA{" "}
+      <a href="/careers" target="_blank" rel="noopener noreferrer">
+        JOIN THE TEAM?
+      </a>
+    </span>
+  </div>
 
-          <div className="mita-links-group">
-            <a href="#">TERMS OF SERVICE</a>
-            <a href="#">PRIVACY POLICY</a>
+  {/* RIGHT SIDE */}
+  <div className="mita-links-group">
+    <a href="/terms" target="_blank" rel="noopener noreferrer">
+      TERMS OF SERVICE
+    </a>
 
-            <span>
-              MADE BY <a href="https://github.com/Dcoderath">Dcoderath</a>
-            </span>
-          </div>
+    <a href="/privacy" target="_blank" rel="noopener noreferrer">
+      PRIVACY POLICY
+    </a>
 
-        </footer>
+    <span>
+      MADE BY{" "}
+      <a
+        href="https://github.com/Dcoderath"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Dcoderath
+      </a>
+    </span>
+  </div>
+
+</footer>
 
       </div>
 </div>

@@ -84,9 +84,11 @@ body.loaded .loader-screen {
 .app-overlay {
   position: fixed;
   inset: 0;
+    pointer-events: none;
   display: none;
   grid-template-columns: repeat(8, 1fr);
   z-index: 9999;
+  
 }
 
 .app-block {

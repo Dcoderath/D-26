@@ -819,32 +819,61 @@ const App = () => {
     }
   }, []);
 
-  const highlightBlock = useCallback((e) => {
-    if (!blocksRef.current || rafIdRef.current) return;
+ const prevPosRef = useRef(null);
 
-    mousePosRef.current = { x: e.clientX, y: e.clientY };
+const highlightBlock = useCallback((e) => {
+  if (!blocksRef.current || rafIdRef.current) return;
 
-    rafIdRef.current = requestAnimationFrame(() => {
-      const rect = blocksRef.current.getBoundingClientRect();
-      const x = mousePosRef.current.x - rect.left;
-      const y = mousePosRef.current.y - rect.top;
+  mousePosRef.current = { x: e.clientX, y: e.clientY };
 
-      const col = Math.floor(x / BLOCK_SIZE);
-      const row = Math.floor(y / BLOCK_SIZE);
+  rafIdRef.current = requestAnimationFrame(() => {
+    const rect = blocksRef.current.getBoundingClientRect();
 
-      const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
-      const index = row * cols + col;
+    const x = mousePosRef.current.x - rect.left;
+    const y = mousePosRef.current.y - rect.top;
 
-      const block = blocksRef.current.children[index];
+    const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
 
-      if (block && !block.classList.contains("app-highlight")) {
-        block.classList.add("app-highlight");
-        setTimeout(() => block.classList.remove("app-highlight"), 250);
+    const col = Math.floor(x / BLOCK_SIZE);
+    const row = Math.floor(y / BLOCK_SIZE);
+
+    if (prevPosRef.current) {
+      const prevCol = prevPosRef.current.col;
+      const prevRow = prevPosRef.current.row;
+
+      const steps = Math.max(
+        Math.abs(col - prevCol),
+        Math.abs(row - prevRow)
+      );
+
+      for (let i = 0; i <= steps; i++) {
+        const interpCol = Math.round(
+          prevCol + ((col - prevCol) * i) / steps
+        );
+
+        const interpRow = Math.round(
+          prevRow + ((row - prevRow) * i) / steps
+        );
+
+        const index = interpRow * cols + interpCol;
+
+        const block = blocksRef.current.children[index];
+
+        if (block) {
+          block.classList.add("app-highlight");
+
+          setTimeout(() => {
+            block.classList.remove("app-highlight");
+          }, 300);
+        }
       }
+    }
 
-      rafIdRef.current = null;
-    });
-  }, []);
+    prevPosRef.current = { col, row };
+
+    rafIdRef.current = null;
+  });
+}, []);
 
   /* ---------------- GRID ONLY ON HOME ---------------- */
   useEffect(() => {

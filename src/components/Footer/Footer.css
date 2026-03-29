@@ -288,284 +288,335 @@
   .arrow-button { width: 35px; height: 35px; font-size: 14px; }
 } */
 
+
 .footer-main{
- background: #F1F1F1;
-}
-.mita-wrapper {
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background: #bad9f7;
-  color: #000;
-  border-top-left-radius:  50px;
-  border-top-right-radius: 50px;
-  font-family: var(--font-family);
-  font-weight: 900;
-  text-transform: uppercase;
+background:#F1F1F1;
 }
 
-.nav-socials a {
-  color: inherit;
-  text-decoration: none;
-  padding: 4px 8px;
-  transition: background 0.3s ease, color 0.3s ease;
+.mita-wrapper{
+  padding-top: 20px ;
+width:100%;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+background:#bad9f7;
+border-top-left-radius:50px;
+border-top-right-radius:50px;
+font-family:var(--font-family);
+font-weight:900;
+text-transform:uppercase;
+position:relative;
+overflow:hidden;
 }
 
-.nav-socials a:hover {
-  background: #000;
-  color: #bad9f7;
+.mita-top-section{
+position:relative;
+width:100%;
+height:60vh;
+padding:20px 5% 0;
+display:flex;
+flex-direction:column;
 }
-/* ---------- NAV ---------- */
 
-.mita-top-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  z-index: 100;
+.mita-top-nav{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:12px;
+z-index:20;
+flex-wrap:wrap;
+gap:8px;
 }
 
 .nav-socials,
-.nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.nav-menu{
+display:flex;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
 }
 
-.nav-socials span,
-.nav-menu span {
-  cursor: pointer;
-  padding: 4px 8px;
-  transition: background 0.3s ease, color 0.3s ease;
+.nav-socials a{
+color:black;
+text-decoration:none;
+padding:4px 8px;
+transition:.3s ease;
 }
 
-.nav-socials span:hover,
-.nav-menu span:hover {
-  background: #000;
-  color: #bad9f7;
+.nav-socials a:hover{
+background:black;
+color:#bad9f7;
 }
 
-/* ---------- CONTENT ---------- */
-
-.mita-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 100px 5% 40px;
+.nav-menu span{
+cursor:pointer;
+padding:4px 8px;
+transition:.3s ease;
 }
 
-/* ---------- HERO ---------- */
-
-.mita-hero {
-  flex: 1;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.nav-menu span:hover{
+background:black;
+color:#bad9f7;
 }
 
-.mita-title {
-  margin: 0;
-  font-size: clamp(80px, 24vw, 320px);
-  line-height: 0.75;
-  letter-spacing: -0.05em;
-  text-align: center;
+.nav-access{
+cursor:pointer;
+padding:4px 10px;
+
+border-bottom:2px solid black;
+transition:.3s ease;
+white-space:nowrap;
 }
 
-/* ---------- SUBTITLE ---------- */
-
-.mita-subtitles {
-  width: 100%;
-  margin-top: 10px;
-
-  display: flex;
-  justify-content: space-between;
-
-  font-size: 14px;
+.nav-access:hover{
+background:black;
+color:#bad9f7;
 }
 
-/* ---------- FORM ---------- */
-
-.mita-form-zone {
-  width: 100%;
-  margin-top: auto;
+.mita-hero{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+position:relative;
+z-index:10;
+text-align:center;
 }
 
-.mita-instruction {
-  max-width: 250px;
-  margin-bottom: 25px;
-
-  font-size: 11px;
-  line-height: 1.3;
+.mita-title{
+margin:0;
+font-size:clamp(80px,24vw,320px);
+line-height:.75;
+letter-spacing:-0.05em;
+text-align:center;
 }
 
-/* ---------- INPUT ROW ---------- */
-
-.mita-input-row {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 15px 20px;
-  border-top: 2px solid #000;
-
-  overflow: hidden;
-  z-index: 1;
+.mita-subtitles{
+width:100%;
+margin-top:10px;
+display:flex;
+justify-content:space-between;
+font-size:14px;
+flex-wrap:wrap;
+gap:6px;
 }
 
-.mita-input-row::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #000;
-
-  transform: scaleX(0);
-  transform-origin: left center;
-
-  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-  z-index: -1;
+.mita-bottom-section{
+padding:40px 5%;
+position:relative;
+z-index:10;
 }
-.success-box{
-  text-align:center;
-  padding:20px;
-  border:1px solid white;
-  margin-top:20px;
+
+.mita-form-zone{
+width:100%;
 }
-.mita-input-row:hover::before {
-  transform: scaleX(1);
+
+.mita-instruction{
+margin-bottom:20px;
+font-size:14px;
+line-height:1.4;
+max-width:420px;
+}
+
+.mita-input-row{
+position:relative;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 18px;
+border-top:2px solid black;
+overflow:hidden;
+z-index:1;
+}
+
+.mita-input-row::before{
+content:"";
+position:absolute;
+inset:0;
+background:black;
+transform:scaleX(0);
+transform-origin:left center;
+transition:transform .6s cubic-bezier(.19,1,.22,1);
+z-index:-1;
+pointer-events:none;
+}
+
+.mita-input-row:hover::before{
+transform:scaleX(1);
+}
+
+.mita-input-row input{
+width:100%;
+border:none;
+outline:none;
+background:transparent;
+font-family:inherit;
+font-weight:900;
+text-transform:uppercase;
+font-size:clamp(22px,4vw,42px);
+color:black;
+transition:.3s ease;
+}
+
+.mita-input-row input::placeholder{
+color:black;
+}
+
+.mita-star{
+margin-left:10px;
+font-size:26px;
 }
 
 .mita-input-row:hover input,
-.mita-input-row:hover .mita-star {
-  color: #fff;
+.mita-input-row:hover .mita-star{
+color:white;
 }
 
-.mita-input-row:hover input::placeholder {
-  color: #fff;
+.mita-input-row:hover input::placeholder{
+color:white;
 }
 
-/* ---------- INPUT ---------- */
-
-.mita-input-row input {
-  width: 100%;
-
-  border: none;
-  outline: none;
-  background: transparent;
-
-  font-family: inherit;
-  font-weight: 900;
-  text-transform: uppercase;
-
-  font-size: clamp(30px, 6vw, 65px);
-  color: #000;
-
-  transition: color 0.3s ease;
+.mita-submit-btn{
+width:100%;
+padding:14px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border:none;
+font-family:inherit;
+font-weight:900;
+font-size:clamp(22px,4vw,42px);
+background:black;
+color:#bad9f7;
+cursor:pointer;
 }
 
-.mita-input-row input::placeholder {
-  color: #000;
+.mita-submit-btn:disabled{
+opacity:.6;
+cursor:not-allowed;
 }
 
-.mita-star {
-  margin-left: 10px;
-  font-size: 40px;
+.success-box{
+text-align:center;
+padding:20px;
+margin-top:20px;
+border:2px solid white;
+font-size:16px;
 }
 
-/* ---------- BUTTON ---------- */
-
-.mita-submit-btn {
-  width: 100%;
-  padding: 18px 0;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  border: none;
-
-  font-family: inherit;
-  font-weight: 900;
-  font-size: clamp(30px, 6vw, 65px);
-
-  background: #000;
-  color: #bad9f7;
-
-  cursor: pointer;
+.mita-spam-text{
+margin-top:8px;
+text-align:right;
+font-size:10px;
 }
 
-/* ---------- TEXT ---------- */
-
-.mita-spam-text {
-  margin-top: 8px;
-  text-align: right;
-  font-size: 11px;
+.mita-bottom-bar{
+margin-top:25px;
+padding-top:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-family:"Inter",sans-serif;
+font-size:9px;
+border-top:1px solid rgba(0,0,0,.2);
+position:relative;
+z-index:20;
+flex-wrap:wrap;
+gap:8px;
 }
 
-/* ---------- FOOTER ---------- */
-
-.mita-bottom-bar {
-  margin-top: 30px;
-  padding-top: 10px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-family: "Inter", sans-serif;
-  font-size: 10px;
-
-  border-top: 1px solid rgba(0,0,0,0.15);
+.mita-links-group{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
 }
 
-.mita-links-group {
-  display: flex;
-  gap: 20px;
+.mita-bottom-bar a{
+text-decoration:underline;
+color:inherit;
+cursor:pointer;
+}
+/* --- Base Adjustments for Better Scaling --- */
+.mita-wrapper {
+  overflow-x: hidden; /* Prevents horizontal scroll on small screens */
 }
 
-.mita-bottom-bar a {
-  text-decoration: underline;
-  color: inherit;
-}
+/* --- Responsive Polish --- */
 
-/* ---------- MOBILE ---------- */
+@media (max-width: 1024px) {
+  .mita-title {
+    /* Keeps the font massive but prevents overlap */
+    font-size: clamp(80px, 22vw, 240px);
+  }
+}
 
 @media (max-width: 768px) {
+  .mita-top-section {
+    height: auto;
+    min-height: 50vh;
+    padding: 60px 5% 20px; /* Space for the absolute nav */
+  }
+
+  .mita-top-nav {
+    padding: 10px 5%;
+    justify-content: space-between;
+  }
 
   .nav-menu {
-    display: none;
+    display: none; /* Hide non-essential links to keep it clean */
   }
 
   .mita-title {
-    font-size: clamp(70px, 20vw, 150px);
+    font-size: clamp(60px, 25vw, 120px);
+    margin: 20px 0;
   }
 
   .mita-subtitles {
-    font-size: 11px;
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .mita-top-section {
+    padding-top: 50px;
+  }
+
+  .mita-title {
+    /* The "Pro" look: high impact, tight leading */
+    font-size: 18vw; 
+    line-height: 0.8;
+  }
+
+  .mita-subtitles {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    text-align: center;
+  }
+
+  .mita-input-row input {
+    font-size: 24px;
+  }
+
+  .mita-submit-btn {
+    font-size: 24px;
   }
 
   .mita-bottom-bar {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
   }
 
   .mita-links-group {
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: center;
   }
-
-  .mita-spam-text {
-    text-align: left;
-  }
-
 }

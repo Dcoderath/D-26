@@ -231,9 +231,223 @@
 // }
 
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+// import React, { useState, useEffect, useRef, useCallback } from "react";
+// import { motion } from "framer-motion";
 
+
+// import "./Projects.css";
+
+// import img11 from "../../assets/Image/img11.jpg";
+// import img2 from "../../assets/Image/img2.jpg";
+// import img10 from "../../assets/Image/img10.jpg";
+// import img4 from "../../assets/Image/img4.jpg";
+// import img5 from "../../assets/Image/img5.jpg";
+// import img13 from "../../assets/Image/img13.jpg";
+
+// function Project() {
+//  const [activeIndex, setActiveIndex] = useState(0);
+
+//   const topRightCanvas = useRef(null);
+//   const bottomLeftCanvas = useRef(null);
+//   const projectRefs = useRef([]);
+
+//   // Toggle project open/close
+//   const toggleProject = (index) => {
+//     setActiveIndex(activeIndex === index ? null : index);
+//   };
+
+//   // Scroll into view when a project opens
+// useEffect(() => {
+//   if (activeIndex !== null && activeIndex !== 0) {
+//     const timer = setTimeout(() => {
+//       projectRefs.current[activeIndex]?.scrollIntoView({
+//         behavior: "smooth",
+//         block: "start",
+//       });
+//     }, 400);
+//     return () => clearTimeout(timer);
+//   }
+// }, [activeIndex]);
+
+//   // Pixel canvas drawing
+//   const drawPixels = useCallback((canvas, type) => {
+//     const ctx = canvas.getContext("2d");
+//     const rect = canvas.getBoundingClientRect();
+    
+//     // Minimum size to avoid disappearing on small screens
+//     canvas.width = Math.max(rect.width, 300);
+//     canvas.height = Math.max(rect.height, 300);
+
+//     const size = canvas.width;
+//     const pixelSizeMultiplier = 0.06;
+//     const basePixelSize = size * pixelSizeMultiplier;
+//     const pixel = Math.max(25, Math.min(60, Math.floor(basePixelSize)));
+
+//     const rows = Math.floor(size / pixel);
+//     const cols = Math.floor(size / pixel);
+
+//     ctx.clearRect(0, 0, size, size);
+//     ctx.font = `${pixel * 0.6}px monospace`;
+//     ctx.textAlign = "center";
+//     ctx.textBaseline = "middle";
+
+//     const coreRadius = 0.32;
+//     const scatterRadius = 0.9;
+
+//     for (let y = 0; y < rows; y++) {
+//       for (let x = 0; x < cols; x++) {
+//         const nx = x / cols;
+//         const ny = y / rows;
+//         let distance;
+
+//         if (type === "top") {
+//           const dx = 1 - nx;
+//           const dy = ny;
+//           distance = Math.sqrt(dx * dx + dy * dy);
+//         } else {
+//           const dx = nx;
+//           const dy = 1 - ny;
+//           distance = Math.sqrt(dx * dx + dy * dy);
+//         }
+
+//         if (distance <= coreRadius || (distance <= scatterRadius && Math.random() < 1 - (distance - coreRadius) / (scatterRadius - coreRadius))) {
+//           ctx.fillStyle = "#f1f1f1";
+//           ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
+//         }
+//       }
+//     }
+//   }, []);
+  
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       if (topRightCanvas.current) drawPixels(topRightCanvas.current, "top");
+//       if (bottomLeftCanvas.current) drawPixels(bottomLeftCanvas.current, "bottom");
+//     };
+//     handleResize();
+
+//     const debouncedResize = () => {
+//       clearTimeout(window.resizeTimer);
+//       window.resizeTimer = setTimeout(handleResize, 100);
+//     };
+//     window.addEventListener("resize", debouncedResize);
+//     return () => window.removeEventListener("resize", debouncedResize);
+//   }, [drawPixels]);
+
+//   const projects = [
+//     {
+//       category: "Open Plan Offices",
+//       client: "Hotel Ponsonby:",
+//       title: "transforming a heritage building into a chic gastropub",
+//       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+//       img1: img11,
+//       img2: img2,
+//     },
+//     {
+//       category: "Recording Studios and Radio",
+//       client: "Mediaworks:",
+//       title: "Capturing the rebellious soul of radio",
+//       tags: ["CubeT", "Quietspaco® Panel"],
+//       img1: img10,
+//       img2: img4,
+//     },
+//     {
+//       category: "Hotel Lobbies and Foyers",
+//       client: "Custom Frontier™ system",
+//       title: "for Headingley Stadium's Emerald Suite",
+//       tags: ["FrontierTM"],
+//       img1: img13,
+//       img2: img5,
+//     },
+//   ];
+
+//   return (
+//     <section id="Project" className="project-section">
+//       <canvas ref={topRightCanvas} className="canvas-top" />
+//       <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
+
+//       <div className="project-content-wrapper">
+// <div className="project-heading">
+//   <div className="heading-box">
+//     <h1>Beautiful projects</h1> 
+//     <p>from around the world</p> 
+//   </div>
+// </div>
+
+//         {projects.map((project, index) => (
+//           <div
+//             key={index}
+//             className="project-row"
+//             ref={(el) => (projectRefs.current[index] = el)}
+//           >
+//             <div className="project-grid">
+//               <div className="project-category">
+//                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+//                 {project.category}
+//               </div>
+
+//               <div className="project-content">
+//                 <h3>{project.client}</h3>
+//                 <p className="project-title">{project.title}</p>
+//                 <div className="project-tags">
+//                   {project.tags.map((tag, i) => (
+//                     <span key={i}>{tag}</span>
+//                   ))}
+//                 </div>
+//               </div>
+
+//               <div className="project-actions">
+//                 <button className="project-btn">View case</button>
+//                 <button
+//                   className="project-btn"
+//                   onClick={() => toggleProject(index)}
+//                 >
+//                   {activeIndex === index ? "Hide" : "Show details"}
+//                 </button>
+//               </div>
+
+//               {activeIndex === index && (
+//                 <motion.div
+//                   className="detail-images"
+//                   initial={{ opacity: 0, maxHeight: 0 }}
+//                   animate={{ opacity: 1, maxHeight: 2000 }} // large maxHeight for responsive screens
+//                   transition={{ duration: 0.6 }}
+//                   style={{ overflow: "hidden" }}
+//                 >
+//                  <div className="img-wrapper">
+//   <img src={project.img1} alt="" />
+// </div>
+
+// <div className="img-wrapper">
+//   <img src={project.img2} alt="" />
+// </div>
+//                 </motion.div>
+//               )}
+//             </div>
+//           </div>
+//         ))}
+
+// <div className="project-bottom-row">
+//   <div className="project-title-wrapper">
+//     <h2 className="project-big-title">
+//       Projects <span className="project-count">26</span>
+//     </h2>
+//     <div className="project-buttons">
+//       <button className="project-buttons-button">All Projects</button>
+//     </div>
+//   </div>
+// </div>
+//       </div>
+//     </section>
+//   );
+// }
+
+// export default Project;
+
+
+
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 import "./Projects.css";
 
@@ -245,94 +459,25 @@ import img5 from "../../assets/Image/img5.jpg";
 import img13 from "../../assets/Image/img13.jpg";
 
 function Project() {
- const [activeIndex, setActiveIndex] = useState(0);
-
-  const topRightCanvas = useRef(null);
-  const bottomLeftCanvas = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const projectRefs = useRef([]);
 
-  // Toggle project open/close
   const toggleProject = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  // Scroll into view when a project opens
-useEffect(() => {
-  if (activeIndex !== null && activeIndex !== 0) {
-    const timer = setTimeout(() => {
-      projectRefs.current[activeIndex]?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 400);
-    return () => clearTimeout(timer);
-  }
-}, [activeIndex]);
-
-  // Pixel canvas drawing
-  const drawPixels = useCallback((canvas, type) => {
-    const ctx = canvas.getContext("2d");
-    const rect = canvas.getBoundingClientRect();
-    
-    // Minimum size to avoid disappearing on small screens
-    canvas.width = Math.max(rect.width, 300);
-    canvas.height = Math.max(rect.height, 300);
-
-    const size = canvas.width;
-    const pixelSizeMultiplier = 0.06;
-    const basePixelSize = size * pixelSizeMultiplier;
-    const pixel = Math.max(25, Math.min(60, Math.floor(basePixelSize)));
-
-    const rows = Math.floor(size / pixel);
-    const cols = Math.floor(size / pixel);
-
-    ctx.clearRect(0, 0, size, size);
-    ctx.font = `${pixel * 0.6}px monospace`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    const coreRadius = 0.32;
-    const scatterRadius = 0.9;
-
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < cols; x++) {
-        const nx = x / cols;
-        const ny = y / rows;
-        let distance;
-
-        if (type === "top") {
-          const dx = 1 - nx;
-          const dy = ny;
-          distance = Math.sqrt(dx * dx + dy * dy);
-        } else {
-          const dx = nx;
-          const dy = 1 - ny;
-          distance = Math.sqrt(dx * dx + dy * dy);
-        }
-
-        if (distance <= coreRadius || (distance <= scatterRadius && Math.random() < 1 - (distance - coreRadius) / (scatterRadius - coreRadius))) {
-          ctx.fillStyle = "#f1f1f1";
-          ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
-        }
-      }
-    }
-  }, []);
-  
-
+  // Scroll into view
   useEffect(() => {
-    const handleResize = () => {
-      if (topRightCanvas.current) drawPixels(topRightCanvas.current, "top");
-      if (bottomLeftCanvas.current) drawPixels(bottomLeftCanvas.current, "bottom");
-    };
-    handleResize();
-
-    const debouncedResize = () => {
-      clearTimeout(window.resizeTimer);
-      window.resizeTimer = setTimeout(handleResize, 100);
-    };
-    window.addEventListener("resize", debouncedResize);
-    return () => window.removeEventListener("resize", debouncedResize);
-  }, [drawPixels]);
+    if (activeIndex !== null && activeIndex !== 0) {
+      const timer = setTimeout(() => {
+        projectRefs.current[activeIndex]?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [activeIndex]);
 
   const projects = [
     {
@@ -363,16 +508,14 @@ useEffect(() => {
 
   return (
     <section id="Project" className="project-section">
-      <canvas ref={topRightCanvas} className="canvas-top" />
-      <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
-
       <div className="project-content-wrapper">
-<div className="project-heading">
-  <div className="heading-box">
-    <h1>Beautiful projects</h1> 
-    <p>from around the world</p> 
-  </div>
-</div>
+        
+        <div className="project-heading">
+          <div className="heading-box">
+            <h1>Beautiful projects</h1>
+            <p>from around the world</p>
+          </div>
+        </div>
 
         {projects.map((project, index) => (
           <div
@@ -410,33 +553,34 @@ useEffect(() => {
                 <motion.div
                   className="detail-images"
                   initial={{ opacity: 0, maxHeight: 0 }}
-                  animate={{ opacity: 1, maxHeight: 2000 }} // large maxHeight for responsive screens
+                  animate={{ opacity: 1, maxHeight: 2000 }}
                   transition={{ duration: 0.6 }}
                   style={{ overflow: "hidden" }}
                 >
-                 <div className="img-wrapper">
-  <img src={project.img1} alt="" />
-</div>
+                  <div className="img-wrapper">
+                    <img src={project.img1} alt="" />
+                  </div>
 
-<div className="img-wrapper">
-  <img src={project.img2} alt="" />
-</div>
+                  <div className="img-wrapper">
+                    <img src={project.img2} alt="" />
+                  </div>
                 </motion.div>
               )}
             </div>
           </div>
         ))}
 
-<div className="project-bottom-row">
-  <div className="project-title-wrapper">
-    <h2 className="project-big-title">
-      Projects <span className="project-count">26</span>
-    </h2>
-    <div className="project-buttons">
-      <button className="project-buttons-button">All Projects</button>
-    </div>
-  </div>
-</div>
+        <div className="project-bottom-row">
+          <div className="project-title-wrapper">
+            <h2 className="project-big-title">
+              Projects <span className="project-count">26</span>
+            </h2>
+            <div className="project-buttons">
+              <button className="project-buttons-button">All Projects</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

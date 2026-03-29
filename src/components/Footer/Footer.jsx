@@ -899,39 +899,40 @@ export function FooterPage() {
     }
   };
 
-  return (
-     <div className="footer-main">
+ return (
+  <div className="footer-main">
     <div id="Footer" className="mita-wrapper">
 
-      <nav className="mita-top-nav">
+      {/* ===== TOP SECTION ===== */}
+      <div className="mita-top-section">
 
-        <div className="nav-socials">
-          <a href="https://github.com/Dcoderath" target="_blank" rel="noopener noreferrer">
-            GITHUB
-          </a>
+        <nav className="mita-top-nav">
 
-          <a
-            href="https://www.linkedin.com/in/divakar-trivedi-85326a376/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LINKEDIN
-          </a>
-        </div>
+          <div className="nav-socials">
+            <a href="https://github.com/Dcoderath" target="_blank" rel="noopener noreferrer">
+              GITHUB
+            </a>
 
-        <div className="nav-menu">
-          <span>MITA</span>
-          <span>THE APP</span>
-          <span>NOT NFTS</span>
-          <span>FAQ IT</span>
-          <span>FOUNDERS</span>
-        </div>
+            <a
+              href="https://www.linkedin.com/in/divakar-trivedi-85326a376/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LINKEDIN
+            </a>
+          </div>
 
-        <div className="nav-access">↗ EARLY ACCESS</div>
+          <div className="nav-menu">
+            <span>MITA</span>
+            <span>THE APP</span>
+            <span>NOT NFTS</span>
+            <span>FAQ IT</span>
+            <span>FOUNDERS</span>
+          </div>
 
-      </nav>
+          <div className="nav-access">↗ EARLY ACCESS</div>
 
-      <div className="mita-content">
+        </nav>
 
         <section className="mita-hero">
           <h1 className="mita-title">JOIN US</h1>
@@ -943,6 +944,12 @@ export function FooterPage() {
           </div>
         </section>
 
+      </div>
+
+      {/* ===== BOTTOM SECTION ===== */}
+
+      <div className="mita-bottom-section">
+
         <section className="mita-form-zone">
 
           <p className="mita-instruction">
@@ -952,9 +959,8 @@ export function FooterPage() {
 
           {submitted ? (
             <div className="success-box">
-              <h3>✅ SUCCESS!</h3>
+              <h3>SUCCESS!</h3>
               <p>Thank you for joining MITA early access.</p>
-              <p>The form will reopen shortly...</p>
             </div>
           ) : (
 
@@ -993,12 +999,6 @@ export function FooterPage() {
                 <span className="mita-star">*</span>
               </div>
 
-              {!isFormValid && email !== "" && (
-                <p style={{ color: "red", marginTop: "5px" }}>
-                  ⚠️ Please fill all fields correctly
-                </p>
-              )}
-
               <button
                 className="mita-submit-btn"
                 type="submit"
@@ -1018,51 +1018,39 @@ export function FooterPage() {
 
         </section>
 
-<footer className="mita-bottom-bar">
 
-  {/* LEFT SIDE */}
-  <div className="mita-links-group">
-    <span>
-      MORE QUESTIONS?{" "}
-      <a href="#contact">CONTACT US</a>
-    </span>
+        <footer className="mita-bottom-bar">
 
-    <span>
-      WANNA{" "}
-      <a href="/careers" target="_blank" rel="noopener noreferrer">
-        JOIN THE TEAM?
-      </a>
-    </span>
-  </div>
+          <div className="mita-links-group">
+            <span>
+              MORE QUESTIONS? <a href="#contact">CONTACT US</a>
+            </span>
 
-  {/* RIGHT SIDE */}
-  <div className="mita-links-group">
-    <a href="/terms" target="_blank" rel="noopener noreferrer">
-      TERMS OF SERVICE
-    </a>
+            <span>
+              WANNA <a href="/careers">JOIN THE TEAM?</a>
+            </span>
+          </div>
 
-    <a href="/privacy" target="_blank" rel="noopener noreferrer">
-      PRIVACY POLICY
-    </a>
 
-    <span>
-      MADE BY{" "}
-      <a
-        href="https://github.com/Dcoderath"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Dcoderath
-      </a>
-    </span>
-  </div>
+          <div className="mita-links-group">
+            <a href="/terms">TERMS OF SERVICE</a>
+            <a href="/privacy">PRIVACY POLICY</a>
 
-</footer>
+            <span>
+              MADE BY{" "}
+              <a href="https://github.com/Dcoderath">
+                Dcoderath
+              </a>
+            </span>
+          </div>
+
+        </footer>
 
       </div>
-</div>
+
     </div>
-  );
+  </div>
+);
 }
 
 export default FooterPage;

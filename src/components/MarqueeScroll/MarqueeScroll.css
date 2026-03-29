@@ -1,17 +1,20 @@
+/* ✅ Main Wrapper: Prevent horizontal jitter */
 .marqueeScroll-wrapper {
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden; /* CRITICAL for mobile smooth scroll */
   font-family: "Big Shoulders Display", sans-serif;
   background: #F1F1F1;
   opacity: 0;
   transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  /* Helps mobile browsers understand scroll intent */
+  touch-action: pan-y; 
 }
 
 .marqueeScroll-wrapper.is-visible {
   opacity: 1;
 }
 
-/* ✅ smoother mask (less aggressive on mobile) */
+/* ✅ Container: Fixed height logic for mobile */
 .marqueeScroll-container {
   position: relative;
   width: 100%;
@@ -37,25 +40,26 @@
 }
 
 .marqueeScroll-section {
-  min-height: 100vh;
+  min-height: 100dvh; /* Use dvh for mobile address bar stability */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10rem 0;
+  padding: 5rem 0; /* Reduced padding for mobile friendly start */
   gap: 2rem;
 }
 
-/* ✅ FIX: stable spacing + GPU */
+/* ✅ Marquee: GPU Accelerated */
 .marqueeScroll-marquee {
   display: flex;
   align-items: center;
-  gap: 16px; /* fixed gap = smooth scroll */
+  gap: 16px; 
   white-space: nowrap;
   will-change: transform;
-  transform: translate3d(0, 0, 0); /* smoother */
+  /* Force hardware acceleration */
+  transform: translateZ(0); 
 }
 
-/* ✅ FIX: consistent item sizing */
+/* ✅ Item Sizing */
 .marqueeScroll-item {
   flex: 0 0 auto;
   width: 350px;
@@ -70,6 +74,8 @@
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
+  /* Prevent image dragging on mobile */
+  pointer-events: none; 
 }
 
 .marqueeScroll-text {
@@ -103,65 +109,59 @@
 
 @media (max-width: 768px) {
   .marqueeScroll-container { height: 130px; }
-
   .marqueeScroll-item {
     width: 200px;
     height: 130px;
   }
-
   .marqueeScroll-item h1 {
     font-size: clamp(1.5rem, 8vw, 45px);
   }
 }
 
 @media (max-width: 480px) {
+  /* Prevent Lenis from breaking by disabling pull-to-refresh if needed */
+  html, body {
+    overscroll-behavior-y: none;
+  }
+
   .marqueeScroll-container {
-    height: 100px;
+    height: 110px; /* Slightly taller for better touch targets */
   }
 
-  /* ✅ CRITICAL FIX: match height exactly */
   .marqueeScroll-item {
-    width: 140px;
-    height: 100px;
+    width: 160px;
+    height: 110px;
   }
 
-  /* ✅ reduce gap for small screens */
   .marqueeScroll-marquee {
-       width: max-content;
-    gap: 10px;
+    width: max-content;
+    gap: 12px;
   }
 
-  /* ✅ reduce mask cut (important) */
   .marqueeScroll-container {
     mask-image: linear-gradient(
       to right,
       transparent,
-      black 5%,
-      black 95%,
+      black 4%,
+      black 96%,
       transparent
     );
     -webkit-mask-image: linear-gradient(
       to right,
       transparent,
-      black 5%,
-      black 95%,
+      black 4%,
+      black 96%,
       transparent
     );
   }
 
   .marqueeScroll-item h1 {
-    font-size: 20px;
-  }
-
-  .marqueeScroll-text {
-    padding: 0 1.5rem;
+    font-size: 24px;
   }
 
   .marqueeScroll-section {
-    gap: 1rem;
-    padding: 2rem 0;
-  }
-    .marqueeScroll-wrapper {
-    overflow-x: hidden;
+    gap: 1.5rem;
+    padding: 4rem 0;
+    min-height: auto; /* Allow natural flow on very small phones */
   }
 }

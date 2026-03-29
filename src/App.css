@@ -10,7 +10,7 @@
 
 html,
 body {
-  background: #000;
+  background-color: #231f1f;
   width: 100%;
   overflow-x: hidden;
   font-family: "Limelight", sans-serif;
@@ -113,11 +113,15 @@ body.loaded .loader-screen {
   height: 30px;
 }
 
-.app-highlight {
-  background: rgb(0, 102, 255);
-  border: 2px solid #fff;
-}
 
+.app-highlight {
+  background:#FF2A00;
+
+  border-radius: 50%;
+  transform: scale(0.9);
+  border: 2px solid #fff;
+  transition: all 0.15s ease;
+}
 .App {
   position: relative;
   min-height: 100vh;
@@ -127,6 +131,16 @@ body.loaded .loader-screen {
 
 .App::-webkit-scrollbar {
   display: none;
+}
+/* TEXT SELECTION COLOR */
+::selection {
+  background: #FF2A00;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: #FF2A00;
+  color: #fff;
 }
 @media (max-width: 480px) {
   .loader-bottom {

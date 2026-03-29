@@ -24,8 +24,9 @@
   z-index: 1;
 
   /* Dark edges with golden glowing center */
-  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.4) 0%, rgba(7,7,7,1) 60%, rgba(5,5,5,1) 100%);
-  
+  /* background: radial-gradient(circle at center, rgba(255, 215, 0, 0.4) 0%, rgba(7,7,7,1) 60%, rgba(5,5,5,1) 100%);
+   */
+   background-color: #231f1f;
   color: #e6e6e6; /* readable text */
   overflow: hidden;
   box-sizing: border-box;
@@ -39,50 +40,50 @@
   z-index: 0;
 }
 
-.canvas-top{top:0;right:-4px;}
-.canvas-bottom{bottom:-4px;left:0;}
+/* .canvas-top{top:0;right:-4px;}
+.canvas-bottom{bottom:-4px;left:0;} */
 
 .project-content-wrapper{position: relative; z-index: 2;}
 
 .project-heading {
   margin-bottom: clamp(30px, 7vw, 90px);
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }
 
 .project-heading .heading-box {
   display: inline-flex;
   flex-direction: column;
-  align-items: stretch;
-  background: #000;
-  box-shadow: -10px 10px 0 #000000;
+  align-items: last baseline;
+  /* background: #000; */
+  /* box-shadow: -10px 10px 0 #000000; */
   transition: all 0.4s ease;
   max-width: 100%; /* Prevent overflow */
 }
 
-.project-heading .heading-box:hover {
+/* .project-heading .heading-box:hover {
   box-shadow: 10px 10px 0 #000000;
   transform: translateX(6px);
-}
+} */
 
 .project-heading h1,
 .project-heading p {
   padding: 6px 14px;
   margin: 0;
-  text-align: center;
+  text-align: left;
   word-wrap: break-word; /* Ensure long text wraps */
 }
 
 .project-heading h1 {
-  background: #003cff;
-  color: #000;
+  /* background: #003cff; */
+  color: #ffffff;
   font-size: clamp(26px, 8vw, 90px);
 }
 
 .project-heading p {
-  background: #fff;
-  color: #000;
-  font-size: clamp(26px, 8vw, 90px);
+  /* background: #0033ff; */
+  color: #ffffff;
+  font-size: clamp(16px, 5vw, 50px);
 }
 
 .project-row {
@@ -231,8 +232,8 @@
 }
 
 .project-big-title{
-  background: #0051ff;
-  color: #000;
+  /* background: #0051ff; */
+  color: #ffffff;
   display: inline-flex;
  /* Allows text + count to stack if too wide */
   align-items: center;
@@ -243,15 +244,15 @@
   min-height: 60px;
   width: auto;
   max-width: 90%;
-  box-shadow: -10px 10px 0 #000000;
-  transition: all 0.4s ease;
+  /* box-shadow: -10px 10px 0 #000000;
+  transition: all 0.4s ease; */
   position: relative;
   text-align: center;
 }
 
 .project-count{
-  background: #fff;
-  color: #000;
+  /* background: #fff; */
+  color: #ffffff;
   padding: 4px 10px;
   font-weight: bold;
   font-size: 0.7em; /* Relative to the parent title size */

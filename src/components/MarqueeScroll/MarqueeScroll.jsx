@@ -138,9 +138,6 @@
 
 
 
-
-
-
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -154,8 +151,7 @@ const MarqueeScroll = () => {
   const containerRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
 
-  // 1. Optimization: Use eager glob and sort
-  // Tip: Convert your .jpg to .webp to reduce size by 70% automatically
+  // Optimization: Eager glob for images
   const images = Object.entries(
     import.meta.glob("../../assets/Image/*.{jpg,webp,png}", { eager: true })
   )
@@ -165,81 +161,104 @@ const MarqueeScroll = () => {
       return numA - numB;
     })
     .map(([, mod]) => mod.default);
-useEffect(() => {
-  const isMobile = window.innerWidth <= 480;
 
-  const lenis = new Lenis({
-    lerp: isMobile ? 0.2 : 0.1,
-    smoothWheel: true,
-  });
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 480;
 
-  function raf(time) {
-    lenis.raf(time);
+    // Initialize Lenis
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 2, // Better feel on mobile touchscreens
+      infinite: false,
+    });
+
+    // VERY IMPORTANT: Tell ScrollTrigger to watch Lenis
+    lenis.on("scroll", ScrollTrigger.update);
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
 
-  const ctx = gsap.context(() => {
-    const containers = document.querySelectorAll(".marqueeScroll-container");
+    const ctx = gsap.context(() => {
+      const containers = document.querySelectorAll(".marqueeScroll-container");
 
-    containers.forEach((container, index) => {
-      const marquee = container.querySelector(".marqueeScroll-marquee");
+      containers.forEach((container, index) => {
+        const marquee = container.querySelector(".marqueeScroll-marquee");
+        
+        // Double content for seamless loop
+        const content = marquee.innerHTML;
+        marquee.innerHTML = content + content;
 
-      const content = marquee.innerHTML;
-      marquee.innerHTML = content + content;
+        const headings = container.querySelectorAll("h1");
+        headings.forEach((heading) => {
+          const split = new SplitType(heading, { types: "chars" });
 
-      const headings = container.querySelectorAll("h1");
-      headings.forEach((heading) => {
-        const split = new SplitType(heading, { types: "chars" });
+          gsap.fromTo(
+            split.chars,
+            { fontWeight: 100 },
+            {
+              fontWeight: 900,
+              stagger: isMobile ? 0.02 : 0.05,
+              scrollTrigger: {
+                trigger: container,
+                start: "top 95%",
+                end: "top 30%",
+                scrub: true,
+              },
+            }
+          );
+        });
+
+        const isEven = index % 2 === 0;
 
         gsap.fromTo(
-          split.chars,
-          { fontWeight: 100 },
+          marquee,
+          { xPercent: isEven ? 0 : -50 },
           {
-            fontWeight: 900,
-            stagger: isMobile ? 0.02 : 0.05,
+            xPercent: isEven ? -50 : 0,
+            ease: "none",
             scrollTrigger: {
               trigger: container,
-              start: "top 95%",
-              end: "top 30%",
-              scrub: true,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: isMobile ? 0.5 : 1,
             },
           }
         );
       });
 
-      const isEven = index % 2 === 0;
+      // Initial Refresh
+      ScrollTrigger.refresh();
+      setIsReady(true);
+    }, containerRef);
 
-      gsap.fromTo(
-        marquee,
-        { xPercent: isEven ? 0 : -50 },
-        {
-          xPercent: isEven ? -50 : 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: container,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: isMobile ? 0.5 : 1,
-          },
-        }
-      );
-    });
+    // FIX FOR VERCEL: Refresh after all images/fonts load
+    const handleLoad = () => {
+      ScrollTrigger.refresh();
+    };
 
-    ScrollTrigger.refresh();
-    setIsReady(true);
-  }, containerRef);
+    window.addEventListener("load", handleLoad);
+    
+    // Optional: Extra refresh after 1 second as a fallback
+    const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+    }, 1000);
 
-  return () => {
-    ctx.revert();
-    lenis.destroy();
-  };
-}, []);
+    return () => {
+      ctx.revert();
+      lenis.destroy();
+      window.removeEventListener("load", handleLoad);
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div className={`marqueeScroll-wrapper ${isReady ? 'is-visible' : ''}`} ref={containerRef}>
       <section className="marqueeScroll-section">
-        {/* Pass priority to top rows to ensure they load first */}
         <Row images={images.slice(0, 4)} text="Unique" priority="high" />
         <Row images={images.slice(4, 8)} text="Release" priority="high" />
         <Row images={images.slice(8, 12)} text="Limited" priority="auto" />
@@ -259,7 +278,7 @@ const Row = ({ images, text, priority }) => {
             <img 
               src={img} 
               alt="" 
-              fetchpriority={priority} 
+              fetchPriority={priority} 
               loading="eager" 
               decoding="sync"
             />
@@ -277,7 +296,7 @@ const Row = ({ images, text, priority }) => {
             <img 
               src={img} 
               alt="" 
-              fetchpriority={priority} 
+              fetchPriority={priority} 
               loading="eager" 
               decoding="sync"
             />

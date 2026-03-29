@@ -125,7 +125,8 @@ body.loaded .loader-screen {
 .App {
   position: relative;
   min-height: 100vh;
-  overflow-y: scroll;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 

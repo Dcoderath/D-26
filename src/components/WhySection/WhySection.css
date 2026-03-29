@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&family=Space+Grotesk:wght@600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+/* ✅ Merge fonts into ONE import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&family=Space+Grotesk:wght@600;700&family=Cedarville+Cursive&display=swap');
 
+/* ================= SECTION ================= */
 .why-section {
   width: 100%;
   border-top-right-radius: 50px;
@@ -15,6 +16,7 @@
   padding: 0;
 }
 
+/* ================= HEADING ================= */
 .why-heading {
   padding: clamp(20px, 4vw, 40px);
   margin-top: clamp(20px, 4vw, 50px);
@@ -32,40 +34,35 @@
 .heading-left,
 .heading-center {
   text-align: center;
-  align-self: center;
 }
 
+/* ================= LIST ================= */
 .why-list {
   padding: clamp(20px, 4vw, 40px);
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .why-item {
   width: 100%;
 }
 
+/* ================= GRID ================= */
 .why-grid {
   display: grid;
   grid-template-columns: 1fr 1.2fr 2.5fr;
   align-items: center;
   position: relative;
-  overflow: hidden;
   z-index: 1;
-  gap: 0;
   padding: clamp(10px, 2vw, 18px);
-  background: transparent;
   transition: color 0.3s ease;
 }
 
 .why-grid::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 0%;
-  height: 100%;
   background: #000;
   transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: -1;
@@ -79,46 +76,32 @@
   color: #F1F1F1;
 }
 
-.why-grid:hover .why-number,
-.why-grid:hover .why-title,
-.why-grid:hover .why-description {
-  color: #F1F1F1;
-}
-
+/* ================= TEXT ================= */
 .why-box {
   padding: clamp(10px, 1.5vw, 20px);
-  margin: 0;
 }
 
 .why-number {
-  color: #000;
   font-size: clamp(24px, 3vw, 52px);
   font-weight: 700;
-  display: flex;
-  align-items: center;
 }
 
 .why-title {
   color: #ff0000;
   font-size: clamp(18px, 2.5vw, 30px);
   font-weight: 600;
-  display: flex;
-  align-items: center;
   padding-left: 6px;
 }
 
 .why-description {
-  font-weight: 400;
-  color: #000;
   font-size: clamp(14px, 1.1vw, 22px);
-  display: flex;
-  align-items: center;
 }
 
+/* ================= RESPONSIVE ================= */
 @media (max-width: 1024px) {
   .why-grid {
     grid-template-columns: 70px 1fr;
-    column-gap: 16px;
+    gap: 16px;
   }
 
   .why-grid > div:nth-child(3) {
@@ -139,15 +122,7 @@
 
   .why-grid {
     grid-template-columns: 50px 1fr;
-    column-gap: 12px;
-  }
-
-  .why-number {
-    font-size: 22px;
-  }
-
-  .why-title {
-    font-size: 16px;
+    gap: 12px;
   }
 
   .why-description {
@@ -160,72 +135,68 @@
   }
 }
 
+/* ================= BANNER ================= */
 .why-banner-wrapper {
   position: relative;
   width: 100%;
-  height: 140px;
-  margin-top: 1.5rem;
-  overflow: hidden;
-  padding: 0;
+  height: clamp(180px, 22vw, 260px); /* 🔥 fixed height */
+  margin: 2rem 0;
+  overflow: visible;
 
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
 }
 
+/* shared */
 .why-banner-left,
 .why-banner-right {
   position: absolute;
   left: 50%;
   transform-origin: center;
   width: 120vw;
-  max-width: none;
   height: clamp(45px, 6vw, 70px);
-  background-color: #0011ff;
+  background: #0011ff;
   display: flex;
   align-items: center;
   pointer-events: none;
 }
 
-.why-banner-left {
-  top: 75px;
-  transform: translateX(-50%) rotate(-3deg);
-  z-index: 2;
-}
-
+/* top */
 .why-banner-right {
-  top: 45px;
+  top: 20%;
   transform: translateX(-50%) rotate(3deg);
   z-index: 1;
 }
 
+/* bottom (FIXED) */
+.why-banner-left {
+  top: 45%;
+  transform: translateX(-50%) rotate(-4deg);
+  z-index: 2;
+}
+
+/* ================= MOBILE ================= */
 @media (max-width: 480px) {
-  .why-section {
-    padding: 0;
-  }
-
   .why-banner-wrapper {
-    height: 120px;
-    margin-top: 1rem;
-  }
-
-  .why-banner-left {
-    top: 70px;
-    height: 45px;
-    transform: translateX(-50%) rotate(-4deg);
+    height: 140px;
   }
 
   .why-banner-right {
-    top: 35px;
+    top: 25px;
     height: 45px;
-    transform: translateX(-50%) rotate(4deg);
+  }
+
+  .why-banner-left {
+    top: 80px;
+    height: 45px;
   }
 }
 
+/* ================= MARQUEE ================= */
 .why-banner-track {
   display: flex;
   align-items: center;
   white-space: nowrap;
-  padding: clamp(6px, 1vw, 10px) clamp(16px, 3vw, 40px);
   width: max-content;
   animation: scroll-left 40s linear infinite;
 }
@@ -243,22 +214,16 @@
 .why-banner-text {
   font-size: clamp(0.75rem, 1.3vw, 1rem);
   font-weight: 600;
-  margin-right: clamp(6px, 1.5vw, 10px);
   color: #fff;
-  font-family: "Limelight", sans-serif;
 }
 
 .why-banner-image {
   height: clamp(22px, 3.5vw, 36px);
-  object-fit: contain;
   filter: brightness(0) invert(1);
 }
 
+/* animation */
 @keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }

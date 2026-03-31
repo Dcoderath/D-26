@@ -387,35 +387,39 @@ const features = [
   {
     id: "01",
     title: "Founder Mindset",
-    description: "We think like business owners, not just developers...",
+    description:
+      "We think like business owners, not just developers. Every decision is made to support growth, reduce unnecessary costs, and improve long-term outcomes. Our focus stays on building solutions that actually move your business forward.",
     icon: img13,
     bgColor: "#C3ABFF",
-    textColor: "#111"
+    textColor: "#111",
   },
   {
     id: "02",
     title: "Fast Execution",
-    description: "Speed matters in today’s market...",
+    description:
+      "Speed matters in today’s market, and we deliver without cutting corners. We follow a streamlined process that helps you launch faster while maintaining quality. This allows you to test, iterate, and scale ahead of your competition.",
     icon: img14,
     bgColor: "#ffffff",
-    textColor: "#111"
+    textColor: "#111",
   },
   {
     id: "03",
     title: "Clear Process",
-    description: "We keep everything simple and transparent...",
+    description:
+      "We keep everything simple and transparent from day one. You always know what’s happening, what’s next, and where things stand. No confusion, no hidden steps—just clear communication and smooth collaboration.",
     icon: img15,
     bgColor: "#fed35b",
-    textColor: "#111"
+    textColor: "#111",
   },
   {
     id: "04",
     title: "Scalable Systems",
-    description: "We build systems that are ready for growth...",
+    description:
+      "We build systems that are ready for growth from the start. As your users increase, performance stays stable and reliable. Our goal is to give you a strong foundation that supports your future expansion without issues.",
     icon: img16,
     bgColor: "#2d2c2c",
-    textColor: "#fff"
-  }
+    textColor: "#fff",
+  },
 ];
 
 export function WhySection() {
@@ -457,9 +461,9 @@ export function WhySection() {
         
         <div className="why-heading-wrapper">
           <div className="why-heading-bold">
-            <span className="bracket">[</span>
-            WHY THE WORLD'S FASTEST-GROWING TEAMS CHOOSE US
-            <span className="bracket">]</span>
+            <span className="bracket"></span>
+            WHY THE WORLD'S FASTEST GROWING TEAMS CHOOSE US
+            <span className="bracket"></span>
           </div>
         </div>
 

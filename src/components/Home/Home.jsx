@@ -215,6 +215,56 @@ const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   /* Detect screen size */
+useEffect(() => {
+  if (!gsapRef.current) return;
+
+  const btn = document.querySelector(".junni-btn-frame");
+  if (!btn) return;
+
+  const strip = btn.querySelector(".junni-btn-strip");
+  const leftCircle = btn.querySelector(".junni-left");
+  const rightCircle = btn.querySelector(".junni-right");
+
+  // safety (VERY IMPORTANT)
+  if (!strip || !leftCircle || !rightCircle) return;
+
+  const tl = gsapRef.current.timeline({
+    paused: true,
+    defaults: {
+      duration: 0.6,
+      ease: "power3.inOut"
+    }
+  });
+
+  tl.to(strip, {
+    x: 0,
+    duration: 0.7,
+    ease: "power3.out"
+  })
+  .fromTo(
+    leftCircle,
+    { scale: 0.3, opacity: 0 },
+    { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.6)" },
+    0.15
+  )
+  .to(
+    rightCircle,
+    { scale: 0, opacity: 0, duration: 0.35 },
+    0
+  );
+
+  const enter = () => tl.play();
+  const leave = () => tl.reverse();
+
+  btn.addEventListener("mouseenter", enter);
+  btn.addEventListener("mouseleave", leave);
+
+  return () => {
+    btn.removeEventListener("mouseenter", enter);
+    btn.removeEventListener("mouseleave", leave);
+  };
+
+}, [isGsapLoaded]);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -419,18 +469,25 @@ const Home = () => {
         ref={boardRef}
       ></section>
 
-      <div className="junni-flip-button-container">
+<div className="junni-flip-button-container">
+  <div className="junni-btn-frame" onClick={flipAllTiles}>
+    <div className="junni-btn-strip">
 
-        <button
-          className="junni-flip-button"
-          onClick={flipAllTiles}
-        >
-
-          {isMobile ? 'Tap to Flip' : 'Flip Tiles'}
-
-        </button>
-
+      <div className="junni-circle junni-left">
+        <div className="junni-arrow"></div>
       </div>
+
+      <div className="junni-box">
+        {isMobile ? 'Tap to Flip' : 'Flip Tiles'}
+      </div>
+
+      <div className="junni-circle junni-right">
+        <div className="junni-arrow"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
     </main>
 

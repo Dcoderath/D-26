@@ -77,7 +77,8 @@
 .project-grid {
   display: grid;
   /** * FIX: Changed 400px min to 0. 
-   * This keeps your 3-column layout but lets it shrink on small phones.
+   * This keeps your 3-column layout 
+    lets it shrink on small phones.
    */
   grid-template-columns: 
     minmax(80px, 1fr) 
@@ -136,8 +137,8 @@
 .project-tags span {
   font-size: 11px;
   padding: 6px 12px;
-  background-color: #fff;
-  color: #111;
+  background-color: #000000;
+  color: #ffffff;
   border-radius: 20px;
   transition: .3s;
 }
@@ -245,14 +246,22 @@
 
 /* ================= BIG TITLE ================= */
 .project-big-title {
-  /* Adjusted for mobile readability */
-  font-size: clamp(60px, 15vw, 206px);
+  font-size: clamp(10px, 15vw, 76px);
   font-weight: 700;
-  color: #ffffff;
+  color: #fff;
+
+  -webkit-text-stroke: 2px #000;
+
+  /* fallback outline */
+  text-shadow: 
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 0;
+  margin: 40px;
   letter-spacing: -0.02em;
 }
 
@@ -265,13 +274,18 @@
   border-radius: 20px;
   display: inline-flex;
 }
+.project-bottom-row {
+  display: flex;
+  flex-direction: column; /* stack items */
+  align-items: center;   /* horizontal center */
+  justify-content: center; /* vertical center */
+  text-align: center;    /* center text */
+  width: 100%;
+}
 
-/* ================= MINIMAL BREAKPOINTS ================= */
-/* Only stacking when it is physically impossible to fit 3 columns */
 
 @media (max-width: 768px) {
   .project-grid {
-    /* Stack only on small mobile */
     grid-template-columns: 1fr;
     gap: 20px;
   }
@@ -280,29 +294,49 @@
     order: -1; 
   }
 
+  /* ✅ CENTER + CLEAN BUTTON ROW */
   .project-actions {
-    align-items: flex-start;
-    flex-direction: row;
     grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;   /* center horizontally */
+    align-items: center;
+    flex-direction: column;    /* stack nicely */
+    gap: 12px;
+    width: 100%;
   }
 
-  .detail-images {
-    grid-column: 1 / -1;
-    grid-template-columns: 1fr 1fr; /* Keep side-by-side even on small screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .detail-images {
-    grid-template-columns: 1fr; /* Stack images on tiny phones */
-  }
-  
-  .project-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
+  /* ✅ MAKE BUTTONS LOOK PREMIUM FULL WIDTH */
   .btn-frame {
     width: 100%;
+    max-width: 320px;          /* keeps it clean, not too wide */
+    margin: 0 auto;            /* center */
+  }
+
+  .detail-images {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+
+  .project-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* ✅ center horizontally */
+    justify-content: center;
+    gap: 12px;
+  }
+
+  /* ✅ BUTTON CENTER (NOT FULL WIDTH) */
+  .btn-frame {
+    width: fit-content;     /* shrink to content */
+    min-width: 180px;       /* keeps good size */
+    max-width: 240px;
+    margin: 0 auto;         /* center */
+  }
+
+  .detail-images {
+    grid-template-columns: 1fr;
   }
 }

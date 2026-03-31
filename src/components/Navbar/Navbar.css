@@ -14,7 +14,7 @@
 }
 
 .text-logo {
-  background-color: #000;
+  background-color: #00000000;
   max-width: max-content;
   padding: 10px;
   color: #fff;
@@ -149,6 +149,64 @@ nav {
 
 .reveal-content {
   opacity: 0;
+}
+/* ================= NAV BUTTON (RESPONSIVE) ================= */
+
+.nav-btn-frame {
+  height: clamp(36px, 5vw, 50px);
+  overflow: hidden;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* strip movement MUST match height */
+.nav-btn-strip {
+  display: flex;
+  align-items: center;
+  transform: translateX(calc(-1 * clamp(36px, 5vw, 50px)));
+}
+
+/* center text */
+.nav-box {
+  height: clamp(36px, 5vw, 50px);
+  padding: 0 clamp(14px, 3vw, 25px);
+
+  background: #ffffff;
+  color: #111;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: clamp(11px, 1.5vw, 14px);
+
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* circles */
+.nav-circle {
+  width: clamp(36px, 5vw, 50px);
+  height: clamp(36px, 5vw, 50px);
+
+  background: #ffffff;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* arrow scales too */
+.nav-arrow {
+  width: clamp(6px, 1vw, 10px);
+  height: clamp(6px, 1vw, 10px);
+
+  border-top: 2px solid #111;
+  border-right: 2px solid #111;
+
+  transform: rotate(45deg);
 }
 
 .overlay-menu {
@@ -299,6 +357,7 @@ body.overlay-active .burger {
   .elite-btn {
     padding: 8px 12px;
     font-size: 12px;
+    display: none;
   }
 
   /* Adjust the burger size for easier tapping */
@@ -341,5 +400,49 @@ body.overlay-active .burger {
     padding: 4em 1em;
     justify-content: flex-start;
     overflow-y: auto;
+  }
+}/* ================= PERFECT MOBILE BUTTON ================= */
+@media (max-width: 480px) {
+
+  .nav-btn-frame {
+    height: 40px; /* not too small */
+  }
+
+  .nav-btn-strip {
+    transform: translateX(-40px);
+  }
+
+  .nav-box {
+    height: 40px;
+
+    /* 🔥 FIX: proper spacing */
+    padding: 0 18px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 🔥 centers text */
+
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .nav-circle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-arrow {
+    width: 7px;
+    height: 7px;
+    border-width: 2px;
+  }
+
+  /* 🔥 IMPORTANT: fix text alignment issue */
+  .nav-box span,
+  .nav-box {
+    text-align: center;
   }
 }

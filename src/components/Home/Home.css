@@ -30,31 +30,84 @@
 
 /* ---------------- BUTTON ---------------- */
 
+/* ================= CONTAINER ================= */
 .junni-flip-button-container {
   position: absolute;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
-  pointer-events: none;
+
+  display: flex;
+  justify-content: center;
+
+  pointer-events: auto;
 }
 
-.junni-flip-button {
-  border: none;
-  outline: none;
-  color: #fff;
-  background-color: #000;
-  border-radius: 0.1em;
-  padding: 0.65em 1em 0.25em 1em;
-  text-transform: uppercase;
-  font-family: inherit;
-  font-size: 24px;
-  pointer-events: all;
+/* ================= BUTTON ================= */
+
+.junni-btn-frame {
+  height: 54px;
+  overflow: hidden;
+  border-radius: 30px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  position: relative;
+
+  transform: translateZ(0);
 }
 
-/* ---------------- BOARD ---------------- */
+/* Strip (IMPORTANT: hidden start for animation) */
+.junni-btn-strip {
+  display: flex;
+  align-items: center;
+  transform: translateX(-54px);
+}
+
+/* Center box */
+.junni-box {
+  padding: 0 35px;
+  height: 54px;
+  background: hsl(0, 0%, 100%);
+  color: #111;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  white-space: nowrap;
+
+  border-radius: 30px;
+}
+
+/* Circles */
+.junni-circle {
+  width: 54px;
+  height: 54px;
+
+  background: #ffffff;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+/* Arrow */
+.junni-arrow {
+  width: 10px;
+  height: 10px;
+
+  border-top: 3px solid #111;
+  border-right: 3px solid #111;
+
+  transform: rotate(45deg);
+}
+
 
 .junni-board {
   width: 100%;
@@ -140,7 +193,7 @@
 /* ================================================= */
 
 /* Tablets */
-
+/* ================= TABLET ================= */
 @media (max-width: 1024px) {
 
   .junni-nav {
@@ -151,20 +204,33 @@
     font-size: 22px;
   }
 
-  .junni-flip-button {
-    font-size: 20px;
-    padding: 0.6em 0.9em 0.3em;
+  /* NEW BUTTON */
+  .junni-btn-frame {
+    height: 48px;
+  }
+
+  .junni-btn-strip {
+    transform: translateX(-48px);
+  }
+
+  .junni-box {
+    height: 48px;
+    font-size: 15px;
+    padding: 0 28px;
+  }
+
+  .junni-circle {
+    width: 48px;
+    height: 48px;
   }
 
   .junni-block {
     width: 40px;
     height: 40px;
   }
-
 }
 
-/* Mobile */
-
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
 
   .junni-nav {
@@ -179,9 +245,24 @@
     bottom: 25px;
   }
 
-  .junni-flip-button {
-    font-size: 16px;
-    padding: 0.5em 0.8em;
+  /* NEW BUTTON */
+  .junni-btn-frame {
+    height: 42px;
+  }
+
+  .junni-btn-strip {
+    transform: translateX(-42px);
+  }
+
+  .junni-box {
+    height: 42px;
+    font-size: 14px;
+    padding: 0 22px;
+  }
+
+  .junni-circle {
+    width: 42px;
+    height: 42px;
   }
 
   .junni-board {
@@ -196,29 +277,41 @@
     width: 28px;
     height: 28px;
   }
-
 }
 
-/* Small phones */
-
+/* ================= SMALL PHONES ================= */
 @media (max-width: 480px) {
 
   .junni-nav-link {
     font-size: 16px;
   }
 
-  .junni-flip-button {
-    font-size: 14px;
-    padding: 0.45em 0.7em;
-  }
-
   .junni-flip-button-container {
     bottom: 20px;
+  }
+
+  /* NEW BUTTON */
+  .junni-btn-frame {
+    height: 36px;
+  }
+
+  .junni-btn-strip {
+    transform: translateX(-36px);
+  }
+
+  .junni-box {
+    height: 36px;
+    font-size: 13px;
+    padding: 0 18px;
+  }
+
+  .junni-circle {
+    width: 36px;
+    height: 36px;
   }
 
   .junni-block {
     width: 22px;
     height: 22px;
   }
-
 }

@@ -6,6 +6,40 @@ const Navbar = () => {
   const timelineRef = useRef(null);
   const overlayRef = useRef(null);
   const menuRef = useRef(null);
+  const navBtnRef = useRef(null);
+
+  useEffect(() => {
+  if (!navBtnRef.current) return;
+
+  import("gsap").then(({ default: gsap }) => {
+
+    const btn = navBtnRef.current;
+
+    const strip = btn.querySelector(".nav-btn-strip");
+    const left = btn.querySelector(".nav-left");
+    const right = btn.querySelector(".nav-right");
+
+    if (!strip || !left || !right) return;
+
+    const tl = gsap.timeline({ paused: true });
+
+    tl.to(strip, { x: 0, duration: 0.7 })
+      .fromTo(left,
+        { scale: 0.3, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.7 },
+        0.15
+      )
+      .to(right,
+        { scale: 0, opacity: 0, duration: 0.3 },
+        0
+      );
+
+    btn.addEventListener("mouseenter", () => tl.play());
+    btn.addEventListener("mouseleave", () => tl.reverse());
+
+  });
+
+}, []);
 
   useEffect(() => {
     const loadGSAP = async () => {
@@ -100,9 +134,29 @@ const Navbar = () => {
   return (
     <div className={`art-tech-nav-container ${isOpen ? "menu-open" : ""}`}>
       <nav>
-        <div className="logo text-logo">
-          <span>web</span><span>design</span><span>elite</span><span>+23</span>
-        </div>
+     <div className="logo text-logo">
+  <div
+    className="nav-btn-frame"
+    ref={navBtnRef}
+    onClick={() => handleScrollAndClose("Footer")}
+  >
+    <div className="nav-btn-strip">
+
+      <div className="nav-circle nav-left">
+        <div className="nav-arrow"></div>
+      </div>
+
+      <div className="nav-box">
+        Let’s Work
+      </div>
+
+      <div className="nav-circle nav-right">
+        <div className="nav-arrow"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
         <div className="logo-main">
           <button className="elite-btn">Elite Web Design</button>
         </div>

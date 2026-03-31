@@ -585,8 +585,9 @@ cursor:pointer;
 }
 
 @media (max-width: 480px) {
+ 
   .mita-top-section {
-    padding-top: 50px;
+    padding-top: 0px;
   }
 
   .mita-title {

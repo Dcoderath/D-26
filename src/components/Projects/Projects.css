@@ -1,19 +1,16 @@
-/* ================= CONTAINER ================= */
 .project-section {
   width: 100%;
-  /* Fluid padding that shrinks on mobile */
   padding: clamp(40px, 6vw, 100px) clamp(15px, 5vw, 80px);
+  padding-top: 90px;
   background: #FBC1D4;
   color: #202020;
   box-sizing: border-box;
-  /* Prevent any element from pushing the screen width */
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
-/* ================= HEADING ================= */
 .project-heading {
-  margin-bottom: clamp(40px, 8vw, 110px);
   display: flex;
+  margin-bottom: clamp(40px, 8vw, 110px);
 }
 
 .heading-box {
@@ -22,8 +19,7 @@
 }
 
 .project-heading h1 {
-  font-size: clamp(36px, 9vw, 110px);
-  font-weight: 800;
+  font-size: clamp(36px, 9vw, 60px);
   margin: 0;
   padding: 6px 0;
   color: #111;
@@ -34,11 +30,10 @@
   font-size: clamp(18px, 4vw, 40px);
   margin: 0;
   padding: 6px 0;
-  color: #111;
+  color: #292626;
   opacity: .9;
 }
 
-/* ================= ROW ================= */
 .project-row {
   padding: clamp(15px, 3vw, 30px);
   margin-bottom: 15px;
@@ -46,20 +41,17 @@
   transition: .3s ease;
   position: relative;
   cursor: pointer;
-  /* Clips the sliding background so it doesn't cause overflow */
-  overflow: hidden; 
+  overflow: hidden;
   isolation: isolate;
   z-index: 0;
 }
 
-/* sliding background */
 .project-row::before {
   content: "";
   position: absolute;
   inset: 0;
   background: #8B0000;
-  /* Start fully hidden to the left */
-  transform: translateX(-101%); 
+  transform: translateX(-101%);
   transition: transform .4s cubic-bezier(.22,.61,.36,1);
   z-index: -1;
 }
@@ -69,27 +61,18 @@
 }
 
 .project-row:hover {
-  color: #ffffff;
+  color: #fff;
   border-color: #8B0000;
 }
 
-/* ================= GRID (LAYOUT PRESERVED) ================= */
 .project-grid {
   display: grid;
-  /** * FIX: Changed 400px min to 0. 
-   * This keeps your 3-column layout 
-    lets it shrink on small phones.
-   */
-  grid-template-columns: 
-    minmax(80px, 1fr) 
-    minmax(0, 2.5fr) 
-    minmax(140px, 1fr);
+  grid-template-columns: minmax(80px, 1fr) minmax(0, 2.5fr) minmax(140px, 1fr);
   gap: clamp(15px, 4vw, 45px);
   align-items: start;
   width: 100%;
 }
 
-/* ================= CATEGORY ================= */
 .project-category {
   font-size: clamp(14px, 1.5vw, 18px);
   display: flex;
@@ -103,17 +86,15 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #fff;
-  opacity: .5;
+  background: #000;
   flex-shrink: 0;
 }
 
 .dot.active {
-  background: red;
+  background: #fff;
   opacity: 1;
 }
 
-/* ================= CONTENT ================= */
 .project-content h3 {
   font-size: clamp(24px, 4vw, 54px);
   margin-bottom: 12px;
@@ -137,8 +118,8 @@
 .project-tags span {
   font-size: 11px;
   padding: 6px 12px;
-  background-color: #000000;
-  color: #ffffff;
+  background: #000;
+  color: #fff;
   border-radius: 20px;
   transition: .3s;
 }
@@ -148,18 +129,15 @@
   color: #fff;
 }
 
-/* ================= BUTTONS ================= */
 .project-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: flex-start;
   gap: 12px;
 }
 
 .btn-frame {
-  /* Fluid width so buttons don't push off-screen */
-  width: clamp(140px, 100%, 200px); 
+  width: clamp(140px, 100%, 200px);
   height: 44px;
   overflow: hidden;
   cursor: pointer;
@@ -172,8 +150,7 @@
   display: flex;
   align-items: center;
   width: max-content;
-  /* Aligned with the circle width */
-  transform: translateX(-44px); 
+  transform: translateX(-44px);
   transition: transform .5s cubic-bezier(.22,.61,.36,1);
 }
 
@@ -182,7 +159,6 @@
 }
 
 .box {
-  /* Calculated to fill the frame minus the circle */
   width: calc(100% - 44px);
   min-width: 110px;
   height: 44px;
@@ -193,7 +169,7 @@
   justify-content: center;
   font-weight: 700;
   font-size: 13px;
-   border-radius: 20px;
+  border-radius: 20px;
   white-space: nowrap;
 }
 
@@ -221,7 +197,6 @@
   transform: rotate(45deg) translate(3px, -3px);
 }
 
-/* ================= DETAIL IMAGES ================= */
 .detail-images {
   grid-column: 2 / 4;
   display: grid;
@@ -233,7 +208,6 @@
 
 .detail-images img {
   width: 100%;
-  /* Uses clamp to keep images from getting too tall or too short */
   height: clamp(160px, 30vw, 380px);
   object-fit: cover;
   border-radius: 8px;
@@ -244,21 +218,12 @@
   transform: scale(1.02);
 }
 
-/* ================= BIG TITLE ================= */
 .project-big-title {
   font-size: clamp(10px, 15vw, 76px);
   font-weight: 700;
   color: #fff;
-
   -webkit-text-stroke: 2px #000;
-
-  /* fallback outline */
-  text-shadow: 
-    -1px -1px 0 #000,
-     1px -1px 0 #000,
-    -1px  1px 0 #000,
-     1px  1px 0 #000;
-
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   display: flex;
   align-items: center;
   margin: 40px;
@@ -268,48 +233,46 @@
 .project-count {
   font-size: clamp(14px, 2vw, 22px);
   font-weight: 600;
-  background: #ffffff;
-  color: #000000;
+  background: #fff;
+  color: #000;
   padding: 4px 12px;
   border-radius: 20px;
   display: inline-flex;
 }
+
 .project-bottom-row {
   display: flex;
-  flex-direction: column; /* stack items */
-  align-items: center;   /* horizontal center */
-  justify-content: center; /* vertical center */
-  text-align: center;    /* center text */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 100%;
 }
-
 
 @media (max-width: 768px) {
   .project-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
+
   .project-category {
-    order: -1; 
+    order: -1;
   }
 
-  /* ✅ CENTER + CLEAN BUTTON ROW */
   .project-actions {
     grid-column: 1 / -1;
     display: flex;
-    justify-content: center;   /* center horizontally */
+    justify-content: center;
     align-items: center;
-    flex-direction: column;    /* stack nicely */
+    flex-direction: column;
     gap: 12px;
     width: 100%;
   }
 
-  /* ✅ MAKE BUTTONS LOOK PREMIUM FULL WIDTH */
   .btn-frame {
     width: 100%;
-    max-width: 320px;          /* keeps it clean, not too wide */
-    margin: 0 auto;            /* center */
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   .detail-images {
@@ -317,23 +280,22 @@
     grid-template-columns: 1fr 1fr;
   }
 }
-@media (max-width: 480px) {
 
+@media (max-width: 480px) {
   .project-actions {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;   /* ✅ center horizontally */
+    align-items: center;
     justify-content: center;
     gap: 12px;
   }
 
-  /* ✅ BUTTON CENTER (NOT FULL WIDTH) */
   .btn-frame {
-    width: fit-content;     /* shrink to content */
-    min-width: 180px;       /* keeps good size */
+    width: fit-content;
+    min-width: 180px;
     max-width: 240px;
-    margin: 0 auto;         /* center */
+    margin: 0 auto;
   }
 
   .detail-images {

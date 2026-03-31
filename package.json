@@ -15,6 +15,7 @@
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
     "@formspree/react": "^3.0.0",
+    "@gsap/react": "^2.1.2",
     "@react-three/drei": "^10.0.7",
     "@react-three/fiber": "^9.1.2",
     "@studio-freight/lenis": "^1.0.42",

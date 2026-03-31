@@ -3,11 +3,9 @@
   width: 100%;
   overflow-x: hidden; /* keeps horizontal clean */
   font-family: "Big Shoulders Display", sans-serif;
-  background: #F1F1F1;
+background-color: #FBC1D4;
   opacity: 0;
   transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-
-  /* ✅ smooth mobile scrolling */
   -webkit-overflow-scrolling: touch;
 }
 

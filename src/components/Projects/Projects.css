@@ -200,7 +200,8 @@
 }
 
 .detail-images {
-  grid-column: 2 / 4;
+   width: 100%;
+  margin-top: 20px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 12px;

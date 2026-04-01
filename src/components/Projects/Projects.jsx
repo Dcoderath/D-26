@@ -878,7 +878,7 @@
 
 
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -894,87 +894,133 @@ import img5 from "../../assets/Image/img5.jpg";
 import img13 from "../../assets/Image/img13.jpg";
 
 function Project() {
-  const [activeIndex, setActiveIndex] = useState(0); // show first by default
+  const [activeIndex, setActiveIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState({});
   const rowRefs = useRef([]);
   const imageRefs = useRef([]);
   const container = useRef();
 
-  const projects = [
-    {
-      category: "Open Plan Offices",
-      client: "Hotel Ponsonby:",
-      title: "transforming a heritage building into a chic gastropub",
-      tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
-      img1: img11,
-      img2: img2,
-    },
-    {
-      category: "Recording Studios and Radio",
-      client: "Mediaworks:",
-      title: "Capturing the rebellious soul of radio",
-      tags: ["CubeT", "Quietspaco® Panel"],
-      img1: img10,
-      img2: img4,
-    },
-    {
-      category: "Hotel Lobbies and Foyers",
-      client: "Custom Frontier™ system",
-      title: "for Headingley Stadium's Emerald Suite",
-      tags: ["FrontierTM"],
-      img1: img13,
-      img2: img5,
-    },
-  ];
+  // ✅ MEMO (prevent re-creation on every render)
+  const projects = useMemo(
+    () => [
+      {
+        category: "Open Plan Offices",
+        client: "Hotel Ponsonby:",
+        title: "transforming a heritage building into a chic gastropub",
+        tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+        img1: img11,
+        img2: img2,
+      },
+      {
+        category: "Recording Studios and Radio",
+        client: "Mediaworks:",
+        title: "Capturing the rebellious soul of radio",
+        tags: ["CubeT", "Quietspaco® Panel"],
+        img1: img10,
+        img2: img4,
+      },
+      {
+        category: "Hotel Lobbies and Foyers",
+        client: "Custom Frontier™ system",
+        title: "for Headingley Stadium's Emerald Suite",
+        tags: ["FrontierTM"],
+        img1: img13,
+        img2: img5,
+      },
+    ],
+    []
+  );
 
-  // GSAP Animations scoped to this component only
-  useGSAP(() => {
-    if (!container.current) return;
-    const ctx = gsap.context(() => {
-      // only select buttons inside this component
-      const buttons = container.current.querySelectorAll(".btn-frame");
+  // ✅ GSAP FIX (scoped + no memory leak)
+  useGSAP(
+    () => {
+      if (!container.current) return;
+
+      const buttons =
+        container.current.querySelectorAll(".btn-frame");
+
       buttons.forEach((btn) => {
         const strip = btn.querySelector(".btn-strip");
         const leftCircle = btn.querySelector(".side-left");
         const rightCircle = btn.querySelector(".side-right");
 
         const tl = gsap.timeline({ paused: true });
-        tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
+
+        tl.to(strip, {
+          x: 0,
+          duration: 0.6,
+          ease: "power3.out",
+        })
           .fromTo(
             leftCircle,
             { scale: 0.3, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.6,
+              ease: "back.out(1.7)",
+            },
             0.1
           )
           .to(
             rightCircle,
-            { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
+            {
+              scale: 0,
+              opacity: 0,
+              duration: 0.3,
+              ease: "power2.inOut",
+            },
             0
           );
 
-        btn.addEventListener("mouseenter", () => tl.play());
-        btn.addEventListener("mouseleave", () => tl.reverse());
+        // ✅ FIX: use GSAP safe handlers
+        const enter = () => tl.play();
+        const leave = () => tl.reverse();
+
+        btn.addEventListener("mouseenter", enter);
+        btn.addEventListener("mouseleave", leave);
+
+        // ✅ CLEANUP (VERY IMPORTANT)
+        btn._gsapHandlers = { enter, leave };
       });
-    }, container);
 
-    return () => ctx.revert(); // cleanup GSAP
-  }, []);
+      return () => {
+        buttons.forEach((btn) => {
+          if (btn._gsapHandlers) {
+            btn.removeEventListener("mouseenter", btn._gsapHandlers.enter);
+            btn.removeEventListener("mouseleave", btn._gsapHandlers.leave);
+          }
+        });
+      };
+    },
+    { scope: container }
+  );
 
-  // Preload images
+  // ✅ IMAGE PRELOAD FIX (no re-run, no conflict)
   useEffect(() => {
+    const loaded = {};
+
     projects.forEach((project) => {
       [project.img1, project.img2].forEach((img) => {
+        if (loaded[img]) return;
+
         const image = new Image();
         image.src = img;
-        image.onload = () =>
+
+        image.onload = () => {
           setLoadedImages((prev) => ({ ...prev, [img]: true }));
-        image.onerror = () => console.error("Failed to load image:", img);
+        };
       });
     });
   }, [projects]);
 
   return (
-    <section id="Project" className="project-section" ref={container}>
+    <section
+      id="Project"
+      className="project-section"
+      ref={container}
+      data-scope="projectComponent"
+    >
       <div className="project-content-wrapper">
         {/* Heading */}
         <div className="project-heading">
@@ -1011,12 +1057,13 @@ function Project() {
                 </div>
               </div>
 
-              {/* Buttons */}
+              {/* Button */}
               <div className="project-actions">
                 <div
                   className="btn-frame"
                   onClick={() => {
-                    const newIndex = activeIndex === index ? null : index;
+                    const newIndex =
+                      activeIndex === index ? null : index;
                     setActiveIndex(newIndex);
 
                     if (newIndex !== null) {
@@ -1026,9 +1073,13 @@ function Project() {
                           const yOffset = -80;
                           const y =
                             el.getBoundingClientRect().top +
-                            window.pageYOffset +
+                            window.scrollY +
                             yOffset;
-                          window.scrollTo({ top: y, behavior: "smooth" });
+
+                          window.scrollTo({
+                            top: y,
+                            behavior: "smooth",
+                          });
                         }
                       }, 300);
                     }
@@ -1039,7 +1090,9 @@ function Project() {
                       <div className="arrow"></div>
                     </div>
                     <div className="box">
-                      {activeIndex === index ? "Hide" : "Show details"}
+                      {activeIndex === index
+                        ? "Hide"
+                        : "Show details"}
                     </div>
                     <div className="circle side-right">
                       <div className="arrow"></div>
@@ -1049,33 +1102,38 @@ function Project() {
               </div>
             </div>
 
-            {/* Detail Images */}
+            {/* Images */}
             <AnimatePresence initial={false}>
               {activeIndex === index && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  transition={{ duration: 0.5 }}
                 >
                   <div
                     className="detail-images"
-                    ref={(el) => (imageRefs.current[index] = el)}
+                    ref={(el) =>
+                      (imageRefs.current[index] = el)
+                    }
                   >
-                    <div className="img-wrapper">
-                      {loadedImages[project.img1] ? (
-                        <img src={project.img1} alt={project.title} />
-                      ) : (
-                        <div className="img-placeholder">Loading...</div>
-                      )}
-                    </div>
-                    <div className="img-wrapper">
-                      {loadedImages[project.img2] ? (
-                        <img src={project.img2} alt={project.title} />
-                      ) : (
-                        <div className="img-placeholder">Loading...</div>
-                      )}
-                    </div>
+                    {[project.img1, project.img2].map(
+                      (img, i) => (
+                        <div className="img-wrapper" key={i}>
+                          {loadedImages[img] ? (
+                            <img
+                              src={img}
+                              alt=""
+                              decoding="async"
+                            />
+                          ) : (
+                            <div className="img-placeholder">
+                              Loading...
+                            </div>
+                          )}
+                        </div>
+                      )
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -1085,18 +1143,9 @@ function Project() {
 
         {/* Bottom */}
         <div className="project-bottom-row">
-          <h2 className="project-big-title">What We've Built</h2>
-          <div className="btn-frame">
-            <div className="btn-strip">
-              <div className="circle side-left">
-                <div className="arrow"></div>
-              </div>
-              <div className="box">Our Projects</div>
-              <div className="circle side-right">
-                <div className="arrow"></div>
-              </div>
-            </div>
-          </div>
+          <h2 className="project-big-title">
+            What We've Built
+          </h2>
         </div>
       </div>
     </section>

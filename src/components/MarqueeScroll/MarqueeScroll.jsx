@@ -137,7 +137,7 @@
 
 
 
-
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -151,7 +151,7 @@ const MarqueeScroll = () => {
   const containerRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
 
-  // Optimization: Eager glob for images
+  // Load images (stable)
   const images = Object.entries(
     import.meta.glob("../../assets/Image/*.{jpg,webp,png}", { eager: true })
   )
@@ -165,16 +165,14 @@ const MarqueeScroll = () => {
   useEffect(() => {
     const isMobile = window.innerWidth <= 480;
 
-    // Initialize Lenis
+    // ✅ Single Lenis instance (scoped)
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 2, // Better feel on mobile touchscreens
-      infinite: false,
+      touchMultiplier: 2,
     });
 
-    // VERY IMPORTANT: Tell ScrollTrigger to watch Lenis
     lenis.on("scroll", ScrollTrigger.update);
 
     function raf(time) {
@@ -183,34 +181,52 @@ const MarqueeScroll = () => {
     }
     requestAnimationFrame(raf);
 
+    // ✅ Connect GSAP with Lenis
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop(value) {
+        return arguments.length
+          ? lenis.scrollTo(value)
+          : window.scrollY;
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+    });
+
     const ctx = gsap.context(() => {
-      const containers = document.querySelectorAll(".marqueeScroll-container");
+      const containers =
+        containerRef.current.querySelectorAll(".marqueeScroll-container");
 
       containers.forEach((container, index) => {
         const marquee = container.querySelector(".marqueeScroll-marquee");
-        
-        // Double content for seamless loop
-        const content = marquee.innerHTML;
-        marquee.innerHTML = content + content;
 
         const headings = container.querySelectorAll("h1");
-        headings.forEach((heading) => {
-          const split = new SplitType(heading, { types: "chars" });
 
-          gsap.fromTo(
-            split.chars,
-            { fontWeight: 100 },
-            {
-              fontWeight: 900,
-              stagger: isMobile ? 0.02 : 0.05,
-              scrollTrigger: {
-                trigger: container,
-                start: "top 95%",
-                end: "top 30%",
-                scrub: true,
-              },
-            }
-          );
+        headings.forEach((heading) => {
+          if (!heading.dataset.split) {
+            const split = new SplitType(heading, { types: "chars" });
+            heading.dataset.split = "true";
+
+            gsap.fromTo(
+              split.chars,
+              { fontWeight: 100 },
+              {
+                fontWeight: 900,
+                stagger: isMobile ? 0.02 : 0.05,
+                scrollTrigger: {
+                  trigger: container,
+                  start: "top 95%",
+                  end: "top 30%",
+                  scrub: true,
+                },
+              }
+            );
+          }
         });
 
         const isEven = index % 2 === 0;
@@ -231,21 +247,15 @@ const MarqueeScroll = () => {
         );
       });
 
-      // Initial Refresh
       ScrollTrigger.refresh();
       setIsReady(true);
     }, containerRef);
 
-    // FIX FOR VERCEL: Refresh after all images/fonts load
-    const handleLoad = () => {
-      ScrollTrigger.refresh();
-    };
-
+    const handleLoad = () => ScrollTrigger.refresh();
     window.addEventListener("load", handleLoad);
-    
-    // Optional: Extra refresh after 1 second as a fallback
+
     const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
+      ScrollTrigger.refresh();
     }, 1000);
 
     return () => {
@@ -257,7 +267,11 @@ const MarqueeScroll = () => {
   }, []);
 
   return (
-    <div className={`marqueeScroll-wrapper ${isReady ? 'is-visible' : ''}`} ref={containerRef}>
+    <div
+      className={`marqueeScroll-wrapper ${isReady ? "is-visible" : ""}`}
+      ref={containerRef}
+      id="marqueeScrollScope"
+    >
       <section className="marqueeScroll-section">
         <Row images={images.slice(0, 4)} text="Unique" priority="high" />
         <Row images={images.slice(4, 8)} text="Release" priority="high" />
@@ -272,40 +286,26 @@ const Row = ({ images, text, priority }) => {
   return (
     <div className="marqueeScroll-container">
       <div className="marqueeScroll-marquee">
-        {/* Left set */}
-        {images.slice(0, 2).map((img, i) => (
-          <div className="marqueeScroll-item" key={`img-l-${i}`}>
-            <img 
-              src={img} 
-              alt="" 
-              fetchPriority={priority} 
-              loading="eager" 
-              decoding="sync"
+        {/* ✅ duplicated safely via React */}
+        {[...images, ...images].map((img, i) => (
+          <div className="marqueeScroll-item" key={`img-${i}`}>
+            <img
+              src={img}
+              alt=""
+              fetchPriority={priority}
+              loading="eager"
+              decoding="async"
             />
           </div>
         ))}
 
-        {/* Center Text */}
+        {/* Text */}
         <div className="marqueeScroll-item marqueeScroll-text">
           <h1>{text}</h1>
         </div>
-
-        {/* Right set */}
-        {images.slice(2, 4).map((img, i) => (
-          <div className="marqueeScroll-item" key={`img-r-${i}`}>
-            <img 
-              src={img} 
-              alt="" 
-              fetchPriority={priority} 
-              loading="eager" 
-              decoding="sync"
-            />
-          </div>
-        ))}
       </div>
     </div>
   );
 };
 
 export default MarqueeScroll;
-

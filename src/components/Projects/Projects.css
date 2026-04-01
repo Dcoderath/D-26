@@ -7,6 +7,7 @@
   padding-top: 90px;
   background: #FBC1D4;
   color: #202020;
+    isolation: isolate;
   box-sizing: border-box;
   overflow-x: hidden; /* prevents horizontal scroll */
 }
@@ -56,17 +57,18 @@
   z-index: 0;
 }
 
-/* Hover overlay animation */
 .project-row::before {
   content: "";
   position: absolute;
   inset: 0;
   background: #8B0000;
-  transform: translateX(-101%);
+
+  transform: translateX(-101%) translateZ(0);
+  will-change: transform;
+
   transition: transform 0.4s cubic-bezier(.22,.61,.36,1);
   z-index: -1;
 }
-
 .project-row:hover::before {
   transform: translateX(0);
 }
@@ -175,7 +177,10 @@
   display: flex;
   align-items: center;
   width: max-content;
-  transform: translateX(-44px);
+
+  transform: translateX(-44px) translateZ(0);
+  will-change: transform;
+
   transition: transform 0.5s cubic-bezier(.22,.61,.36,1);
 }
 
@@ -238,11 +243,13 @@
   height: clamp(160px, 30vw, 380px);
   object-fit: cover;
   border-radius: 8px;
-  transition: transform 0.35s ease;
-}
 
-.detail-images img:hover {
-  transform: scale(1.02);
+  transition: transform 0.35s ease;
+
+  /* 🔥 ADD THIS */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* ==========================
@@ -308,33 +315,34 @@
     grid-template-columns: 1fr 1fr; /* two-column layout on tablet */
   }
 }
-
-/* Mobile */
 @media (max-width: 480px) {
   .project-actions {
     width: 100%;
     display: flex;
-    justify-content: center; /* center horizontally */
+    justify-content: center;
     align-items: center;
   }
 
   .btn-frame {
-    width: 90%; /* almost full width */
+    width: 90%;
     max-width: 340px;
-    margin: 0 auto; /* keep centered */
+    margin: 0 auto;
     display: block;
   }
 
   .detail-images {
     display: grid !important;
-    grid-template-columns: 1fr !important; /* stack images vertically */
-    gap: 0; /* remove spacing */
+    grid-template-columns: 1fr !important;
+
+    /* ✅ THIS IS THE REAL FIX */
+    gap: 16px;  /* or 20px if you want bigger space */
+
     width: 100%;
   }
 
   .detail-images img {
-    width: 100%; /* full width */
-    height: auto; /* maintain aspect ratio */
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 8px;
     display: block;

@@ -444,8 +444,208 @@
 
 // export default Project;
 
+// "use client";
+// import React, { useState, useRef } from "react";
+// import { motion, AnimatePresence } from "framer-motion";
+// import gsap from "gsap";
+// import { useGSAP } from "@gsap/react";
+
+// import "./Projects.css";
+
+// // Images
+// import img11 from "../../assets/Image/img11.jpg";
+// import img2 from "../../assets/Image/img2.jpg";
+// import img10 from "../../assets/Image/img10.jpg";
+// import img4 from "../../assets/Image/img4.jpg";
+// import img5 from "../../assets/Image/img5.jpg";
+// import img13 from "../../assets/Image/img13.jpg";
+
+// function Project() {
+//   // ✅ First row open by default
+//   const [activeIndex, setActiveIndex] = useState(0);
+
+//   const container = useRef();
+
+//   // ✅ Scoped GSAP (won’t affect outside)
+//   useGSAP(() => {
+//     const ctx = gsap.context(() => {
+//       const buttons = gsap.utils.toArray(".btn-frame");
+
+//       buttons.forEach((btn) => {
+//         const strip = btn.querySelector(".btn-strip");
+//         const leftCircle = btn.querySelector(".side-left");
+//         const rightCircle = btn.querySelector(".side-right");
+
+//         const tl = gsap.timeline({ paused: true });
+
+//         tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
+//           .fromTo(
+//             leftCircle,
+//             { scale: 0.3, opacity: 0 },
+//             { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+//             0.1
+//           )
+//           .to(
+//             rightCircle,
+//             { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
+//             0
+//           );
+
+//         btn.addEventListener("mouseenter", () => tl.play());
+//         btn.addEventListener("mouseleave", () => tl.reverse());
+//       });
+//     }, container);
+
+//     return () => ctx.revert(); // ✅ cleanup
+//   }, []);
+
+//   const projects = [
+//     {
+//       category: "Open Plan Offices",
+//       client: "Hotel Ponsonby:",
+//       title: "transforming a heritage building into a chic gastropub",
+//       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+//       img1: img11,
+//       img2: img2,
+//     },
+//     {
+//       category: "Recording Studios and Radio",
+//       client: "Mediaworks:",
+//       title: "Capturing the rebellious soul of radio",
+//       tags: ["CubeT", "Quietspaco® Panel"],
+//       img1: img10,
+//       img2: img4,
+//     },
+//     {
+//       category: "Hotel Lobbies and Foyers",
+//       client: "Custom Frontier™ system",
+//       title: "for Headingley Stadium's Emerald Suite",
+//       tags: ["FrontierTM"],
+//       img1: img13,
+//       img2: img5,
+//     },
+//   ];
+
+//   return (
+//     <section id="Project" className="project-section" ref={container}>
+//       <div className="project-content-wrapper">
+        
+//         {/* Heading */}
+//         <div className="project-heading">
+//           <div className="heading-box">
+//             <h1>We partner with serious scaleups worldwide</h1>
+//             <p>Helping them scale faster and smarter.</p>
+//           </div>
+//         </div>
+
+//         {/* Projects */}
+//         {projects.map((project, index) => (
+//           <div key={index} className="project-row">
+//             <div className="project-grid">
+
+//               {/* Category */}
+//               <div className="project-category">
+//                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+//                 {project.category}
+//               </div>
+
+//               {/* Content */}
+//               <div className="project-content">
+//                 <h3>{project.client}</h3>
+//                 <p className="project-title">{project.title}</p>
+
+//                 <div className="project-tags">
+//                   {project.tags.map((tag, i) => (
+//                     <span key={i}>{tag}</span>
+//                   ))}
+//                 </div>
+//               </div>
+
+//               {/* Buttons */}
+//               <div className="project-actions">
+
+//                 {/* View Case */}
+//                 <div className="btn-frame">
+//                   <div className="btn-strip">
+//                     <div className="circle side-left"><div className="arrow"></div></div>
+//                     <div className="box">View case</div>
+//                     <div className="circle side-right"><div className="arrow"></div></div>
+//                   </div>
+//                 </div>
+
+//                 {/* Toggle */}
+//                 <div
+//                   className="btn-frame"
+//                   onClick={() =>
+//                     setActiveIndex(activeIndex === index ? null : index)
+//                   }
+//                 >
+//                   <div className="btn-strip">
+//                     <div className="circle side-left"><div className="arrow"></div></div>
+//                     <div className="box">
+//                       {activeIndex === index ? "Hide" : "Show details"}
+//                     </div>
+//                     <div className="circle side-right"><div className="arrow"></div></div>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Images */}
+//               <AnimatePresence initial={false}>
+//                 {activeIndex === index && (
+//                   <motion.div
+//                     className="detail-images"
+//                     initial={{ opacity: 0, height: 0 }}
+//                     animate={{ opacity: 1, height: "auto" }}
+//                     exit={{ opacity: 0, height: 0 }}
+//                     transition={{ duration: 0.5, ease: "easeInOut" }}
+//                   >
+//                     <div className="img-wrapper">
+//                       <img src={project.img1} alt="" />
+//                     </div>
+//                     <div className="img-wrapper">
+//                       <img src={project.img2} alt="" />
+//                     </div>
+//                   </motion.div>
+//                 )}
+//               </AnimatePresence>
+
+//             </div>
+//           </div>
+//         ))}
+
+//         {/* Bottom */}
+//         <div className="project-bottom-row">
+// <h2 className="project-big-title">What We've Built</h2>
+
+//           <div className="btn-frame">
+//             <div className="btn-strip">
+//               <div className="circle side-left"><div className="arrow"></div></div>
+//               <div className="box">Our Projects</div>
+//               <div className="circle side-right"><div className="arrow"></div></div>
+//             </div>
+//           </div>
+//         </div>
+
+//       </div>
+//     </section>
+//   );
+// }
+
+// export default Project;
+
+
+
+
+
+
+
+
+
+
+
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -461,44 +661,11 @@ import img5 from "../../assets/Image/img5.jpg";
 import img13 from "../../assets/Image/img13.jpg";
 
 function Project() {
-  // ✅ First row open by default
   const [activeIndex, setActiveIndex] = useState(0);
-const rowRefs = useRef([]);
-const imageRefs = useRef([]);
+  const [loadedImages, setLoadedImages] = useState({});
+  const rowRefs = useRef([]);
+  const imageRefs = useRef([]);
   const container = useRef();
-
-  // ✅ Scoped GSAP (won’t affect outside)
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
-      const buttons = gsap.utils.toArray(".btn-frame");
-
-      buttons.forEach((btn) => {
-        const strip = btn.querySelector(".btn-strip");
-        const leftCircle = btn.querySelector(".side-left");
-        const rightCircle = btn.querySelector(".side-right");
-
-        const tl = gsap.timeline({ paused: true });
-
-        tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
-          .fromTo(
-            leftCircle,
-            { scale: 0.3, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
-            0.1
-          )
-          .to(
-            rightCircle,
-            { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
-            0
-          );
-
-        btn.addEventListener("mouseenter", () => tl.play());
-        btn.addEventListener("mouseleave", () => tl.reverse());
-      });
-    }, container);
-
-    return () => ctx.revert(); // ✅ cleanup
-  }, []);
 
   const projects = [
     {
@@ -527,10 +694,56 @@ const imageRefs = useRef([]);
     },
   ];
 
+  // GSAP animations
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      const buttons = gsap.utils.toArray(".btn-frame");
+      buttons.forEach((btn) => {
+        const strip = btn.querySelector(".btn-strip");
+        const leftCircle = btn.querySelector(".side-left");
+        const rightCircle = btn.querySelector(".side-right");
+
+        const tl = gsap.timeline({ paused: true });
+        tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
+          .fromTo(
+            leftCircle,
+            { scale: 0.3, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+            0.1
+          )
+          .to(
+            rightCircle,
+            { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
+            0
+          );
+
+        btn.addEventListener("mouseenter", () => tl.play());
+        btn.addEventListener("mouseleave", () => tl.reverse());
+      });
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Preload images
+  useEffect(() => {
+    projects.forEach((project) => {
+      [project.img1, project.img2].forEach((img) => {
+        const image = new Image();
+        image.src = img;
+        image.onload = () => {
+          setLoadedImages((prev) => ({ ...prev, [img]: true }));
+        };
+        image.onerror = () => {
+          console.error("Failed to load image:", img);
+        };
+      });
+    });
+  }, [projects]);
+
   return (
     <section id="Project" className="project-section" ref={container}>
       <div className="project-content-wrapper">
-        
         {/* Heading */}
         <div className="project-heading">
           <div className="heading-box">
@@ -541,13 +754,12 @@ const imageRefs = useRef([]);
 
         {/* Projects */}
         {projects.map((project, index) => (
-       <div
-  key={index}
-  className="project-row"
-  ref={(el) => (rowRefs.current[index] = el)}
->
+          <div
+            key={index}
+            className="project-row"
+            ref={(el) => (rowRefs.current[index] = el)}
+          >
             <div className="project-grid">
-
               {/* Category */}
               <div className="project-category">
                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
@@ -558,7 +770,6 @@ const imageRefs = useRef([]);
               <div className="project-content">
                 <h3>{project.client}</h3>
                 <p className="project-title">{project.title}</p>
-
                 <div className="project-tags">
                   {project.tags.map((tag, i) => (
                     <span key={i}>{tag}</span>
@@ -568,46 +779,45 @@ const imageRefs = useRef([]);
 
               {/* Buttons */}
               <div className="project-actions">
-
-                {/* View Case */}
                 <div className="btn-frame">
                   <div className="btn-strip">
-                    <div className="circle side-left"><div className="arrow"></div></div>
+                    <div className="circle side-left">
+                      <div className="arrow"></div>
+                    </div>
                     <div className="box">View case</div>
-                    <div className="circle side-right"><div className="arrow"></div></div>
+                    <div className="circle side-right">
+                      <div className="arrow"></div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Toggle */}
                 <div
                   className="btn-frame"
-onClick={() => {
-  const newIndex = activeIndex === index ? null : index;
-  setActiveIndex(newIndex);
+                  onClick={() => {
+                    const newIndex = activeIndex === index ? null : index;
+                    setActiveIndex(newIndex);
 
-  if (newIndex !== null) {
-    setTimeout(() => {
-      const el = imageRefs.current[index];
-      if (el) {
-        const yOffset = -80; // space from top (adjust if needed)
-        const y =
-          el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-        window.scrollTo({
-          top: y,
-          behavior: "smooth",
-        });
-      }
-    }, 300); // wait for expand animation
-  }
-}}
+                    if (newIndex !== null) {
+                      setTimeout(() => {
+                        const el = imageRefs.current[index];
+                        if (el) {
+                          const yOffset = -80;
+                          const y =
+                            el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                          window.scrollTo({ top: y, behavior: "smooth" });
+                        }
+                      }, 300);
+                    }
+                  }}
                 >
                   <div className="btn-strip">
-                    <div className="circle side-left"><div className="arrow"></div></div>
-                    <div className="box">
-                      {activeIndex === index ? "Hide" : "Show details"}
+                    <div className="circle side-left">
+                      <div className="arrow"></div>
                     </div>
-                    <div className="circle side-right"><div className="arrow"></div></div>
+                    <div className="box">{activeIndex === index ? "Hide" : "Show details"}</div>
+                    <div className="circle side-right">
+                      <div className="arrow"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -615,41 +825,50 @@ onClick={() => {
               {/* Images */}
               <AnimatePresence initial={false}>
                 {activeIndex === index && (
-         <motion.div
-  className="detail-images"
-  ref={(el) => (imageRefs.current[index] = el)}
-  initial={{ opacity: 0, height: 0 }}
-  animate={{ opacity: 1, height: "auto" }}
-  exit={{ opacity: 0, height: 0 }}
-  transition={{ duration: 0.5, ease: "easeInOut" }}
->
-  <div className="img-wrapper">
-    <img src={project.img1} alt="" />
-  </div>
-  <div className="img-wrapper">
-    <img src={project.img2} alt="" />
-  </div>
-</motion.div>
+                  <motion.div
+                    className="detail-images"
+                    ref={(el) => (imageRefs.current[index] = el)}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                  >
+                    <div className="img-wrapper">
+                      {loadedImages[project.img1] ? (
+                        <img src={project.img1} alt={project.title} />
+                      ) : (
+                        <div className="img-placeholder">Loading...</div>
+                      )}
+                    </div>
+                    <div className="img-wrapper">
+                      {loadedImages[project.img2] ? (
+                        <img src={project.img2} alt={project.title} />
+                      ) : (
+                        <div className="img-placeholder">Loading...</div>
+                      )}
+                    </div>
+                  </motion.div>
                 )}
               </AnimatePresence>
-
             </div>
           </div>
         ))}
 
         {/* Bottom */}
         <div className="project-bottom-row">
-<h2 className="project-big-title">What We've Built</h2>
-
+          <h2 className="project-big-title">What We've Built</h2>
           <div className="btn-frame">
             <div className="btn-strip">
-              <div className="circle side-left"><div className="arrow"></div></div>
+              <div className="circle side-left">
+                <div className="arrow"></div>
+              </div>
               <div className="box">Our Projects</div>
-              <div className="circle side-right"><div className="arrow"></div></div>
+              <div className="circle side-right">
+                <div className="arrow"></div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

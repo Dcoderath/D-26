@@ -313,4 +313,28 @@
     width: 22px;
     height: 22px;
   }
+  
+}
+/* ===== Perfect square tiles, fully centered, no gaps ===== */
+@media (max-width: 480px) {
+  .junni-board {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 tiles per row */
+    grid-template-rows: repeat(6, 1fr);    /* 6 rows */
+    width: 100%;
+    height: 100%;          /* fill parent */
+    padding: 0;
+    gap: 0;                /* remove all gaps */
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+  .junni-tile {
+    width: 100%;
+    height: 100%;
+  }
+
+  .junni-row {
+    display: contents; /* remove flex row wrapper effect */
+  }
 }

@@ -147,4 +147,11 @@ overflow-y: auto;
   .loader-bottom {
     align-items: flex-end;
   }
+
+  .app-highlight,
+  .app-overlay,
+  .app-blocks-container {
+    display: none !important;
+  }
+
 }

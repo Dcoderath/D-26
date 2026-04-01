@@ -97,12 +97,12 @@ background-color: #FBC1D4;
   display: inline-block;
   margin: 0;
 }
-
 .marqueeScroll-item h1 .char {
   display: inline-block;
   will-change: font-weight;
+  text-rendering: geometricPrecision; /* better for variable font animation */
+  vertical-align: middle;
 }
-
 /* ------------------ */
 /* ✅ RESPONSIVE FIXES */
 /* ------------------ */

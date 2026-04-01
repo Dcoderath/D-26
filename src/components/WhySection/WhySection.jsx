@@ -370,8 +370,6 @@
 //   );
 // }
 
-
-
 "use client";
 import React, { useEffect, useRef } from "react";
 import "./WhySection.css";
@@ -433,9 +431,7 @@ export function WhySection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = cardsRef.current;
-      const list = listRef.current;
-
-      if (!list) return;
+      if (!listRef.current) return;
 
       const headerOffset = 110;
 
@@ -445,7 +441,7 @@ export function WhySection() {
         ScrollTrigger.create({
           trigger: card,
           start: `top ${index * headerOffset}px`,
-          endTrigger: list,
+          endTrigger: listRef.current,
           end: `bottom ${((cards.length - 1) * headerOffset) + 400}px`,
           pin: true,
           pinSpacing: false,
@@ -453,15 +449,14 @@ export function WhySection() {
           invalidateOnRefresh: true,
         });
       });
-    }, sectionRef); // 👈 scoped to this section only
+    }, sectionRef);
 
-    return () => ctx.revert(); // 👈 clean up safely
+    return () => ctx.revert();
   }, []);
 
   return (
     <section className="why-section" ref={sectionRef}>
       <div className="why-container">
-        
         <div className="why-heading-wrapper">
           <div className="why-heading-bold">
             <span className="bracket"></span>
@@ -470,7 +465,6 @@ export function WhySection() {
           </div>
         </div>
 
-        {/* ✅ IMPORTANT REF */}
         <div className="why-full-list" ref={listRef}>
           {features.map((feature, idx) => (
             <div
@@ -480,14 +474,13 @@ export function WhySection() {
               style={{
                 backgroundColor: feature.bgColor,
                 color: feature.textColor,
-                zIndex: idx + 1
+                zIndex: idx + 1,
               }}
             >
               <div className="card-left">
                 <div className="card-left-top">{feature.title}</div>
                 <div className="card-left-bottom">{feature.description}</div>
               </div>
-
               <div className="card-right">
                 <img src={feature.icon} alt={feature.title} className="card-img" />
               </div>
@@ -495,42 +488,23 @@ export function WhySection() {
           ))}
         </div>
 
-        {/* MARQUEE */}
         <div className="why-banner-wrapper">
-          <div className="why-banner why-banner-left">
-            <div className="why-banner-track">
-              {[...Array(20)].map((_, i) => (
-                <div className="why-banner-item" key={i}>
-                  <div className="why-banner-text">JUST IMAGINE, WE DESIGN</div>
-                  <img src={D8} alt="Logo" className="why-banner-image" />
-                </div>
-              ))}
+          {["left", "right"].map((side) => (
+            <div className={`why-banner why-banner-${side}`} key={side}>
+              <div className="why-banner-track">
+                {[...Array(20)].map((_, i) => (
+                  <div className="why-banner-item" key={i}>
+                    <div className="why-banner-text">JUST IMAGINE, WE DESIGN</div>
+                    <img src={D8} alt="Logo" className="why-banner-image" />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-
-          <div className="why-banner why-banner-right">
-            <div className="why-banner-track">
-              {[...Array(20)].map((_, i) => (
-                <div className="why-banner-item" key={i}>
-                  <div className="why-banner-text">JUST IMAGINE, WE DESIGN</div>
-                  <img src={D8} alt="Logo" className="why-banner-image" />
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
-
       </div>
     </section>
   );
 }
 
 export default WhySection;
-
-
-
-
-
-
-
-

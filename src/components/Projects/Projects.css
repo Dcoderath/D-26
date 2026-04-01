@@ -1,15 +1,22 @@
+/* ==========================
+   PROJECT SECTION CONTAINER
+=========================== */
 .project-section {
-  width: 100%;
+  width: 100%; /* full width */
   padding: clamp(40px, 6vw, 100px) clamp(15px, 5vw, 80px);
   padding-top: 90px;
   background: #FBC1D4;
   color: #202020;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow-x: hidden; /* prevents horizontal scroll */
 }
 
+/* ==========================
+   HEADING
+=========================== */
 .project-heading {
   display: flex;
+  flex-direction: column; /* stack heading & subheading */
   margin-bottom: clamp(40px, 8vw, 110px);
 }
 
@@ -31,14 +38,17 @@
   margin: 0;
   padding: 6px 0;
   color: #292626;
-  opacity: .9;
+  opacity: 0.9;
 }
 
+/* ==========================
+   PROJECT ROW
+=========================== */
 .project-row {
   padding: clamp(15px, 3vw, 30px);
   margin-bottom: 15px;
   border: 1px solid #1b1b1b25;
-  transition: .3s ease;
+  transition: 0.3s ease;
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -46,13 +56,14 @@
   z-index: 0;
 }
 
+/* Hover overlay animation */
 .project-row::before {
   content: "";
   position: absolute;
   inset: 0;
   background: #8B0000;
   transform: translateX(-101%);
-  transition: transform .4s cubic-bezier(.22,.61,.36,1);
+  transition: transform 0.4s cubic-bezier(.22,.61,.36,1);
   z-index: -1;
 }
 
@@ -65,6 +76,9 @@
   border-color: #8B0000;
 }
 
+/* ==========================
+   PROJECT GRID
+=========================== */
 .project-grid {
   display: grid;
   grid-template-columns: minmax(80px, 1fr) minmax(0, 2.5fr) minmax(140px, 1fr);
@@ -73,12 +87,13 @@
   width: 100%;
 }
 
+/* Category dots */
 .project-category {
   font-size: clamp(14px, 1.5vw, 18px);
   display: flex;
   align-items: center;
   gap: 10px;
-  opacity: .8;
+  opacity: 0.8;
   white-space: nowrap;
 }
 
@@ -95,21 +110,24 @@
   opacity: 1;
 }
 
+/* ==========================
+   PROJECT CONTENT
+=========================== */
 .project-content h3 {
   font-size: clamp(24px, 4vw, 54px);
   margin-bottom: 12px;
-  
   line-height: 1.2;
 }
 
 .project-title {
   font-size: clamp(14px, 2vw, 25px);
   margin-bottom: 20px;
-   font-family: 'Courier New', Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   line-height: 1.6;
   max-width: 650px;
 }
 
+/* Tags */
 .project-tags {
   display: flex;
   gap: 8px;
@@ -119,11 +137,11 @@
 .project-tags span {
   font-size: 11px;
   padding: 6px 12px;
-   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background: #000;
   color: #fff;
   border-radius: 20px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .project-tags span:hover {
@@ -131,6 +149,9 @@
   color: #fff;
 }
 
+/* ==========================
+   PROJECT ACTIONS / BUTTONS
+=========================== */
 .project-actions {
   display: flex;
   flex-direction: column;
@@ -138,6 +159,7 @@
   gap: 12px;
 }
 
+/* Button frame */
 .btn-frame {
   width: clamp(140px, 100%, 200px);
   height: 44px;
@@ -148,12 +170,13 @@
   background: transparent;
 }
 
+/* Sliding button strip */
 .btn-strip {
   display: flex;
   align-items: center;
   width: max-content;
   transform: translateX(-44px);
-  transition: transform .5s cubic-bezier(.22,.61,.36,1);
+  transition: transform 0.5s cubic-bezier(.22,.61,.36,1);
 }
 
 .btn-frame:hover .btn-strip {
@@ -192,21 +215,22 @@
   border-top: 2px solid #111;
   border-right: 2px solid #111;
   transform: rotate(45deg);
-  transition: transform .4s ease;
+  transition: transform 0.4s ease;
 }
 
 .btn-frame:hover .arrow {
   transform: rotate(45deg) translate(3px, -3px);
 }
 
+/* ==========================
+   DETAIL IMAGES
+=========================== */
 .detail-images {
-   width: 100%;
+  width: 100%;
   margin-top: 20px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 1fr; /* desktop: larger left image, smaller right */
   gap: 12px;
-  
- 
 }
 
 .detail-images img {
@@ -214,16 +238,18 @@
   height: clamp(160px, 30vw, 380px);
   object-fit: cover;
   border-radius: 8px;
-  transition: transform .35s ease;
+  transition: transform 0.35s ease;
 }
 
 .detail-images img:hover {
   transform: scale(1.02);
 }
 
+/* ==========================
+   PROJECT BIG TITLE
+=========================== */
 .project-big-title {
   font-size: clamp(30px, 15vw, 86px);
- 
   color: #fff;
   -webkit-text-stroke: 2px #000;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
@@ -234,6 +260,9 @@
   letter-spacing: -0.02em;
 }
 
+/* ==========================
+   BOTTOM ROW
+=========================== */
 .project-bottom-row {
   display: flex;
   flex-direction: column;
@@ -243,14 +272,19 @@
   width: 100%;
 }
 
+/* ==========================
+   MEDIA QUERIES
+=========================== */
+
+/* Tablet */
 @media (max-width: 768px) {
   .project-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* stack all columns */
     gap: 20px;
   }
 
   .project-category {
-    order: -1;
+    order: -1; /* category appears first */
   }
 
   .project-actions {
@@ -271,33 +305,38 @@
 
   .detail-images {
     grid-column: 1 / -1;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* two-column layout on tablet */
   }
 }
+
+/* Mobile */
 @media (max-width: 480px) {
   .project-actions {
     width: 100%;
     display: flex;
-    justify-content: center;   /* center horizontally */
+    justify-content: center; /* center horizontally */
     align-items: center;
   }
 
   .btn-frame {
-    width: 60%;               /* large but not full edge */
+    width: 90%; /* almost full width */
     max-width: 340px;
-    margin: 0 auto;           /* keeps it centered */
+    margin: 0 auto; /* keep centered */
     display: block;
   }
-    .detail-images {
-    display: grid;
-    grid-template-columns: 1fr !important; /* FORCE vertical */
-   
+
+  .detail-images {
+    display: grid !important;
+    grid-template-columns: 1fr !important; /* stack images vertically */
+    gap: 0; /* remove spacing */
+    width: 100%;
   }
 
   .detail-images img {
+    width: 100%; /* full width */
+    height: auto; /* maintain aspect ratio */
     object-fit: cover;
-    width: 100%;
-    gap: 0px;
-    height: auto; /* prevents weird stretching */
+    border-radius: 8px;
+    display: block;
   }
 }

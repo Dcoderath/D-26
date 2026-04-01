@@ -372,173 +372,8 @@
 
 
 
-// "use client";
-// import React, { useEffect, useRef } from "react";
-// import "./WhySection.css";
-// import { gsap } from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// import D8 from "../../assets/D/d8.svg";
-// import img13 from "../../assets/Image/img13.jpg";
-// import img14 from "../../assets/Image/img14.jpg";
-// import img15 from "../../assets/Image/img15.jpg";
-// import img16 from "../../assets/Image/img16.jpg";
-
-// gsap.registerPlugin(ScrollTrigger);
-
-// const features = [
-//   {
-//     id: "01",
-//     title: "Founder Mindset",
-//     description:
-//       "We think like business owners, not just developers. Every decision is made to support growth, reduce unnecessary costs, and improve long-term outcomes. Our focus stays on building solutions that actually move your business forward.",
-//     icon: img13,
-//     bgColor: "#C3ABFF",
-//     textColor: "#111",
-//   },
-//   {
-//     id: "02",
-//     title: "Fast Execution",
-//     description:
-//       "Speed matters in today’s market, and we deliver without cutting corners. We follow a streamlined process that helps you launch faster while maintaining quality. This allows you to test, iterate, and scale ahead of your competition.",
-//     icon: img14,
-//     bgColor: "#ffffff",
-//     textColor: "#111",
-//   },
-//   {
-//     id: "03",
-//     title: "Clear Process",
-//     description:
-//       "We keep everything simple and transparent from day one. You always know what’s happening, what’s next, and where things stand. No confusion, no hidden steps—just clear communication and smooth collaboration.",
-//     icon: img15,
-//     bgColor: "#fed35b",
-//     textColor: "#111",
-//   },
-//   {
-//     id: "04",
-//     title: "Scalable Systems",
-//     description:
-//       "We build systems that are ready for growth from the start. As your users increase, performance stays stable and reliable. Our goal is to give you a strong foundation that supports your future expansion without issues.",
-//     icon: img16,
-//     bgColor: "#2d2c2c",
-//     textColor: "#fff",
-//   },
-// ];
-
-// export function WhySection() {
-//   const cardsRef = useRef([]);
-//   const listRef = useRef(null);
-//   const sectionRef = useRef(null);
-
-//   useEffect(() => {
-//     const ctx = gsap.context(() => {
-//       const cards = cardsRef.current;
-//       const list = listRef.current;
-
-//       if (!list) return;
-
-//       const headerOffset = 110;
-
-//       cards.forEach((card, index) => {
-//         if (!card) return;
-
-//         ScrollTrigger.create({
-//           trigger: card,
-//           start: `top ${index * headerOffset}px`,
-//           endTrigger: list,
-//           end: `bottom ${((cards.length - 1) * headerOffset) + 400}px`,
-//           pin: true,
-//           pinSpacing: false,
-//           scrub: true,
-//           invalidateOnRefresh: true,
-//         });
-//       });
-//     }, sectionRef); // 👈 scoped to this section only
-
-//     return () => ctx.revert(); // 👈 clean up safely
-//   }, []);
-
-//   return (
-//     <section className="why-section" ref={sectionRef}>
-//       <div className="why-container">
-        
-//         <div className="why-heading-wrapper">
-//           <div className="why-heading-bold">
-//             <span className="bracket"></span>
-//             WHY THE WORLD'S FASTEST GROWING TEAMS CHOOSE US
-//             <span className="bracket"></span>
-//           </div>
-//         </div>
-
-//         {/* ✅ IMPORTANT REF */}
-//         <div className="why-full-list" ref={listRef}>
-//           {features.map((feature, idx) => (
-//             <div
-//               key={feature.id}
-//               className="why-item-card"
-//               ref={(el) => (cardsRef.current[idx] = el)}
-//               style={{
-//                 backgroundColor: feature.bgColor,
-//                 color: feature.textColor,
-//                 zIndex: idx + 1
-//               }}
-//             >
-//               <div className="card-left">
-//                 <div className="card-left-top">{feature.title}</div>
-//                 <div className="card-left-bottom">{feature.description}</div>
-//               </div>
-
-//               <div className="card-right">
-//                 <img src={feature.icon} alt={feature.title} className="card-img" />
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* MARQUEE */}
-//         <div className="why-banner-wrapper">
-//           <div className="why-banner why-banner-left">
-//             <div className="why-banner-track">
-//               {[...Array(20)].map((_, i) => (
-//                 <div className="why-banner-item" key={i}>
-//                   <div className="why-banner-text">JUST IMAGINE, WE DESIGN</div>
-//                   <img src={D8} alt="Logo" className="why-banner-image" />
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-
-//           <div className="why-banner why-banner-right">
-//             <div className="why-banner-track">
-//               {[...Array(20)].map((_, i) => (
-//                 <div className="why-banner-item" key={i}>
-//                   <div className="why-banner-text">JUST IMAGINE, WE DESIGN</div>
-//                   <img src={D8} alt="Logo" className="why-banner-image" />
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// }
-
-// export default WhySection;
-
-
-
-
-
-
-
-
-
-
-
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "./WhySection.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -591,12 +426,10 @@ const features = [
 ];
 
 export function WhySection() {
-  const [loadedImages, setLoadedImages] = useState({});
   const cardsRef = useRef([]);
   const listRef = useRef(null);
   const sectionRef = useRef(null);
 
-  // GSAP ScrollTrigger setup
   useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = cardsRef.current;
@@ -620,28 +453,15 @@ export function WhySection() {
           invalidateOnRefresh: true,
         });
       });
-    }, sectionRef);
+    }, sectionRef); // 👈 scoped to this section only
 
-    return () => ctx.revert();
-  }, []);
-
-  // Preload all feature icons
-  useEffect(() => {
-    features.forEach((feature) => {
-      const image = new Image();
-      image.src = feature.icon;
-      image.onload = () => {
-        setLoadedImages((prev) => ({ ...prev, [feature.id]: true }));
-      };
-      image.onerror = () => {
-        console.error("Failed to load image:", feature.icon);
-      };
-    });
+    return () => ctx.revert(); // 👈 clean up safely
   }, []);
 
   return (
     <section className="why-section" ref={sectionRef}>
       <div className="why-container">
+        
         <div className="why-heading-wrapper">
           <div className="why-heading-bold">
             <span className="bracket"></span>
@@ -650,6 +470,7 @@ export function WhySection() {
           </div>
         </div>
 
+        {/* ✅ IMPORTANT REF */}
         <div className="why-full-list" ref={listRef}>
           {features.map((feature, idx) => (
             <div
@@ -659,7 +480,7 @@ export function WhySection() {
               style={{
                 backgroundColor: feature.bgColor,
                 color: feature.textColor,
-                zIndex: idx + 1,
+                zIndex: idx + 1
               }}
             >
               <div className="card-left">
@@ -668,11 +489,7 @@ export function WhySection() {
               </div>
 
               <div className="card-right">
-                {loadedImages[feature.id] ? (
-                  <img src={feature.icon} alt={feature.title} className="card-img" />
-                ) : (
-                  <div className="img-placeholder">Loading...</div>
-                )}
+                <img src={feature.icon} alt={feature.title} className="card-img" />
               </div>
             </div>
           ))}
@@ -702,9 +519,18 @@ export function WhySection() {
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );
 }
 
 export default WhySection;
+
+
+
+
+
+
+
+

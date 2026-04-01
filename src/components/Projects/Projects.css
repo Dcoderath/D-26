@@ -205,8 +205,8 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 12px;
-  margin-top: 25px;
-  width: 100%;
+  
+ 
 }
 
 .detail-images img {

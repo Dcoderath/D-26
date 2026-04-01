@@ -3,11 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 .services-main {
+  
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: 5rem;
- 
   gap: 20px;
   box-sizing: border-box;
   background-color: #FBC1D4;
@@ -24,10 +24,7 @@
   font-family: 'Limelight', cursive;
 }
 
-.description-box,
-.subcategory-item {
-  font-family: 'Inter', sans-serif;
-}
+
 
 .service-row {
   display: flex;
@@ -136,10 +133,12 @@
 .subcategory-item {
   font-size: 0.95rem;
   color: red;
-  font-family: 'Limelight', cursive;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .description-box {
+ 
+    font-family: 'Courier New', Courier, monospace;
   font-size: 1.3rem;
   line-height: 1.5;
   color: black;
@@ -179,13 +178,14 @@
     padding: 10px;
   }
   .main-title {
-    font-size: 3rem;
+    font-size: 4rem;
     margin-bottom: 1rem;
+     margin-top: 1rem;
   }
-  .number-title-box { gap: 4px; }
+  .number-title-box { gap: 10px; }
   .service-number { font-size: 1.8rem; }
-  .service-title { font-size: 1.5rem; line-height: 1.2; }
+  .service-title { font-size: 2.5rem; line-height: 1.2; }
   .description-box { font-size: 1.1rem; margin-right: 0; }
-  .image-box { height: 120px; margin-top: 1rem; }
+  .image-box { height: 80px; margin-top: 1rem; }
   .subcategory-item { font-size: 0.85rem; }
 }

@@ -212,7 +212,7 @@
   /* HEADING */
   .why-heading-bold {
     margin-top: 60px;
-    font-size: 32px;
+    font-size: 29px;
     line-height: 1.3;
     padding: 30px 20px;
   }
@@ -242,7 +242,7 @@
 
   /* IMAGE */
   .card-right {
-    height: 160px;
+    height: 250px;
     padding: 10px;
   }
 
@@ -258,7 +258,7 @@
 
   .why-banner {
    
-    height: 40px;
+    height: 50px;
   }
 
   .why-banner-item {
@@ -268,5 +268,14 @@
 
   .why-banner-image {
     height: 16px;
+  }
+
+
+  .why-banner-left {
+    top: 65%; /* move the left banner lower */
+  }
+
+  .why-banner-right {
+    top: 35%; /* move the right banner higher */
   }
 }

@@ -463,7 +463,8 @@ import img13 from "../../assets/Image/img13.jpg";
 function Project() {
   // ✅ First row open by default
   const [activeIndex, setActiveIndex] = useState(0);
-
+const rowRefs = useRef([]);
+const imageRefs = useRef([]);
   const container = useRef();
 
   // ✅ Scoped GSAP (won’t affect outside)
@@ -540,7 +541,11 @@ function Project() {
 
         {/* Projects */}
         {projects.map((project, index) => (
-          <div key={index} className="project-row">
+       <div
+  key={index}
+  className="project-row"
+  ref={(el) => (rowRefs.current[index] = el)}
+>
             <div className="project-grid">
 
               {/* Category */}
@@ -576,9 +581,26 @@ function Project() {
                 {/* Toggle */}
                 <div
                   className="btn-frame"
-                  onClick={() =>
-                    setActiveIndex(activeIndex === index ? null : index)
-                  }
+onClick={() => {
+  const newIndex = activeIndex === index ? null : index;
+  setActiveIndex(newIndex);
+
+  if (newIndex !== null) {
+    setTimeout(() => {
+      const el = imageRefs.current[index];
+      if (el) {
+        const yOffset = -80; // space from top (adjust if needed)
+        const y =
+          el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+        window.scrollTo({
+          top: y,
+          behavior: "smooth",
+        });
+      }
+    }, 300); // wait for expand animation
+  }
+}}
                 >
                   <div className="btn-strip">
                     <div className="circle side-left"><div className="arrow"></div></div>
@@ -593,20 +615,21 @@ function Project() {
               {/* Images */}
               <AnimatePresence initial={false}>
                 {activeIndex === index && (
-                  <motion.div
-                    className="detail-images"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                  >
-                    <div className="img-wrapper">
-                      <img src={project.img1} alt="" />
-                    </div>
-                    <div className="img-wrapper">
-                      <img src={project.img2} alt="" />
-                    </div>
-                  </motion.div>
+         <motion.div
+  className="detail-images"
+  ref={(el) => (imageRefs.current[index] = el)}
+  initial={{ opacity: 0, height: 0 }}
+  animate={{ opacity: 1, height: "auto" }}
+  exit={{ opacity: 0, height: 0 }}
+  transition={{ duration: 0.5, ease: "easeInOut" }}
+>
+  <div className="img-wrapper">
+    <img src={project.img1} alt="" />
+  </div>
+  <div className="img-wrapper">
+    <img src={project.img2} alt="" />
+  </div>
+</motion.div>
                 )}
               </AnimatePresence>
 

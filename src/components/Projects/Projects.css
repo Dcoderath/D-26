@@ -1,23 +1,17 @@
-/* ==========================
-   PROJECT SECTION CONTAINER
-=========================== */
 .project-section {
-  width: 100%; /* full width */
+  width: 100%;
   padding: clamp(40px, 6vw, 100px) clamp(15px, 5vw, 80px);
   padding-top: 90px;
   background: #FBC1D4;
   color: #202020;
-    isolation: isolate;
+  isolation: isolate;
   box-sizing: border-box;
-  overflow-x: hidden; /* prevents horizontal scroll */
+  overflow-x: hidden;
 }
 
-/* ==========================
-   HEADING
-=========================== */
 .project-heading {
   display: flex;
-  flex-direction: column; /* stack heading & subheading */
+  flex-direction: column;
   margin-bottom: clamp(40px, 8vw, 110px);
 }
 
@@ -42,9 +36,6 @@
   opacity: 0.9;
 }
 
-/* ==========================
-   PROJECT ROW
-=========================== */
 .project-row {
   padding: clamp(15px, 3vw, 30px);
   margin-bottom: 15px;
@@ -56,40 +47,28 @@
   isolation: isolate;
   z-index: 0;
 }
-
 .project-row::before {
   content: "";
   position: absolute;
   inset: 0;
   background: #8B0000;
-
-  transform: translateX(-101%) translateZ(0);
-  will-change: transform;
-
-  transition: transform 0.4s cubic-bezier(.22,.61,.36,1);
+  transform: translateX(var(--slideX, -101%));
   z-index: -1;
 }
-.project-row:hover::before {
-  transform: translateX(0);
-}
 
-.project-row:hover {
+.project-row.active {
   color: #fff;
   border-color: #8B0000;
 }
-
-/* ==========================
-   PROJECT GRID
-=========================== */
 .project-grid {
   display: grid;
-  grid-template-columns: minmax(80px, 1fr) minmax(0, 2.5fr) minmax(140px, 1fr);
-  gap: clamp(15px, 4vw, 45px);
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
   align-items: start;
   width: 100%;
 }
 
-/* Category dots */
 .project-category {
   font-size: clamp(14px, 1.5vw, 18px);
   display: flex;
@@ -104,17 +83,12 @@
   height: 10px;
   border-radius: 50%;
   background: #000;
-  flex-shrink: 0;
 }
 
 .dot.active {
   background: #fff;
-  opacity: 1;
 }
 
-/* ==========================
-   PROJECT CONTENT
-=========================== */
 .project-content h3 {
   font-size: clamp(24px, 4vw, 54px);
   margin-bottom: 12px;
@@ -129,7 +103,6 @@
   max-width: 650px;
 }
 
-/* Tags */
 .project-tags {
   display: flex;
   gap: 8px;
@@ -143,45 +116,29 @@
   background: #000;
   color: #fff;
   border-radius: 20px;
-  transition: 0.3s;
 }
 
-.project-tags span:hover {
-  background: #000;
-  color: #fff;
-}
-
-/* ==========================
-   PROJECT ACTIONS / BUTTONS
-=========================== */
 .project-actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 12px;
+  justify-content: flex-end;
+  align-items: flex-start;
 }
 
-/* Button frame */
 .btn-frame {
-  width: clamp(140px, 100%, 200px);
-  height: 44px;
+  width: clamp(160px, 100%, 220px);
+  height: 48px;
   overflow: hidden;
   cursor: pointer;
   position: relative;
-  border-radius: 30px;
-  background: transparent;
+  border-radius: 999px;
 }
 
-/* Sliding button strip */
 .btn-strip {
   display: flex;
   align-items: center;
-  width: max-content;
-
-  transform: translateX(-44px) translateZ(0);
-  will-change: transform;
-
-  transition: transform 0.5s cubic-bezier(.22,.61,.36,1);
+  width: calc(100% + 48px);
+  transform: translateX(-48px);
+  transition: transform 0.45s cubic-bezier(.22,.61,.36,1);
 }
 
 .btn-frame:hover .btn-strip {
@@ -189,162 +146,124 @@
 }
 
 .box {
-  width: calc(100% - 44px);
-  min-width: 110px;
-  height: 44px;
+  flex: 1;
+  height: 48px;
   background: #fff;
   color: #111;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 13px;
-  border-radius: 20px;
-  white-space: nowrap;
+
+  border-radius: 999px;
 }
 
 .circle {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
+
+  aspect-ratio: 1 / 1;  
+
   background: #fff;
   border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-}
 
+  flex-shrink: 0;   
+}
 .arrow {
   width: 8px;
   height: 8px;
   border-top: 2px solid #111;
   border-right: 2px solid #111;
   transform: rotate(45deg);
-  transition: transform 0.4s ease;
 }
 
-.btn-frame:hover .arrow {
-  transform: rotate(45deg) translate(3px, -3px);
-}
-
-/* ==========================
-   DETAIL IMAGES
-=========================== */
-.detail-images {
+.img-grid {
   width: 100%;
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 2fr 1fr; /* desktop: larger left image, smaller right */
-  gap: 12px;
 }
 
-.detail-images img {
+.img-grid img {
   width: 100%;
-  height: clamp(160px, 30vw, 380px);
+  height: clamp(180px, 25vw, 300px);
   object-fit: cover;
-  border-radius: 8px;
-
-  transition: transform 0.35s ease;
-
-  /* 🔥 ADD THIS */
-  will-change: transform;
+  border-radius: 12px;
+  display: block;
   transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
-/* ==========================
-   PROJECT BIG TITLE
-=========================== */
 .project-big-title {
-  font-size: clamp(30px, 15vw, 86px);
+  font-size: clamp(32px, 12vw, 86px);
+  
+  line-height: 1.05;
   color: #fff;
+
   -webkit-text-stroke: 2px #000;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  display: flex;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 20px;
+
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+
   letter-spacing: -0.02em;
+  text-align: center;
+
+  margin-top: 80px;
+  margin-bottom: 10px;
+  padding: 0;
+
+  max-width: 100%;
 }
 
-/* ==========================
-   BOTTOM ROW
-=========================== */
-.project-bottom-row {
+.project-bottom-row .project-actions {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
+  align-items: center;
   width: 100%;
 }
 
-/* ==========================
-   MEDIA QUERIES
-=========================== */
+.project-bottom-row .btn-frame {
+  width: 300px;
+  margin: 0 auto;
 
-/* Tablet */
-@media (max-width: 768px) {
-  .project-grid {
-    grid-template-columns: 1fr; /* stack all columns */
-    gap: 20px;
-  }
-
-  .project-category {
-    order: -1; /* category appears first */
-  }
-
-  .project-actions {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .btn-frame {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-  }
-
-  .detail-images {
-    grid-column: 1 / -1;
-    grid-template-columns: 1fr 1fr; /* two-column layout on tablet */
-  }
 }
-@media (max-width: 480px) {
+
+.project-bottom-row .btn-strip {
+  width: 344px;
+}
+
+
+@media (max-width: 768px) {
+
+  .project-big-title {
+    font-size: clamp(28px, 14vw, 60px);
+    -webkit-text-stroke: 1.2px #000;
+  }
+
+  .project-bottom-row {
+    gap: 18px;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
   .project-actions {
-    width: 100%;
-    display: flex;
     justify-content: center;
-    align-items: center;
   }
 
   .btn-frame {
     width: 90%;
-    max-width: 340px;
+    max-width: 320px;
     margin: 0 auto;
-    display: block;
   }
 
-  .detail-images {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-
-    /* ✅ THIS IS THE REAL FIX */
-    gap: 16px;  /* or 20px if you want bigger space */
-
-    width: 100%;
-  }
-
-  .detail-images img {
-    width: 100%;
+  .img-grid img {
     height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
   }
+
 }

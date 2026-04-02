@@ -1,640 +1,638 @@
-// import React, { useState, useEffect, useRef, useCallback } from "react";
-// import { motion } from "framer-motion";
-// import "./Project.css";
+// // import React, { useState, useEffect, useRef, useCallback } from "react";
+// // import { motion } from "framer-motion";
+// // import "./Project.css";
 
-// import D1 from "../../assets/D/D1.jpg";
-// import D2 from "../../assets/D/D2.jpg";
-// import D3 from "../../assets/D/D3.jpg";
-// import D4 from "../../assets/D/D4.jpg";
-// import D5 from "../../assets/D/D5.jpg";
-// import D6 from "../../assets/D/D6.jpg";
+// // import D1 from "../../assets/D/D1.jpg";
+// // import D2 from "../../assets/D/D2.jpg";
+// // import D3 from "../../assets/D/D3.jpg";
+// // import D4 from "../../assets/D/D4.jpg";
+// // import D5 from "../../assets/D/D5.jpg";
+// // import D6 from "../../assets/D/D6.jpg";
 
-// export default function Project() {
-//   // 1. Set to 0 so the first project is open by default
-//   const [activeIndex, setActiveIndex] = useState(0);
+// // export default function Project() {
+// //   // 1. Set to 0 so the first project is open by default
+// //   const [activeIndex, setActiveIndex] = useState(0);
   
-//   // 2. Refs for canvases and project rows
-//   const topRightCanvas = useRef(null);
-//   const bottomLeftCanvas = useRef(null);
-//   const projectRefs = useRef([]);
+// //   // 2. Refs for canvases and project rows
+// //   const topRightCanvas = useRef(null);
+// //   const bottomLeftCanvas = useRef(null);
+// //   const projectRefs = useRef([]);
 
-//   // 3. Updated toggle with smooth scroll to center
-// const toggleProject = (index) => {
-//   const isOpening = activeIndex !== index;
-//   setActiveIndex(isOpening ? index : null);
+// //   // 3. Updated toggle with smooth scroll to center
+// // const toggleProject = (index) => {
+// //   const isOpening = activeIndex !== index;
+// //   setActiveIndex(isOpening ? index : null);
 
-//   if (isOpening) {
-//     // We wait for the "height: auto" animation to start 
-//     // so the center calculation is more accurate
-//     requestAnimationFrame(() => {
-//       setTimeout(() => {
-//         projectRefs.current[index]?.scrollIntoView({
-//           behavior: "smooth",
-//           block: "center", // Keeps the project in the sweet spot of the screen
-//         });
-//       }, 300); // 300ms is the "Goldilocks" zone for smooth transitions
-//     });
-//   }
-// };
+// //   if (isOpening) {
+// //     // We wait for the "height: auto" animation to start 
+// //     // so the center calculation is more accurate
+// //     requestAnimationFrame(() => {
+// //       setTimeout(() => {
+// //         projectRefs.current[index]?.scrollIntoView({
+// //           behavior: "smooth",
+// //           block: "center", // Keeps the project in the sweet spot of the screen
+// //         });
+// //       }, 300); // 300ms is the "Goldilocks" zone for smooth transitions
+// //     });
+// //   }
+// // };
 
-//   const drawPixels = useCallback((canvas, type) => {
-//     const ctx = canvas.getContext("2d");
-//     const rect = canvas.getBoundingClientRect();
+// //   const drawPixels = useCallback((canvas, type) => {
+// //     const ctx = canvas.getContext("2d");
+// //     const rect = canvas.getBoundingClientRect();
     
-//     canvas.width = rect.width;
-//     canvas.height = rect.height;
-//     const size = rect.width;
+// //     canvas.width = rect.width;
+// //     canvas.height = rect.height;
+// //     const size = rect.width;
     
-//     const pixelSizeMultiplier = 0.06;
-//     const basePixelSize = size * pixelSizeMultiplier;
-//     const pixel = Math.max(25, Math.min(60, Math.floor(basePixelSize)));
+// //     const pixelSizeMultiplier = 0.06;
+// //     const basePixelSize = size * pixelSizeMultiplier;
+// //     const pixel = Math.max(25, Math.min(60, Math.floor(basePixelSize)));
     
-//     const rows = Math.floor(size / pixel);
-//     const cols = Math.floor(size / pixel);
+// //     const rows = Math.floor(size / pixel);
+// //     const cols = Math.floor(size / pixel);
 
-//     ctx.clearRect(0, 0, size, size);
-//     ctx.font = `${pixel * 0.6}px monospace`;
-//     ctx.textAlign = "center";
-//     ctx.textBaseline = "middle";
+// //     ctx.clearRect(0, 0, size, size);
+// //     ctx.font = `${pixel * 0.6}px monospace`;
+// //     ctx.textAlign = "center";
+// //     ctx.textBaseline = "middle";
 
-//     const edgeMargin = Math.max(2, Math.floor(cols * 0.08));
+// //     const edgeMargin = Math.max(2, Math.floor(cols * 0.08));
 
-//     for (let y = 0; y < rows; y++) {
-//       for (let x = 0; x < cols; x++) {
-//         const nx = x / cols;
-//         const ny = y / rows;
-//         let distance;
+// //     for (let y = 0; y < rows; y++) {
+// //       for (let x = 0; x < cols; x++) {
+// //         const nx = x / cols;
+// //         const ny = y / rows;
+// //         let distance;
 
-//         if (type === "top") {
-//           const dx = 1 - nx;
-//           const dy = ny;
-//           distance = Math.sqrt(dx * dx + dy * dy);
-//         } else if (type === "bottom") {
-//           const dx = nx;
-//           const dy = 1 - ny;
-//           distance = Math.sqrt(dx * dx + dy * dy);
-//         }
+// //         if (type === "top") {
+// //           const dx = 1 - nx;
+// //           const dy = ny;
+// //           distance = Math.sqrt(dx * dx + dy * dy);
+// //         } else if (type === "bottom") {
+// //           const dx = nx;
+// //           const dy = 1 - ny;
+// //           distance = Math.sqrt(dx * dx + dy * dy);
+// //         }
 
-//         const coreRadius = 0.32;
-//         const scatterRadius = 0.9;
+// //         const coreRadius = 0.32;
+// //         const scatterRadius = 0.9;
 
-//         if (distance <= coreRadius) {
-//           ctx.fillStyle = "#f1f1f1";
-//           ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
-//           const isEdge = x < edgeMargin || y < edgeMargin || x >= cols - edgeMargin || y >= rows - edgeMargin;
-//           if (!isEdge && Math.random() > 0.3) {
-//             ctx.fillStyle = "#000";
-//             ctx.fillText(Math.random() > 0.5 ? "1" : "0", x * pixel + pixel / 2, y * pixel + pixel / 2);
-//           }
-//         } else if (distance <= scatterRadius) {
-//           const fade = (distance - coreRadius) / (scatterRadius - coreRadius);
-//           const density = 1 - fade;
-//           if (Math.random() < density) {
-//             ctx.fillStyle = "#f1f1f1";
-//             ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
-//             const isEdge = x < edgeMargin || y < edgeMargin || x >= cols - edgeMargin || y >= rows - edgeMargin;
-//             if (!isEdge && Math.random() > 0.7) {
-//               ctx.fillStyle = "#000";
-//               ctx.fillText(Math.random() > 0.5 ? "1" : "0", x * pixel + pixel / 2, y * pixel + pixel / 2);
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }, []);
+// //         if (distance <= coreRadius) {
+// //           ctx.fillStyle = "#f1f1f1";
+// //           ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
+// //           const isEdge = x < edgeMargin || y < edgeMargin || x >= cols - edgeMargin || y >= rows - edgeMargin;
+// //           if (!isEdge && Math.random() > 0.3) {
+// //             ctx.fillStyle = "#000";
+// //             ctx.fillText(Math.random() > 0.5 ? "1" : "0", x * pixel + pixel / 2, y * pixel + pixel / 2);
+// //           }
+// //         } else if (distance <= scatterRadius) {
+// //           const fade = (distance - coreRadius) / (scatterRadius - coreRadius);
+// //           const density = 1 - fade;
+// //           if (Math.random() < density) {
+// //             ctx.fillStyle = "#f1f1f1";
+// //             ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
+// //             const isEdge = x < edgeMargin || y < edgeMargin || x >= cols - edgeMargin || y >= rows - edgeMargin;
+// //             if (!isEdge && Math.random() > 0.7) {
+// //               ctx.fillStyle = "#000";
+// //               ctx.fillText(Math.random() > 0.5 ? "1" : "0", x * pixel + pixel / 2, y * pixel + pixel / 2);
+// //             }
+// //           }
+// //         }
+// //       }
+// //     }
+// //   }, []);
 
-//   useEffect(() => {
-//     const handleResize = () => {
-//       if (topRightCanvas.current) drawPixels(topRightCanvas.current, "top");
-//       if (bottomLeftCanvas.current) drawPixels(bottomLeftCanvas.current, "bottom");
-//     };
+// //   useEffect(() => {
+// //     const handleResize = () => {
+// //       if (topRightCanvas.current) drawPixels(topRightCanvas.current, "top");
+// //       if (bottomLeftCanvas.current) drawPixels(bottomLeftCanvas.current, "bottom");
+// //     };
 
-//     handleResize();
-//     let timeoutId;
-//     const debouncedResize = () => {
-//       clearTimeout(timeoutId);
-//       timeoutId = setTimeout(handleResize, 100);
-//     };
+// //     handleResize();
+// //     let timeoutId;
+// //     const debouncedResize = () => {
+// //       clearTimeout(timeoutId);
+// //       timeoutId = setTimeout(handleResize, 100);
+// //     };
 
-//     window.addEventListener("resize", debouncedResize);
-//     const resizeObserver = new ResizeObserver(debouncedResize);
+// //     window.addEventListener("resize", debouncedResize);
+// //     const resizeObserver = new ResizeObserver(debouncedResize);
     
-//     if (topRightCanvas.current) resizeObserver.observe(topRightCanvas.current);
-//     if (bottomLeftCanvas.current) resizeObserver.observe(bottomLeftCanvas.current);
+// //     if (topRightCanvas.current) resizeObserver.observe(topRightCanvas.current);
+// //     if (bottomLeftCanvas.current) resizeObserver.observe(bottomLeftCanvas.current);
 
-//     return () => {
-//       window.removeEventListener("resize", debouncedResize);
-//       clearTimeout(timeoutId);
-//       resizeObserver.disconnect();
-//     };
-//   }, [drawPixels]);
+// //     return () => {
+// //       window.removeEventListener("resize", debouncedResize);
+// //       clearTimeout(timeoutId);
+// //       resizeObserver.disconnect();
+// //     };
+// //   }, [drawPixels]);
 
-//   const projects = [
-//     {
-//       category: "Open Plan Offices",
-//       client: "Hotel Ponsonby:",
-//       title: "transforming a heritage building into a chic gastropub",
-//       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
-//       img1: D1,
-//       img2: D2,
-//     },
-//     {
-//       category: "Recording Studios and Radio",
-//       client: "Mediaworks:",
-//       title: "Capturing the rebellious soul of radio",
-//       tags: ["CubeT", "Quietspaco® Panel"],
-//       img1: D3,
-//       img2: D4,
-//     },
-//     {
-//       category: "Hotel Lobbies and Foyers",
-//       client: "Custom Frontier™ system",
-//       title: "for Headingley Stadium's Emerald Suite",
-//       tags: ["FrontierTM"],
-//       img1: D5,
-//       img2: D6,
-//     },
-//   ];
+// //   const projects = [
+// //     {
+// //       category: "Open Plan Offices",
+// //       client: "Hotel Ponsonby:",
+// //       title: "transforming a heritage building into a chic gastropub",
+// //       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+// //       img1: D1,
+// //       img2: D2,
+// //     },
+// //     {
+// //       category: "Recording Studios and Radio",
+// //       client: "Mediaworks:",
+// //       title: "Capturing the rebellious soul of radio",
+// //       tags: ["CubeT", "Quietspaco® Panel"],
+// //       img1: D3,
+// //       img2: D4,
+// //     },
+// //     {
+// //       category: "Hotel Lobbies and Foyers",
+// //       client: "Custom Frontier™ system",
+// //       title: "for Headingley Stadium's Emerald Suite",
+// //       tags: ["FrontierTM"],
+// //       img1: D5,
+// //       img2: D6,
+// //     },
+// //   ];
 
-//   return (
-//     <section id="Project" className="project-section">
-//       <canvas ref={topRightCanvas} className="canvas-top" />
-//       <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
+// //   return (
+// //     <section id="Project" className="project-section">
+// //       <canvas ref={topRightCanvas} className="canvas-top" />
+// //       <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
 
-//       <div className="project-content-wrapper">
-//         <div className="project-heading">
-//           <h1>Beautiful projects</h1>
-//           <p>from around the world</p>
-//         </div>
+// //       <div className="project-content-wrapper">
+// //         <div className="project-heading">
+// //           <h1>Beautiful projects</h1>
+// //           <p>from around the world</p>
+// //         </div>
 
-//         {projects.map((project, index) => (
-//           <div 
-//             key={index} 
-//             className="project-row"
-//             ref={(el) => (projectRefs.current[index] = el)}
-//           >
-//             <div className="project-grid">
-//               <div className="project-category">
-//                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
-//                 {project.category}
-//               </div>
+// //         {projects.map((project, index) => (
+// //           <div 
+// //             key={index} 
+// //             className="project-row"
+// //             ref={(el) => (projectRefs.current[index] = el)}
+// //           >
+// //             <div className="project-grid">
+// //               <div className="project-category">
+// //                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+// //                 {project.category}
+// //               </div>
 
-//               <div className="project-content">
-//                 <h3>{project.client}</h3>
-//                 <p className="project-title">{project.title}</p>
-//                 <div className="project-tags">
-//                   {project.tags.map((tag, i) => <span key={i}>{tag}</span>)}
-//                 </div>
-//               </div>
+// //               <div className="project-content">
+// //                 <h3>{project.client}</h3>
+// //                 <p className="project-title">{project.title}</p>
+// //                 <div className="project-tags">
+// //                   {project.tags.map((tag, i) => <span key={i}>{tag}</span>)}
+// //                 </div>
+// //               </div>
 
-//               <div className="project-actions">
-//                 <button className="project-btn">View case</button>
-//                 <button
-//                   className="project-btn"
-//                   onClick={() => toggleProject(index)}
-//                 >
-//                   {activeIndex === index ? "Hide" : "Show details"}
-//                 </button>
-//               </div>
+// //               <div className="project-actions">
+// //                 <button className="project-btn">View case</button>
+// //                 <button
+// //                   className="project-btn"
+// //                   onClick={() => toggleProject(index)}
+// //                 >
+// //                   {activeIndex === index ? "Hide" : "Show details"}
+// //                 </button>
+// //               </div>
 
-//         {activeIndex === index && (
-//   <motion.div
-//     className="detail-images"
-//     initial={{ opacity: 0, height: 0, y: -10 }}
-//     animate={{ opacity: 1, height: "auto", y: 0 }}
-//     exit={{ opacity: 0, height: 0, y: -10 }}
-//     transition={{ 
-//       duration: 0.6, 
-//       ease: [0.16, 1, 0.3, 1] // Custom "Expo" easing for a luxury feel
-//     }}
-//     style={{ overflow: "hidden" }} // Prevents jitter during expansion
-//   >
-//     <img src={project.img1} alt="" />
-//     <img src={project.img2} alt="" />
-//   </motion.div>
-// )}
-//             </div>
-//           </div>
-//         ))}
+// //         {activeIndex === index && (
+// //   <motion.div
+// //     className="detail-images"
+// //     initial={{ opacity: 0, height: 0, y: -10 }}
+// //     animate={{ opacity: 1, height: "auto", y: 0 }}
+// //     exit={{ opacity: 0, height: 0, y: -10 }}
+// //     transition={{ 
+// //       duration: 0.6, 
+// //       ease: [0.16, 1, 0.3, 1] // Custom "Expo" easing for a luxury feel
+// //     }}
+// //     style={{ overflow: "hidden" }} // Prevents jitter during expansion
+// //   >
+// //     <img src={project.img1} alt="" />
+// //     <img src={project.img2} alt="" />
+// //   </motion.div>
+// // )}
+// //             </div>
+// //           </div>
+// //         ))}
 
-//         <div className="project-bottom">
-//           <div className="project-bottom-row">
-//             <h2 className="project-big-title">
-//               Projects <span className="project-count">[ 26 ]</span>
-//             </h2>
-//             <div className="arrow-circle-big">→</div>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-
-// import React, { useState, useEffect, useRef, useCallback } from "react";
-// import { motion } from "framer-motion";
+// //         <div className="project-bottom">
+// //           <div className="project-bottom-row">
+// //             <h2 className="project-big-title">
+// //               Projects <span className="project-count">[ 26 ]</span>
+// //             </h2>
+// //             <div className="arrow-circle-big">→</div>
+// //           </div>
+// //         </div>
+// //       </div>
+// //     </section>
+// //   );
+// // }
 
 
-// import "./Projects.css";
+// // import React, { useState, useEffect, useRef, useCallback } from "react";
+// // import { motion } from "framer-motion";
 
-// import img11 from "../../assets/Image/img11.jpg";
-// import img2 from "../../assets/Image/img2.jpg";
-// import img10 from "../../assets/Image/img10.jpg";
-// import img4 from "../../assets/Image/img4.jpg";
-// import img5 from "../../assets/Image/img5.jpg";
-// import img13 from "../../assets/Image/img13.jpg";
 
-// function Project() {
-//  const [activeIndex, setActiveIndex] = useState(0);
+// // import "./Projects.css";
 
-//   const topRightCanvas = useRef(null);
-//   const bottomLeftCanvas = useRef(null);
-//   const projectRefs = useRef([]);
+// // import img11 from "../../assets/Image/img11.jpg";
+// // import img2 from "../../assets/Image/img2.jpg";
+// // import img10 from "../../assets/Image/img10.jpg";
+// // import img4 from "../../assets/Image/img4.jpg";
+// // import img5 from "../../assets/Image/img5.jpg";
+// // import img13 from "../../assets/Image/img13.jpg";
 
-//   // Toggle project open/close
-//   const toggleProject = (index) => {
-//     setActiveIndex(activeIndex === index ? null : index);
-//   };
+// // function Project() {
+// //  const [activeIndex, setActiveIndex] = useState(0);
 
-//   // Scroll into view when a project opens
-// useEffect(() => {
-//   if (activeIndex !== null && activeIndex !== 0) {
-//     const timer = setTimeout(() => {
-//       projectRefs.current[activeIndex]?.scrollIntoView({
-//         behavior: "smooth",
-//         block: "start",
-//       });
-//     }, 400);
-//     return () => clearTimeout(timer);
-//   }
-// }, [activeIndex]);
+// //   const topRightCanvas = useRef(null);
+// //   const bottomLeftCanvas = useRef(null);
+// //   const projectRefs = useRef([]);
 
-//   // Pixel canvas drawing
-//   const drawPixels = useCallback((canvas, type) => {
-//     const ctx = canvas.getContext("2d");
-//     const rect = canvas.getBoundingClientRect();
+// //   // Toggle project open/close
+// //   const toggleProject = (index) => {
+// //     setActiveIndex(activeIndex === index ? null : index);
+// //   };
+
+// //   // Scroll into view when a project opens
+// // useEffect(() => {
+// //   if (activeIndex !== null && activeIndex !== 0) {
+// //     const timer = setTimeout(() => {
+// //       projectRefs.current[activeIndex]?.scrollIntoView({
+// //         behavior: "smooth",
+// //         block: "start",
+// //       });
+// //     }, 400);
+// //     return () => clearTimeout(timer);
+// //   }
+// // }, [activeIndex]);
+
+// //   // Pixel canvas drawing
+// //   const drawPixels = useCallback((canvas, type) => {
+// //     const ctx = canvas.getContext("2d");
+// //     const rect = canvas.getBoundingClientRect();
     
-//     // Minimum size to avoid disappearing on small screens
-//     canvas.width = Math.max(rect.width, 300);
-//     canvas.height = Math.max(rect.height, 300);
+// //     // Minimum size to avoid disappearing on small screens
+// //     canvas.width = Math.max(rect.width, 300);
+// //     canvas.height = Math.max(rect.height, 300);
 
-//     const size = canvas.width;
-//     const pixelSizeMultiplier = 0.06;
-//     const basePixelSize = size * pixelSizeMultiplier;
-//     const pixel = Math.max(25, Math.min(60, Math.floor(basePixelSize)));
+// //     const size = canvas.width;
+// //     const pixelSizeMultiplier = 0.06;
+// //     const basePixelSize = size * pixelSizeMultiplier;
+// //     const pixel = Math.max(25, Math.min(60, Math.floor(basePixelSize)));
 
-//     const rows = Math.floor(size / pixel);
-//     const cols = Math.floor(size / pixel);
+// //     const rows = Math.floor(size / pixel);
+// //     const cols = Math.floor(size / pixel);
 
-//     ctx.clearRect(0, 0, size, size);
-//     ctx.font = `${pixel * 0.6}px monospace`;
-//     ctx.textAlign = "center";
-//     ctx.textBaseline = "middle";
+// //     ctx.clearRect(0, 0, size, size);
+// //     ctx.font = `${pixel * 0.6}px monospace`;
+// //     ctx.textAlign = "center";
+// //     ctx.textBaseline = "middle";
 
-//     const coreRadius = 0.32;
-//     const scatterRadius = 0.9;
+// //     const coreRadius = 0.32;
+// //     const scatterRadius = 0.9;
 
-//     for (let y = 0; y < rows; y++) {
-//       for (let x = 0; x < cols; x++) {
-//         const nx = x / cols;
-//         const ny = y / rows;
-//         let distance;
+// //     for (let y = 0; y < rows; y++) {
+// //       for (let x = 0; x < cols; x++) {
+// //         const nx = x / cols;
+// //         const ny = y / rows;
+// //         let distance;
 
-//         if (type === "top") {
-//           const dx = 1 - nx;
-//           const dy = ny;
-//           distance = Math.sqrt(dx * dx + dy * dy);
-//         } else {
-//           const dx = nx;
-//           const dy = 1 - ny;
-//           distance = Math.sqrt(dx * dx + dy * dy);
-//         }
+// //         if (type === "top") {
+// //           const dx = 1 - nx;
+// //           const dy = ny;
+// //           distance = Math.sqrt(dx * dx + dy * dy);
+// //         } else {
+// //           const dx = nx;
+// //           const dy = 1 - ny;
+// //           distance = Math.sqrt(dx * dx + dy * dy);
+// //         }
 
-//         if (distance <= coreRadius || (distance <= scatterRadius && Math.random() < 1 - (distance - coreRadius) / (scatterRadius - coreRadius))) {
-//           ctx.fillStyle = "#f1f1f1";
-//           ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
-//         }
-//       }
-//     }
-//   }, []);
+// //         if (distance <= coreRadius || (distance <= scatterRadius && Math.random() < 1 - (distance - coreRadius) / (scatterRadius - coreRadius))) {
+// //           ctx.fillStyle = "#f1f1f1";
+// //           ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
+// //         }
+// //       }
+// //     }
+// //   }, []);
   
 
-//   useEffect(() => {
-//     const handleResize = () => {
-//       if (topRightCanvas.current) drawPixels(topRightCanvas.current, "top");
-//       if (bottomLeftCanvas.current) drawPixels(bottomLeftCanvas.current, "bottom");
-//     };
-//     handleResize();
+// //   useEffect(() => {
+// //     const handleResize = () => {
+// //       if (topRightCanvas.current) drawPixels(topRightCanvas.current, "top");
+// //       if (bottomLeftCanvas.current) drawPixels(bottomLeftCanvas.current, "bottom");
+// //     };
+// //     handleResize();
 
-//     const debouncedResize = () => {
-//       clearTimeout(window.resizeTimer);
-//       window.resizeTimer = setTimeout(handleResize, 100);
-//     };
-//     window.addEventListener("resize", debouncedResize);
-//     return () => window.removeEventListener("resize", debouncedResize);
-//   }, [drawPixels]);
+// //     const debouncedResize = () => {
+// //       clearTimeout(window.resizeTimer);
+// //       window.resizeTimer = setTimeout(handleResize, 100);
+// //     };
+// //     window.addEventListener("resize", debouncedResize);
+// //     return () => window.removeEventListener("resize", debouncedResize);
+// //   }, [drawPixels]);
 
-//   const projects = [
-//     {
-//       category: "Open Plan Offices",
-//       client: "Hotel Ponsonby:",
-//       title: "transforming a heritage building into a chic gastropub",
-//       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
-//       img1: img11,
-//       img2: img2,
-//     },
-//     {
-//       category: "Recording Studios and Radio",
-//       client: "Mediaworks:",
-//       title: "Capturing the rebellious soul of radio",
-//       tags: ["CubeT", "Quietspaco® Panel"],
-//       img1: img10,
-//       img2: img4,
-//     },
-//     {
-//       category: "Hotel Lobbies and Foyers",
-//       client: "Custom Frontier™ system",
-//       title: "for Headingley Stadium's Emerald Suite",
-//       tags: ["FrontierTM"],
-//       img1: img13,
-//       img2: img5,
-//     },
-//   ];
+// //   const projects = [
+// //     {
+// //       category: "Open Plan Offices",
+// //       client: "Hotel Ponsonby:",
+// //       title: "transforming a heritage building into a chic gastropub",
+// //       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+// //       img1: img11,
+// //       img2: img2,
+// //     },
+// //     {
+// //       category: "Recording Studios and Radio",
+// //       client: "Mediaworks:",
+// //       title: "Capturing the rebellious soul of radio",
+// //       tags: ["CubeT", "Quietspaco® Panel"],
+// //       img1: img10,
+// //       img2: img4,
+// //     },
+// //     {
+// //       category: "Hotel Lobbies and Foyers",
+// //       client: "Custom Frontier™ system",
+// //       title: "for Headingley Stadium's Emerald Suite",
+// //       tags: ["FrontierTM"],
+// //       img1: img13,
+// //       img2: img5,
+// //     },
+// //   ];
 
-//   return (
-//     <section id="Project" className="project-section">
-//       <canvas ref={topRightCanvas} className="canvas-top" />
-//       <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
+// //   return (
+// //     <section id="Project" className="project-section">
+// //       <canvas ref={topRightCanvas} className="canvas-top" />
+// //       <canvas ref={bottomLeftCanvas} className="canvas-bottom" />
 
-//       <div className="project-content-wrapper">
-// <div className="project-heading">
-//   <div className="heading-box">
-//     <h1>Beautiful projects</h1> 
-//     <p>from around the world</p> 
-//   </div>
-// </div>
+// //       <div className="project-content-wrapper">
+// // <div className="project-heading">
+// //   <div className="heading-box">
+// //     <h1>Beautiful projects</h1> 
+// //     <p>from around the world</p> 
+// //   </div>
+// // </div>
 
-//         {projects.map((project, index) => (
-//           <div
-//             key={index}
-//             className="project-row"
-//             ref={(el) => (projectRefs.current[index] = el)}
-//           >
-//             <div className="project-grid">
-//               <div className="project-category">
-//                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
-//                 {project.category}
-//               </div>
+// //         {projects.map((project, index) => (
+// //           <div
+// //             key={index}
+// //             className="project-row"
+// //             ref={(el) => (projectRefs.current[index] = el)}
+// //           >
+// //             <div className="project-grid">
+// //               <div className="project-category">
+// //                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+// //                 {project.category}
+// //               </div>
 
-//               <div className="project-content">
-//                 <h3>{project.client}</h3>
-//                 <p className="project-title">{project.title}</p>
-//                 <div className="project-tags">
-//                   {project.tags.map((tag, i) => (
-//                     <span key={i}>{tag}</span>
-//                   ))}
-//                 </div>
-//               </div>
+// //               <div className="project-content">
+// //                 <h3>{project.client}</h3>
+// //                 <p className="project-title">{project.title}</p>
+// //                 <div className="project-tags">
+// //                   {project.tags.map((tag, i) => (
+// //                     <span key={i}>{tag}</span>
+// //                   ))}
+// //                 </div>
+// //               </div>
 
-//               <div className="project-actions">
-//                 <button className="project-btn">View case</button>
-//                 <button
-//                   className="project-btn"
-//                   onClick={() => toggleProject(index)}
-//                 >
-//                   {activeIndex === index ? "Hide" : "Show details"}
-//                 </button>
-//               </div>
+// //               <div className="project-actions">
+// //                 <button className="project-btn">View case</button>
+// //                 <button
+// //                   className="project-btn"
+// //                   onClick={() => toggleProject(index)}
+// //                 >
+// //                   {activeIndex === index ? "Hide" : "Show details"}
+// //                 </button>
+// //               </div>
 
-//               {activeIndex === index && (
-//                 <motion.div
-//                   className="detail-images"
-//                   initial={{ opacity: 0, maxHeight: 0 }}
-//                   animate={{ opacity: 1, maxHeight: 2000 }} // large maxHeight for responsive screens
-//                   transition={{ duration: 0.6 }}
-//                   style={{ overflow: "hidden" }}
-//                 >
-//                  <div className="img-wrapper">
-//   <img src={project.img1} alt="" />
-// </div>
+// //               {activeIndex === index && (
+// //                 <motion.div
+// //                   className="detail-images"
+// //                   initial={{ opacity: 0, maxHeight: 0 }}
+// //                   animate={{ opacity: 1, maxHeight: 2000 }} // large maxHeight for responsive screens
+// //                   transition={{ duration: 0.6 }}
+// //                   style={{ overflow: "hidden" }}
+// //                 >
+// //                  <div className="img-wrapper">
+// //   <img src={project.img1} alt="" />
+// // </div>
 
-// <div className="img-wrapper">
-//   <img src={project.img2} alt="" />
-// </div>
-//                 </motion.div>
-//               )}
-//             </div>
-//           </div>
-//         ))}
+// // <div className="img-wrapper">
+// //   <img src={project.img2} alt="" />
+// // </div>
+// //                 </motion.div>
+// //               )}
+// //             </div>
+// //           </div>
+// //         ))}
 
-// <div className="project-bottom-row">
-//   <div className="project-title-wrapper">
-//     <h2 className="project-big-title">
-//       Projects <span className="project-count">26</span>
-//     </h2>
-//     <div className="project-buttons">
-//       <button className="project-buttons-button">All Projects</button>
-//     </div>
-//   </div>
-// </div>
-//       </div>
-//     </section>
-//   );
-// }
+// // <div className="project-bottom-row">
+// //   <div className="project-title-wrapper">
+// //     <h2 className="project-big-title">
+// //       Projects <span className="project-count">26</span>
+// //     </h2>
+// //     <div className="project-buttons">
+// //       <button className="project-buttons-button">All Projects</button>
+// //     </div>
+// //   </div>
+// // </div>
+// //       </div>
+// //     </section>
+// //   );
+// // }
 
-// export default Project;
+// // export default Project;
 
-// "use client";
-// import React, { useState, useRef } from "react";
-// import { motion, AnimatePresence } from "framer-motion";
-// import gsap from "gsap";
-// import { useGSAP } from "@gsap/react";
+// // "use client";
+// // import React, { useState, useRef } from "react";
+// // import { motion, AnimatePresence } from "framer-motion";
+// // import gsap from "gsap";
+// // import { useGSAP } from "@gsap/react";
 
-// import "./Projects.css";
+// // import "./Projects.css";
 
-// // Images
-// import img11 from "../../assets/Image/img11.jpg";
-// import img2 from "../../assets/Image/img2.jpg";
-// import img10 from "../../assets/Image/img10.jpg";
-// import img4 from "../../assets/Image/img4.jpg";
-// import img5 from "../../assets/Image/img5.jpg";
-// import img13 from "../../assets/Image/img13.jpg";
+// // // Images
+// // import img11 from "../../assets/Image/img11.jpg";
+// // import img2 from "../../assets/Image/img2.jpg";
+// // import img10 from "../../assets/Image/img10.jpg";
+// // import img4 from "../../assets/Image/img4.jpg";
+// // import img5 from "../../assets/Image/img5.jpg";
+// // import img13 from "../../assets/Image/img13.jpg";
 
-// function Project() {
-//   // ✅ First row open by default
-//   const [activeIndex, setActiveIndex] = useState(0);
+// // function Project() {
+// //   // ✅ First row open by default
+// //   const [activeIndex, setActiveIndex] = useState(0);
 
-//   const container = useRef();
+// //   const container = useRef();
 
-//   // ✅ Scoped GSAP (won’t affect outside)
-//   useGSAP(() => {
-//     const ctx = gsap.context(() => {
-//       const buttons = gsap.utils.toArray(".btn-frame");
+// //   // ✅ Scoped GSAP (won’t affect outside)
+// //   useGSAP(() => {
+// //     const ctx = gsap.context(() => {
+// //       const buttons = gsap.utils.toArray(".btn-frame");
 
-//       buttons.forEach((btn) => {
-//         const strip = btn.querySelector(".btn-strip");
-//         const leftCircle = btn.querySelector(".side-left");
-//         const rightCircle = btn.querySelector(".side-right");
+// //       buttons.forEach((btn) => {
+// //         const strip = btn.querySelector(".btn-strip");
+// //         const leftCircle = btn.querySelector(".side-left");
+// //         const rightCircle = btn.querySelector(".side-right");
 
-//         const tl = gsap.timeline({ paused: true });
+// //         const tl = gsap.timeline({ paused: true });
 
-//         tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
-//           .fromTo(
-//             leftCircle,
-//             { scale: 0.3, opacity: 0 },
-//             { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
-//             0.1
-//           )
-//           .to(
-//             rightCircle,
-//             { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
-//             0
-//           );
+// //         tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
+// //           .fromTo(
+// //             leftCircle,
+// //             { scale: 0.3, opacity: 0 },
+// //             { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+// //             0.1
+// //           )
+// //           .to(
+// //             rightCircle,
+// //             { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
+// //             0
+// //           );
 
-//         btn.addEventListener("mouseenter", () => tl.play());
-//         btn.addEventListener("mouseleave", () => tl.reverse());
-//       });
-//     }, container);
+// //         btn.addEventListener("mouseenter", () => tl.play());
+// //         btn.addEventListener("mouseleave", () => tl.reverse());
+// //       });
+// //     }, container);
 
-//     return () => ctx.revert(); // ✅ cleanup
-//   }, []);
+// //     return () => ctx.revert(); // ✅ cleanup
+// //   }, []);
 
-//   const projects = [
-//     {
-//       category: "Open Plan Offices",
-//       client: "Hotel Ponsonby:",
-//       title: "transforming a heritage building into a chic gastropub",
-//       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
-//       img1: img11,
-//       img2: img2,
-//     },
-//     {
-//       category: "Recording Studios and Radio",
-//       client: "Mediaworks:",
-//       title: "Capturing the rebellious soul of radio",
-//       tags: ["CubeT", "Quietspaco® Panel"],
-//       img1: img10,
-//       img2: img4,
-//     },
-//     {
-//       category: "Hotel Lobbies and Foyers",
-//       client: "Custom Frontier™ system",
-//       title: "for Headingley Stadium's Emerald Suite",
-//       tags: ["FrontierTM"],
-//       img1: img13,
-//       img2: img5,
-//     },
-//   ];
+// //   const projects = [
+// //     {
+// //       category: "Open Plan Offices",
+// //       client: "Hotel Ponsonby:",
+// //       title: "transforming a heritage building into a chic gastropub",
+// //       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+// //       img1: img11,
+// //       img2: img2,
+// //     },
+// //     {
+// //       category: "Recording Studios and Radio",
+// //       client: "Mediaworks:",
+// //       title: "Capturing the rebellious soul of radio",
+// //       tags: ["CubeT", "Quietspaco® Panel"],
+// //       img1: img10,
+// //       img2: img4,
+// //     },
+// //     {
+// //       category: "Hotel Lobbies and Foyers",
+// //       client: "Custom Frontier™ system",
+// //       title: "for Headingley Stadium's Emerald Suite",
+// //       tags: ["FrontierTM"],
+// //       img1: img13,
+// //       img2: img5,
+// //     },
+// //   ];
 
-//   return (
-//     <section id="Project" className="project-section" ref={container}>
-//       <div className="project-content-wrapper">
+// //   return (
+// //     <section id="Project" className="project-section" ref={container}>
+// //       <div className="project-content-wrapper">
         
-//         {/* Heading */}
-//         <div className="project-heading">
-//           <div className="heading-box">
-//             <h1>We partner with serious scaleups worldwide</h1>
-//             <p>Helping them scale faster and smarter.</p>
-//           </div>
-//         </div>
+// //         {/* Heading */}
+// //         <div className="project-heading">
+// //           <div className="heading-box">
+// //             <h1>We partner with serious scaleups worldwide</h1>
+// //             <p>Helping them scale faster and smarter.</p>
+// //           </div>
+// //         </div>
 
-//         {/* Projects */}
-//         {projects.map((project, index) => (
-//           <div key={index} className="project-row">
-//             <div className="project-grid">
+// //         {/* Projects */}
+// //         {projects.map((project, index) => (
+// //           <div key={index} className="project-row">
+// //             <div className="project-grid">
 
-//               {/* Category */}
-//               <div className="project-category">
-//                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
-//                 {project.category}
-//               </div>
+// //               {/* Category */}
+// //               <div className="project-category">
+// //                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+// //                 {project.category}
+// //               </div>
 
-//               {/* Content */}
-//               <div className="project-content">
-//                 <h3>{project.client}</h3>
-//                 <p className="project-title">{project.title}</p>
+// //               {/* Content */}
+// //               <div className="project-content">
+// //                 <h3>{project.client}</h3>
+// //                 <p className="project-title">{project.title}</p>
 
-//                 <div className="project-tags">
-//                   {project.tags.map((tag, i) => (
-//                     <span key={i}>{tag}</span>
-//                   ))}
-//                 </div>
-//               </div>
+// //                 <div className="project-tags">
+// //                   {project.tags.map((tag, i) => (
+// //                     <span key={i}>{tag}</span>
+// //                   ))}
+// //                 </div>
+// //               </div>
 
-//               {/* Buttons */}
-//               <div className="project-actions">
+// //               {/* Buttons */}
+// //               <div className="project-actions">
 
-//                 {/* View Case */}
-//                 <div className="btn-frame">
-//                   <div className="btn-strip">
-//                     <div className="circle side-left"><div className="arrow"></div></div>
-//                     <div className="box">View case</div>
-//                     <div className="circle side-right"><div className="arrow"></div></div>
-//                   </div>
-//                 </div>
+// //                 {/* View Case */}
+// //                 <div className="btn-frame">
+// //                   <div className="btn-strip">
+// //                     <div className="circle side-left"><div className="arrow"></div></div>
+// //                     <div className="box">View case</div>
+// //                     <div className="circle side-right"><div className="arrow"></div></div>
+// //                   </div>
+// //                 </div>
 
-//                 {/* Toggle */}
-//                 <div
-//                   className="btn-frame"
-//                   onClick={() =>
-//                     setActiveIndex(activeIndex === index ? null : index)
-//                   }
-//                 >
-//                   <div className="btn-strip">
-//                     <div className="circle side-left"><div className="arrow"></div></div>
-//                     <div className="box">
-//                       {activeIndex === index ? "Hide" : "Show details"}
-//                     </div>
-//                     <div className="circle side-right"><div className="arrow"></div></div>
-//                   </div>
-//                 </div>
-//               </div>
+// //                 {/* Toggle */}
+// //                 <div
+// //                   className="btn-frame"
+// //                   onClick={() =>
+// //                     setActiveIndex(activeIndex === index ? null : index)
+// //                   }
+// //                 >
+// //                   <div className="btn-strip">
+// //                     <div className="circle side-left"><div className="arrow"></div></div>
+// //                     <div className="box">
+// //                       {activeIndex === index ? "Hide" : "Show details"}
+// //                     </div>
+// //                     <div className="circle side-right"><div className="arrow"></div></div>
+// //                   </div>
+// //                 </div>
+// //               </div>
 
-//               {/* Images */}
-//               <AnimatePresence initial={false}>
-//                 {activeIndex === index && (
-//                   <motion.div
-//                     className="detail-images"
-//                     initial={{ opacity: 0, height: 0 }}
-//                     animate={{ opacity: 1, height: "auto" }}
-//                     exit={{ opacity: 0, height: 0 }}
-//                     transition={{ duration: 0.5, ease: "easeInOut" }}
-//                   >
-//                     <div className="img-wrapper">
-//                       <img src={project.img1} alt="" />
-//                     </div>
-//                     <div className="img-wrapper">
-//                       <img src={project.img2} alt="" />
-//                     </div>
-//                   </motion.div>
-//                 )}
-//               </AnimatePresence>
+// //               {/* Images */}
+// //               <AnimatePresence initial={false}>
+// //                 {activeIndex === index && (
+// //                   <motion.div
+// //                     className="detail-images"
+// //                     initial={{ opacity: 0, height: 0 }}
+// //                     animate={{ opacity: 1, height: "auto" }}
+// //                     exit={{ opacity: 0, height: 0 }}
+// //                     transition={{ duration: 0.5, ease: "easeInOut" }}
+// //                   >
+// //                     <div className="img-wrapper">
+// //                       <img src={project.img1} alt="" />
+// //                     </div>
+// //                     <div className="img-wrapper">
+// //                       <img src={project.img2} alt="" />
+// //                     </div>
+// //                   </motion.div>
+// //                 )}
+// //               </AnimatePresence>
 
-//             </div>
-//           </div>
-//         ))}
+// //             </div>
+// //           </div>
+// //         ))}
 
-//         {/* Bottom */}
-//         <div className="project-bottom-row">
-// <h2 className="project-big-title">What We've Built</h2>
+// //         {/* Bottom */}
+// //         <div className="project-bottom-row">
+// // <h2 className="project-big-title">What We've Built</h2>
 
-//           <div className="btn-frame">
-//             <div className="btn-strip">
-//               <div className="circle side-left"><div className="arrow"></div></div>
-//               <div className="box">Our Projects</div>
-//               <div className="circle side-right"><div className="arrow"></div></div>
-//             </div>
-//           </div>
-//         </div>
+// //           <div className="btn-frame">
+// //             <div className="btn-strip">
+// //               <div className="circle side-left"><div className="arrow"></div></div>
+// //               <div className="box">Our Projects</div>
+// //               <div className="circle side-right"><div className="arrow"></div></div>
+// //             </div>
+// //           </div>
+// //         </div>
 
-//       </div>
-//     </section>
-//   );
-// }
+// //       </div>
+// //     </section>
+// //   );
+// // }
 
-// export default Project;
-
-
+// // export default Project;
 
 
 
@@ -642,10 +640,245 @@
 
 
 
+
+
+
+
+// // "use client";
+// // import React, { useState, useRef, useEffect } from "react";
+// // import { motion, AnimatePresence } from "framer-motion";
+// // import gsap from "gsap";
+// // import { useGSAP } from "@gsap/react";
+
+// // import "./Projects.css";
+
+// // // Images
+// // import img11 from "../../assets/Image/img11.jpg";
+// // import img2 from "../../assets/Image/img2.jpg";
+// // import img10 from "../../assets/Image/img10.jpg";
+// // import img4 from "../../assets/Image/img4.jpg";
+// // import img5 from "../../assets/Image/img5.jpg";
+// // import img13 from "../../assets/Image/img13.jpg";
+
+// // function Project() {
+// //   const [activeIndex, setActiveIndex] = useState(0);
+// //   const [loadedImages, setLoadedImages] = useState({});
+// //   const rowRefs = useRef([]);
+// //   const imageRefs = useRef([]);
+// //   const container = useRef();
+
+// //   const projects = [
+// //     {
+// //       category: "Open Plan Offices",
+// //       client: "Hotel Ponsonby:",
+// //       title: "transforming a heritage building into a chic gastropub",
+// //       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+// //       img1: img11,
+// //       img2: img2,
+// //     },
+// //     {
+// //       category: "Recording Studios and Radio",
+// //       client: "Mediaworks:",
+// //       title: "Capturing the rebellious soul of radio",
+// //       tags: ["CubeT", "Quietspaco® Panel"],
+// //       img1: img10,
+// //       img2: img4,
+// //     },
+// //     {
+// //       category: "Hotel Lobbies and Foyers",
+// //       client: "Custom Frontier™ system",
+// //       title: "for Headingley Stadium's Emerald Suite",
+// //       tags: ["FrontierTM"],
+// //       img1: img13,
+// //       img2: img5,
+// //     },
+// //   ];
+
+// //   // GSAP animations
+// //   useGSAP(() => {
+// //     const ctx = gsap.context(() => {
+// //       const buttons = gsap.utils.toArray(".btn-frame");
+// //       buttons.forEach((btn) => {
+// //         const strip = btn.querySelector(".btn-strip");
+// //         const leftCircle = btn.querySelector(".side-left");
+// //         const rightCircle = btn.querySelector(".side-right");
+
+// //         const tl = gsap.timeline({ paused: true });
+// //         tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
+// //           .fromTo(
+// //             leftCircle,
+// //             { scale: 0.3, opacity: 0 },
+// //             { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+// //             0.1
+// //           )
+// //           .to(
+// //             rightCircle,
+// //             { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
+// //             0
+// //           );
+
+// //         btn.addEventListener("mouseenter", () => tl.play());
+// //         btn.addEventListener("mouseleave", () => tl.reverse());
+// //       });
+// //     }, container);
+
+// //     return () => ctx.revert();
+// //   }, []);
+
+// //   // Preload images
+// //   useEffect(() => {
+// //     projects.forEach((project) => {
+// //       [project.img1, project.img2].forEach((img) => {
+// //         const image = new Image();
+// //         image.src = img;
+// //         image.onload = () => {
+// //           setLoadedImages((prev) => ({ ...prev, [img]: true }));
+// //         };
+// //         image.onerror = () => {
+// //           console.error("Failed to load image:", img);
+// //         };
+// //       });
+// //     });
+// //   }, [projects]);
+
+// //   return (
+// //     <section id="Project" className="project-section" ref={container}>
+// //       <div className="project-content-wrapper">
+// //         {/* Heading */}
+// //         <div className="project-heading">
+// //           <div className="heading-box">
+// //             <h1>We partner with serious scaleups worldwide</h1>
+// //             <p>Helping them scale faster and smarter.</p>
+// //           </div>
+// //         </div>
+
+// //         {/* Projects */}
+// //         {projects.map((project, index) => (
+// //           <div
+// //             key={index}
+// //             className="project-row"
+// //             ref={(el) => (rowRefs.current[index] = el)}
+// //           >
+// //             <div className="project-grid">
+// //               {/* Category */}
+// //               <div className="project-category">
+// //                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+// //                 {project.category}
+// //               </div>
+
+// //               {/* Content */}
+// //               <div className="project-content">
+// //                 <h3>{project.client}</h3>
+// //                 <p className="project-title">{project.title}</p>
+// //                 <div className="project-tags">
+// //                   {project.tags.map((tag, i) => (
+// //                     <span key={i}>{tag}</span>
+// //                   ))}
+// //                 </div>
+// //               </div>
+
+// //               {/* Buttons */}
+// //               <div className="project-actions">
+// //                 <div className="btn-frame">
+// //                   <div className="btn-strip">
+// //                     <div className="circle side-left">
+// //                       <div className="arrow"></div>
+// //                     </div>
+// //                     <div className="box">View case</div>
+// //                     <div className="circle side-right">
+// //                       <div className="arrow"></div>
+// //                     </div>
+// //                   </div>
+// //                 </div>
+
+// //                 <div
+// //                   className="btn-frame"
+// //                   onClick={() => {
+// //                     const newIndex = activeIndex === index ? null : index;
+// //                     setActiveIndex(newIndex);
+
+// //                     if (newIndex !== null) {
+// //                       setTimeout(() => {
+// //                         const el = imageRefs.current[index];
+// //                         if (el) {
+// //                           const yOffset = -80;
+// //                           const y =
+// //                             el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+// //                           window.scrollTo({ top: y, behavior: "smooth" });
+// //                         }
+// //                       }, 300);
+// //                     }
+// //                   }}
+// //                 >
+// //                   <div className="btn-strip">
+// //                     <div className="circle side-left">
+// //                       <div className="arrow"></div>
+// //                     </div>
+// //                     <div className="box">{activeIndex === index ? "Hide" : "Show details"}</div>
+// //                     <div className="circle side-right">
+// //                       <div className="arrow"></div>
+// //                     </div>
+// //                   </div>
+// //                 </div>
+// //               </div>
+
+// //               {/* Images */}
+// //               <AnimatePresence initial={false}>
+// //                 {activeIndex === index && (
+// //                   <motion.div
+// //                     className="detail-images"
+// //                     ref={(el) => (imageRefs.current[index] = el)}
+// //                     initial={{ opacity: 0, height: 0 }}
+// //                     animate={{ opacity: 1, height: "auto" }}
+// //                     exit={{ opacity: 0, height: 0 }}
+// //                     transition={{ duration: 0.5, ease: "easeInOut" }}
+// //                   >
+// //                     <div className="img-wrapper">
+// //                       {loadedImages[project.img1] ? (
+// //                         <img src={project.img1} alt={project.title} />
+// //                       ) : (
+// //                         <div className="img-placeholder">Loading...</div>
+// //                       )}
+// //                     </div>
+// //                     <div className="img-wrapper">
+// //                       {loadedImages[project.img2] ? (
+// //                         <img src={project.img2} alt={project.title} />
+// //                       ) : (
+// //                         <div className="img-placeholder">Loading...</div>
+// //                       )}
+// //                     </div>
+// //                   </motion.div>
+// //                 )}
+// //               </AnimatePresence>
+// //             </div>
+// //           </div>
+// //         ))}
+
+// //         {/* Bottom */}
+// //         <div className="project-bottom-row">
+// //           <h2 className="project-big-title">What We've Built</h2>
+// //           <div className="btn-frame">
+// //             <div className="btn-strip">
+// //               <div className="circle side-left">
+// //                 <div className="arrow"></div>
+// //               </div>
+// //               <div className="box">Our Projects</div>
+// //               <div className="circle side-right">
+// //                 <div className="arrow"></div>
+// //               </div>
+// //             </div>
+// //           </div>
+// //         </div>
+// //       </div>
+// //     </section>
+// //   );
+// // }
+
+// // export default Project;
 
 
 // "use client";
-// import React, { useState, useRef, useEffect } from "react";
+// import React, { useState, useRef, useEffect, useMemo } from "react";
 // import { motion, AnimatePresence } from "framer-motion";
 // import gsap from "gsap";
 // import { useGSAP } from "@gsap/react";
@@ -667,82 +900,127 @@
 //   const imageRefs = useRef([]);
 //   const container = useRef();
 
-//   const projects = [
-//     {
-//       category: "Open Plan Offices",
-//       client: "Hotel Ponsonby:",
-//       title: "transforming a heritage building into a chic gastropub",
-//       tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
-//       img1: img11,
-//       img2: img2,
-//     },
-//     {
-//       category: "Recording Studios and Radio",
-//       client: "Mediaworks:",
-//       title: "Capturing the rebellious soul of radio",
-//       tags: ["CubeT", "Quietspaco® Panel"],
-//       img1: img10,
-//       img2: img4,
-//     },
-//     {
-//       category: "Hotel Lobbies and Foyers",
-//       client: "Custom Frontier™ system",
-//       title: "for Headingley Stadium's Emerald Suite",
-//       tags: ["FrontierTM"],
-//       img1: img13,
-//       img2: img5,
-//     },
-//   ];
+//   // ✅ MEMO (prevent re-creation on every render)
+//   const projects = useMemo(
+//     () => [
+//       {
+//         category: "Open Plan Offices",
+//         client: "Hotel Ponsonby:",
+//         title: "transforming a heritage building into a chic gastropub",
+//         tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+//         img1: img11,
+//         img2: img2,
+//       },
+//       {
+//         category: "Recording Studios and Radio",
+//         client: "Mediaworks:",
+//         title: "Capturing the rebellious soul of radio",
+//         tags: ["CubeT", "Quietspaco® Panel"],
+//         img1: img10,
+//         img2: img4,
+//       },
+//       {
+//         category: "Hotel Lobbies and Foyers",
+//         client: "Custom Frontier™ system",
+//         title: "for Headingley Stadium's Emerald Suite",
+//         tags: ["FrontierTM"],
+//         img1: img13,
+//         img2: img5,
+//       },
+//     ],
+//     []
+//   );
 
-//   // GSAP animations
-//   useGSAP(() => {
-//     const ctx = gsap.context(() => {
-//       const buttons = gsap.utils.toArray(".btn-frame");
+//   // ✅ GSAP FIX (scoped + no memory leak)
+//   useGSAP(
+//     () => {
+//       if (!container.current) return;
+
+//       const buttons =
+//         container.current.querySelectorAll(".btn-frame");
+
 //       buttons.forEach((btn) => {
 //         const strip = btn.querySelector(".btn-strip");
 //         const leftCircle = btn.querySelector(".side-left");
 //         const rightCircle = btn.querySelector(".side-right");
 
 //         const tl = gsap.timeline({ paused: true });
-//         tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
+
+//         tl.to(strip, {
+//           x: 0,
+//           duration: 0.6,
+//           ease: "power3.out",
+//         })
 //           .fromTo(
 //             leftCircle,
 //             { scale: 0.3, opacity: 0 },
-//             { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+//             {
+//               scale: 1,
+//               opacity: 1,
+//               duration: 0.6,
+//               ease: "back.out(1.7)",
+//             },
 //             0.1
 //           )
 //           .to(
 //             rightCircle,
-//             { scale: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" },
+//             {
+//               scale: 0,
+//               opacity: 0,
+//               duration: 0.3,
+//               ease: "power2.inOut",
+//             },
 //             0
 //           );
 
-//         btn.addEventListener("mouseenter", () => tl.play());
-//         btn.addEventListener("mouseleave", () => tl.reverse());
+//         // ✅ FIX: use GSAP safe handlers
+//         const enter = () => tl.play();
+//         const leave = () => tl.reverse();
+
+//         btn.addEventListener("mouseenter", enter);
+//         btn.addEventListener("mouseleave", leave);
+
+//         // ✅ CLEANUP (VERY IMPORTANT)
+//         btn._gsapHandlers = { enter, leave };
 //       });
-//     }, container);
 
-//     return () => ctx.revert();
-//   }, []);
+//       return () => {
+//         buttons.forEach((btn) => {
+//           if (btn._gsapHandlers) {
+//             btn.removeEventListener("mouseenter", btn._gsapHandlers.enter);
+//             btn.removeEventListener("mouseleave", btn._gsapHandlers.leave);
+//           }
+//         });
+//       };
+//     },
+//     { scope: container }
+//   );
 
-//   // Preload images
+//   // ✅ IMAGE PRELOAD FIX (no re-run, no conflict)
 //   useEffect(() => {
+//     const loaded = {};
+
 //     projects.forEach((project) => {
 //       [project.img1, project.img2].forEach((img) => {
+//         if (loaded[img]) return;
+
 //         const image = new Image();
 //         image.src = img;
+
 //         image.onload = () => {
 //           setLoadedImages((prev) => ({ ...prev, [img]: true }));
-//         };
-//         image.onerror = () => {
-//           console.error("Failed to load image:", img);
 //         };
 //       });
 //     });
 //   }, [projects]);
 
 //   return (
-//     <section id="Project" className="project-section" ref={container}>
+//     <section
+//       id="Project"
+//       className="project-section"
+//       ref={container}
+//       data-scope="projectComponent"
+//     >
 //       <div className="project-content-wrapper">
 //         {/* Heading */}
 //         <div className="project-heading">
@@ -762,7 +1040,9 @@
 //             <div className="project-grid">
 //               {/* Category */}
 //               <div className="project-category">
-//                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+//                 <span
+//                   className={`dot ${activeIndex === index ? "active" : ""}`}
+//                 />
 //                 {project.category}
 //               </div>
 
@@ -777,34 +1057,29 @@
 //                 </div>
 //               </div>
 
-//               {/* Buttons */}
+//               {/* Button */}
 //               <div className="project-actions">
-//                 <div className="btn-frame">
-//                   <div className="btn-strip">
-//                     <div className="circle side-left">
-//                       <div className="arrow"></div>
-//                     </div>
-//                     <div className="box">View case</div>
-//                     <div className="circle side-right">
-//                       <div className="arrow"></div>
-//                     </div>
-//                   </div>
-//                 </div>
-
 //                 <div
 //                   className="btn-frame"
 //                   onClick={() => {
-//                     const newIndex = activeIndex === index ? null : index;
+//                     const newIndex =
+//                       activeIndex === index ? null : index;
 //                     setActiveIndex(newIndex);
 
 //                     if (newIndex !== null) {
 //                       setTimeout(() => {
-//                         const el = imageRefs.current[index];
+//                         const el = imageRefs.current[newIndex];
 //                         if (el) {
 //                           const yOffset = -80;
 //                           const y =
-//                             el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-//                           window.scrollTo({ top: y, behavior: "smooth" });
+//                             el.getBoundingClientRect().top +
+//                             window.scrollY +
+//                             yOffset;
+
+//                           window.scrollTo({
+//                             top: y,
+//                             behavior: "smooth",
+//                           });
 //                         }
 //                       }, 300);
 //                     }
@@ -814,60 +1089,63 @@
 //                     <div className="circle side-left">
 //                       <div className="arrow"></div>
 //                     </div>
-//                     <div className="box">{activeIndex === index ? "Hide" : "Show details"}</div>
+//                     <div className="box">
+//                       {activeIndex === index
+//                         ? "Hide"
+//                         : "Show details"}
+//                     </div>
 //                     <div className="circle side-right">
 //                       <div className="arrow"></div>
 //                     </div>
 //                   </div>
 //                 </div>
 //               </div>
-
-//               {/* Images */}
-//               <AnimatePresence initial={false}>
-//                 {activeIndex === index && (
-//                   <motion.div
-//                     className="detail-images"
-//                     ref={(el) => (imageRefs.current[index] = el)}
-//                     initial={{ opacity: 0, height: 0 }}
-//                     animate={{ opacity: 1, height: "auto" }}
-//                     exit={{ opacity: 0, height: 0 }}
-//                     transition={{ duration: 0.5, ease: "easeInOut" }}
-//                   >
-//                     <div className="img-wrapper">
-//                       {loadedImages[project.img1] ? (
-//                         <img src={project.img1} alt={project.title} />
-//                       ) : (
-//                         <div className="img-placeholder">Loading...</div>
-//                       )}
-//                     </div>
-//                     <div className="img-wrapper">
-//                       {loadedImages[project.img2] ? (
-//                         <img src={project.img2} alt={project.title} />
-//                       ) : (
-//                         <div className="img-placeholder">Loading...</div>
-//                       )}
-//                     </div>
-//                   </motion.div>
-//                 )}
-//               </AnimatePresence>
 //             </div>
+
+//             {/* Images */}
+//             <AnimatePresence initial={false}>
+//               {activeIndex === index && (
+//                 <motion.div
+//                   initial={{ opacity: 0, height: 0 }}
+//                   animate={{ opacity: 1, height: "auto" }}
+//                   exit={{ opacity: 0, height: 0 }}
+//                   transition={{ duration: 0.5 }}
+//                 >
+//                   <div
+//                     className="detail-images"
+//                     ref={(el) =>
+//                       (imageRefs.current[index] = el)
+//                     }
+//                   >
+//                     {[project.img1, project.img2].map(
+//                       (img, i) => (
+//                         <div className="img-wrapper" key={i}>
+//                           {loadedImages[img] ? (
+//                             <img
+//                               src={img}
+//                               alt=""
+//                               decoding="async"
+//                             />
+//                           ) : (
+//                             <div className="img-placeholder">
+//                               Loading...
+//                             </div>
+//                           )}
+//                         </div>
+//                       )
+//                     )}
+//                   </div>
+//                 </motion.div>
+//               )}
+//             </AnimatePresence>
 //           </div>
 //         ))}
 
 //         {/* Bottom */}
 //         <div className="project-bottom-row">
-//           <h2 className="project-big-title">What We've Built</h2>
-//           <div className="btn-frame">
-//             <div className="btn-strip">
-//               <div className="circle side-left">
-//                 <div className="arrow"></div>
-//               </div>
-//               <div className="box">Our Projects</div>
-//               <div className="circle side-right">
-//                 <div className="arrow"></div>
-//               </div>
-//             </div>
-//           </div>
+//           <h2 className="project-big-title">
+//             What We've Built
+//           </h2>
 //         </div>
 //       </div>
 //     </section>
@@ -877,15 +1155,279 @@
 // export default Project;
 
 
+
+
+// "use client";
+// import React, { useState, useRef, useEffect, useMemo } from "react";
+// import { motion, AnimatePresence } from "framer-motion";
+// import gsap from "gsap";
+// import { useGSAP } from "@gsap/react";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// import "./Projects.css";
+
+// import img11 from "../../assets/Image/img11.jpg";
+// import img2 from "../../assets/Image/img2.jpg";
+// import img10 from "../../assets/Image/img10.jpg";
+// import img4 from "../../assets/Image/img4.jpg";
+// import img5 from "../../assets/Image/img5.jpg";
+// import img13 from "../../assets/Image/img13.jpg";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// function Project() {
+//   const [activeIndex, setActiveIndex] = useState(null);
+//   const [loadedImages, setLoadedImages] = useState({});
+//   const container = useRef();
+
+//   const projects = useMemo(
+//     () => [
+//       {
+//         category: "Open Plan Offices",
+//         client: "Hotel Ponsonby:",
+//         title: "transforming a heritage building into a chic gastropub",
+//         tags: ["Cube™", "Etch™", "Frontier™", "Symphony®"],
+//         img1: img11,
+//         img2: img2,
+//       },
+//       {
+//         category: "Recording Studios and Radio",
+//         client: "Mediaworks:",
+//         title: "Capturing the rebellious soul of radio",
+//         tags: ["CubeT", "Quietspace® Panel"],
+//         img1: img10,
+//         img2: img4,
+//       },
+//       {
+//         category: "Hotel Lobbies and Foyers",
+//         client: "Custom Frontier™ system",
+//         title: "for Headingley Stadium's Emerald Suite",
+//         tags: ["Frontier™"],
+//         img1: img13,
+//         img2: img5,
+//       },
+//     ],
+//     []
+//   );
+
+//   useGSAP(() => {
+//     if (!container.current) return;
+
+//     const rows = container.current.querySelectorAll(".project-row");
+
+//     rows.forEach((row) => {
+//       gsap.fromTo(
+//         row,
+//         { "--slideX": "-101%" },
+//         {
+//           "--slideX": "0%",
+//           ease: "power3.out",
+//           scrollTrigger: {
+//             trigger: row,
+//             start: "top 85%",
+//             end: "top 40%",
+//             scrub: 1,
+//           },
+//         }
+//       );
+
+//       ScrollTrigger.create({
+//         trigger: row,
+//         start: "top 85%",
+//         onEnter: () => row.classList.add("active"),
+//         onLeaveBack: () => row.classList.remove("active"),
+//       });
+//     });
+
+//     const buttons = container.current.querySelectorAll(".btn-frame");
+
+//     buttons.forEach((btn) => {
+//       const strip = btn.querySelector(".btn-strip");
+//       const leftCircle = btn.querySelector(".side-left");
+//       const rightCircle = btn.querySelector(".side-right");
+
+//       const tl = gsap.timeline({ paused: true });
+
+//       tl.to(strip, { x: 0, duration: 0.6, ease: "power3.out" })
+//         .fromTo(
+//           leftCircle,
+//           { scale: 0.3, opacity: 0 },
+//           { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+//           0.1
+//         )
+//         .to(rightCircle, { scale: 0, opacity: 0, duration: 0.3 }, 0);
+
+//       const enter = () => tl.play();
+//       const leave = () => tl.reverse();
+
+//       btn.addEventListener("mouseenter", enter);
+//       btn.addEventListener("mouseleave", leave);
+
+//       btn._gsapHandlers = { enter, leave };
+//     });
+
+//     return () => {
+//       ScrollTrigger.getAll().forEach((t) => t.kill());
+
+//       buttons.forEach((btn) => {
+//         if (btn._gsapHandlers) {
+//           btn.removeEventListener("mouseenter", btn._gsapHandlers.enter);
+//           btn.removeEventListener("mouseleave", btn._gsapHandlers.leave);
+//         }
+//       });
+//     };
+//   }, { scope: container });
+
+//   useEffect(() => {
+//     projects.forEach((project) => {
+//       [project.img1, project.img2].forEach((img) => {
+//         const image = new Image();
+//         image.src = img;
+//         image.onload = () => {
+//           setLoadedImages((prev) => ({ ...prev, [img]: true }));
+//         };
+//       });
+//     });
+//   }, [projects]);
+
+//   return (
+//     <section id="Project" className="project-section" ref={container}>
+//       <div className="project-content-wrapper">
+
+//         <div className="project-heading">
+//           <div className="heading-box">
+//             <h1>We partner with serious scaleups worldwide</h1>
+//             <p>Helping them scale faster and smarter.</p>
+//           </div>
+//         </div>
+
+//         {projects.map((project, index) => (
+//           <div key={index} className="project-row">
+//             <div className="project-grid">
+
+//               <div className="project-category">
+//                 <span className={`dot ${activeIndex === index ? "active" : ""}`} />
+//                 {project.category}
+//               </div>
+
+//               <div className="project-content">
+//                 <h3>{project.client}</h3>
+//                 <p className="project-title">{project.title}</p>
+
+//                 <div className="project-tags">
+//                   {project.tags.map((tag, i) => (
+//                     <span key={i}>{tag}</span>
+//                   ))}
+//                 </div>
+//               </div>
+
+//               <div className="project-actions">
+//                 <div
+//                   className="btn-frame"
+//                   onClick={() =>
+//                     setActiveIndex(activeIndex === index ? null : index)
+//                   }
+//                 >
+//                   <div className="btn-strip">
+//                     <div className="circle side-left"><div className="arrow"></div></div>
+//                     <div className="box">
+//                       {activeIndex === index ? "Hide" : "Show details"}
+//                     </div>
+//                     <div className="circle side-right"><div className="arrow"></div></div>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               <div></div>
+
+//               <AnimatePresence>
+//                 {activeIndex === index && (
+//                   <motion.div
+//                     className="img-grid"
+//                     initial={{ opacity: 0, scale: 0.9, y: 40 }}
+//                     animate={{ opacity: 1, scale: 1, y: 0 }}
+//                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
+//                     transition={{ duration: 0.6 }}
+//                   >
+//                     <img src={project.img1} alt="" />
+//                   </motion.div>
+//                 )}
+//               </AnimatePresence>
+
+//               <AnimatePresence>
+//                 {activeIndex === index && (
+//                   <motion.div
+//                     className="img-grid"
+//                     initial={{ opacity: 0, scale: 0.9, y: 40 }}
+//                     animate={{ opacity: 1, scale: 1, y: 0 }}
+//                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
+//                     transition={{ duration: 0.6, delay: 0.1 }}
+//                   >
+//                     <img src={project.img2} alt="" />
+//                   </motion.div>
+//                 )}
+//               </AnimatePresence>
+
+//             </div>
+//           </div>
+//         ))}
+
+//         <div className="project-bottom-row">
+
+//   <h2 className="project-big-title">
+//     What We've Built
+//   </h2>
+
+//   <div className="project-actions">
+
+//     <div className="btn-frame">
+
+//       <div className="btn-strip">
+
+//         <div className="circle side-left">
+//           <div className="arrow"></div>
+//         </div>
+
+//         <div className="box">
+//           View All Projects
+//         </div>
+
+//         <div className="circle side-right">
+//           <div className="arrow"></div>
+//         </div>
+
+//       </div>
+
+//     </div>
+
+//   </div>
+
+// </div>
+
+//       </div>
+//     </section>
+//   );
+// }
+
+// export default Project;
+
+
+
+
+
+
+
+
+
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "./Projects.css";
 
-// Images
 import img11 from "../../assets/Image/img11.jpg";
 import img2 from "../../assets/Image/img2.jpg";
 import img10 from "../../assets/Image/img10.jpg";
@@ -893,14 +1435,13 @@ import img4 from "../../assets/Image/img4.jpg";
 import img5 from "../../assets/Image/img5.jpg";
 import img13 from "../../assets/Image/img13.jpg";
 
+gsap.registerPlugin(ScrollTrigger);
+
 function Project() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(null);
   const [loadedImages, setLoadedImages] = useState({});
-  const rowRefs = useRef([]);
-  const imageRefs = useRef([]);
   const container = useRef();
 
-  // ✅ MEMO (prevent re-creation on every render)
   const projects = useMemo(
     () => [
       {
@@ -915,7 +1456,7 @@ function Project() {
         category: "Recording Studios and Radio",
         client: "Mediaworks:",
         title: "Capturing the rebellious soul of radio",
-        tags: ["CubeT", "Quietspaco® Panel"],
+        tags: ["CubeT", "Quietspace® Panel"],
         img1: img10,
         img2: img4,
       },
@@ -923,7 +1464,7 @@ function Project() {
         category: "Hotel Lobbies and Foyers",
         client: "Custom Frontier™ system",
         title: "for Headingley Stadium's Emerald Suite",
-        tags: ["FrontierTM"],
+        tags: ["Frontier™"],
         img1: img13,
         img2: img5,
       },
@@ -931,10 +1472,35 @@ function Project() {
     []
   );
 
-  // ✅ GSAP FIX (scoped + no memory leak)
   useGSAP(
     () => {
       if (!container.current) return;
+
+      const rows = container.current.querySelectorAll(".project-row");
+
+      rows.forEach((row) => {
+        gsap.fromTo(
+          row,
+          { "--slideX": "-101%" },
+          {
+            "--slideX": "0%",
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 85%",
+              end: "top 40%",
+              scrub: 1,
+            },
+          }
+        );
+
+        ScrollTrigger.create({
+          trigger: row,
+          start: "top 85%",
+          onEnter: () => row.classList.add("active"),
+          onLeaveBack: () => row.classList.remove("active"),
+        });
+      });
 
       const buttons =
         container.current.querySelectorAll(".btn-frame");
@@ -964,31 +1530,32 @@ function Project() {
           )
           .to(
             rightCircle,
-            {
-              scale: 0,
-              opacity: 0,
-              duration: 0.3,
-              ease: "power2.inOut",
-            },
+            { scale: 0, opacity: 0, duration: 0.3 },
             0
           );
 
-        // ✅ FIX: use GSAP safe handlers
         const enter = () => tl.play();
         const leave = () => tl.reverse();
 
         btn.addEventListener("mouseenter", enter);
         btn.addEventListener("mouseleave", leave);
 
-        // ✅ CLEANUP (VERY IMPORTANT)
         btn._gsapHandlers = { enter, leave };
       });
 
       return () => {
+        ScrollTrigger.getAll().forEach((t) => t.kill());
+
         buttons.forEach((btn) => {
           if (btn._gsapHandlers) {
-            btn.removeEventListener("mouseenter", btn._gsapHandlers.enter);
-            btn.removeEventListener("mouseleave", btn._gsapHandlers.leave);
+            btn.removeEventListener(
+              "mouseenter",
+              btn._gsapHandlers.enter
+            );
+            btn.removeEventListener(
+              "mouseleave",
+              btn._gsapHandlers.leave
+            );
           }
         });
       };
@@ -996,19 +1563,27 @@ function Project() {
     { scope: container }
   );
 
-  // ✅ IMAGE PRELOAD FIX (no re-run, no conflict)
+  /* Refresh when activeIndex changes */
   useEffect(() => {
-    const loaded = {};
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
+  }, [activeIndex]);
 
+  /* Preload images */
+  useEffect(() => {
     projects.forEach((project) => {
       [project.img1, project.img2].forEach((img) => {
-        if (loaded[img]) return;
-
         const image = new Image();
         image.src = img;
 
         image.onload = () => {
-          setLoadedImages((prev) => ({ ...prev, [img]: true }));
+          setLoadedImages((prev) => ({
+            ...prev,
+            [img]: true,
+          }));
+
+          ScrollTrigger.refresh();
         };
       });
     });
@@ -1019,37 +1594,43 @@ function Project() {
       id="Project"
       className="project-section"
       ref={container}
-      data-scope="projectComponent"
     >
       <div className="project-content-wrapper">
-        {/* Heading */}
+
         <div className="project-heading">
           <div className="heading-box">
-            <h1>We partner with serious scaleups worldwide</h1>
-            <p>Helping them scale faster and smarter.</p>
+            <h1>
+              We partner with serious scaleups worldwide
+            </h1>
+            <p>
+              Helping them scale faster and smarter.
+            </p>
           </div>
         </div>
 
-        {/* Projects */}
         {projects.map((project, index) => (
-          <div
-            key={index}
-            className="project-row"
-            ref={(el) => (rowRefs.current[index] = el)}
-          >
+          <div key={index} className="project-row">
+
             <div className="project-grid">
-              {/* Category */}
+
               <div className="project-category">
                 <span
-                  className={`dot ${activeIndex === index ? "active" : ""}`}
+                  className={`dot ${
+                    activeIndex === index
+                      ? "active"
+                      : ""
+                  }`}
                 />
                 {project.category}
               </div>
 
-              {/* Content */}
               <div className="project-content">
                 <h3>{project.client}</h3>
-                <p className="project-title">{project.title}</p>
+
+                <p className="project-title">
+                  {project.title}
+                </p>
+
                 <div className="project-tags">
                   {project.tags.map((tag, i) => (
                     <span key={i}>{tag}</span>
@@ -1057,97 +1638,165 @@ function Project() {
                 </div>
               </div>
 
-              {/* Button */}
+              {/* FIXED CLICK HANDLER */}
+
               <div className="project-actions">
+
                 <div
                   className="btn-frame"
                   onClick={() => {
-                    const newIndex =
-                      activeIndex === index ? null : index;
-                    setActiveIndex(newIndex);
+                    setActiveIndex(
+                      activeIndex === index
+                        ? null
+                        : index
+                    );
 
-                    if (newIndex !== null) {
-                      setTimeout(() => {
-                        const el = imageRefs.current[newIndex];
-                        if (el) {
-                          const yOffset = -80;
-                          const y =
-                            el.getBoundingClientRect().top +
-                            window.scrollY +
-                            yOffset;
-
-                          window.scrollTo({
-                            top: y,
-                            behavior: "smooth",
-                          });
-                        }
-                      }, 300);
-                    }
+                    setTimeout(() => {
+                      ScrollTrigger.refresh();
+                    }, 500);
                   }}
                 >
+
                   <div className="btn-strip">
+
                     <div className="circle side-left">
                       <div className="arrow"></div>
                     </div>
+
                     <div className="box">
                       {activeIndex === index
                         ? "Hide"
                         : "Show details"}
                     </div>
+
                     <div className="circle side-right">
                       <div className="arrow"></div>
                     </div>
+
                   </div>
+
                 </div>
+
               </div>
+
+              <div></div>
+
+              {/* IMAGE 1 */}
+
+              <AnimatePresence>
+                {activeIndex === index && (
+                  <motion.div
+                    className="img-grid"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.9,
+                      y: 40,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.95,
+                      y: 20,
+                    }}
+                    transition={{
+                      duration: 0.6,
+                    }}
+                  >
+
+                    <img
+                      src={project.img1}
+                      alt=""
+                      onLoad={() =>
+                        ScrollTrigger.refresh()
+                      }
+                    />
+
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* IMAGE 2 */}
+
+              <AnimatePresence>
+                {activeIndex === index && (
+                  <motion.div
+                    className="img-grid"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.9,
+                      y: 40,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.95,
+                      y: 20,
+                    }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.1,
+                    }}
+                  >
+
+                    <img
+                      src={project.img2}
+                      alt=""
+                      onLoad={() =>
+                        ScrollTrigger.refresh()
+                      }
+                    />
+
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
             </div>
 
-            {/* Images */}
-            <AnimatePresence initial={false}>
-              {activeIndex === index && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div
-                    className="detail-images"
-                    ref={(el) =>
-                      (imageRefs.current[index] = el)
-                    }
-                  >
-                    {[project.img1, project.img2].map(
-                      (img, i) => (
-                        <div className="img-wrapper" key={i}>
-                          {loadedImages[img] ? (
-                            <img
-                              src={img}
-                              alt=""
-                              decoding="async"
-                            />
-                          ) : (
-                            <div className="img-placeholder">
-                              Loading...
-                            </div>
-                          )}
-                        </div>
-                      )
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         ))}
 
-        {/* Bottom */}
         <div className="project-bottom-row">
+
           <h2 className="project-big-title">
             What We've Built
           </h2>
+
+          <div className="project-actions">
+
+            <div className="btn-frame">
+
+              <div className="btn-strip">
+
+                <div className="circle side-left">
+                  <div className="arrow"></div>
+                </div>
+
+                <div className="box">
+                  View All Projects
+                </div>
+
+                <div className="circle side-right">
+                  <div className="arrow"></div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
+
       </div>
+
     </section>
   );
 }

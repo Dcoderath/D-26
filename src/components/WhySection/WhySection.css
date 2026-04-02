@@ -60,6 +60,7 @@
   padding: 10px clamp(16px, 3vw, 30px) clamp(20px, 4vw, 40px);
   opacity: 0.9;
   max-width: 750px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .card-right {

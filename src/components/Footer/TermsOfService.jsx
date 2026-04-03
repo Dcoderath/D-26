@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -14,157 +15,212 @@ const TermsOfService = () => {
   ];
 
   return (
-    <div style={{
-      backgroundColor: "#F1F1F1",
-      minHeight: "100vh",
-      padding: "clamp(40px, 10vw, 100px) 24px",
-      fontFamily: "inherit",
-      color: "#1a1a1a"
-    }}>
+    <section
+      style={{
+        width: "100%",
+        padding: "clamp(40px,6vw,100px) clamp(15px,5vw,80px)",
+        background: "#FBC1D4",
+        color: "#202020",
+      }}
+    >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         
-        {/* Header */}
-        <header style={{ marginBottom: "80px", borderBottom: "2px solid #000", paddingBottom: "30px" }}>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{ fontSize: "clamp(48px, 7vw, 100px)", fontWeight: "800", letterSpacing: "-0.04em", margin: 0, textTransform: "uppercase" }}
+        {/* HEADER */}
+        <div style={{ marginBottom: "80px" }}>
+          <h1
+            style={{
+              fontSize: "clamp(36px,9vw,100px)",
+              margin: 0,
+              lineHeight: 1,
+              color: "#111",
+            }}
           >
-            Service <span style={{ fontWeight: "300", fontStyle: "italic" }}>Protocol</span>
-          </motion.h1>
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", color: "#666", fontSize: "12px", fontWeight: "600", letterSpacing: "1px" }}>
-            <span>CODEGRID — VERSION 2.4</span>
-            <span>PUBLISHED MARCH 2026</span>
-          </div>
-        </header>
+            Service <span style={{ fontWeight: 300 }}>Protocol</span>
+          </h1>
 
-        {/* Interactive List */}
-        <div style={{ marginBottom: "100px" }}>
+          <p
+            style={{
+              fontSize: "clamp(18px,4vw,40px)",
+              marginTop: "10px",
+              opacity: 0.8,
+            }}
+          >
+            Terms that power elite execution.
+          </p>
+        </div>
+
+        {/* LIST */}
+        <div style={{ borderTop: "1px solid #1b1b1b25" }}>
           {sections.map((item, index) => (
             <SectionRow key={index} item={item} index={index} />
           ))}
         </div>
 
-        {/* Professional Footer / CTA */}
-        <motion.footer 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          style={{ 
-            background: "#000", 
-            color: "#fff", 
-            padding: "80px 40px", 
-            borderRadius: "4px",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
-          <h2 style={{ fontSize: "clamp(32px, 4vw, 56px)", fontWeight: "700", marginBottom: "20px", letterSpacing: "-0.02em" }}>
-            Ready to initiate development?
-          </h2>
-          <p style={{ color: "#888", maxWidth: "600px", lineHeight: "1.6", marginBottom: "40px", fontSize: "18px" }}>
-            By clicking below, you acknowledge that you have read and agreed to the CodeGrid master service terms outlined above.
-          </p>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        {/* CTA */}
+        <div style={{ marginTop: "100px", textAlign: "center" }}>
+          <h2
             style={{
-              background: "#fff",
-              color: "#000",
-              border: "none",
-              padding: "20px 60px",
-              fontSize: "18px",
-              fontWeight: "700",
-              cursor: "pointer",
-              borderRadius: "100px",
-              boxShadow: "0 20px 40px rgba(255,255,255,0.1)"
+              fontSize: "clamp(32px,12vw,86px)",
+              color: "#fff",
+              WebkitTextStroke: "2px #000",
+              textShadow:
+                "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
             }}
           >
-            Accept & Secure Deposit
-          </motion.button>
-          
-          <span style={{ marginTop: "30px", fontSize: "13px", color: "#444" }}>
-            Secure Electronic Agreement — Encrypted
-          </span>
-        </motion.footer>
+            Start Project
+          </h2>
+
+          <div style={{ marginTop: "40px" }}>
+            <div className="btn-frame">
+              <div className="btn-strip">
+                <div className="circle side-left">
+                  <div className="arrow"></div>
+                </div>
+
+                <div className="box">Accept & Proceed</div>
+
+                <div className="circle side-right">
+                  <div className="arrow"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
+      {/* BUTTON CSS */}
+      <style jsx>{`
+        .btn-frame {
+          width: 280px;
+          height: 48px;
+          overflow: hidden;
+          cursor: pointer;
+          border-radius: 999px;
+          margin: auto;
+        }
+
+        .btn-strip {
+          display: flex;
+          align-items: center;
+          width: calc(100% + 48px);
+          transform: translateX(-48px);
+          transition: transform 0.45s cubic-bezier(.22,.61,.36,1);
+        }
+
+        .btn-frame:hover .btn-strip {
+          transform: translateX(0);
+        }
+
+        .box {
+          flex: 1;
+          height: 48px;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 999px;
+        }
+
+        .circle {
+          width: 48px;
+          height: 48px;
+          background: #fff;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .arrow {
+          width: 8px;
+          height: 8px;
+          border-top: 2px solid #111;
+          border-right: 2px solid #111;
+          transform: rotate(45deg);
+        }
+
+        @media (max-width: 768px) {
+          .btn-frame {
+            width: 90%;
+          }
+        }
+      `}</style>
+    </section>
   );
 };
 
-// Component for the Hover Row
+/* ROW */
 const SectionRow = ({ item, index }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [hover, setHover] = useState(false);
 
   return (
-    <motion.div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       style={{
         position: "relative",
-        display: "grid",
-        gridTemplateColumns: "80px 1fr 2fr",
-        padding: "50px 20px",
-        borderBottom: "1px solid #d1d1d1",
-        cursor: "pointer",
+        padding: "clamp(20px,4vw,40px)",
+        borderBottom: "1px solid #1b1b1b25",
         overflow: "hidden",
-        alignItems: "center"
+        cursor: "pointer",
       }}
     >
-      {/* Background Slide Effect */}
+      {/* BG */}
       <motion.div
-        initial={{ x: "-100%" }}
-        animate={{ x: isHovered ? "0%" : "-100%" }}
-        transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+        animate={{ x: hover ? "0%" : "-101%" }}
+        transition={{ duration: 0.5 }}
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "#000",
-          zIndex: 0
+          inset: 0,
+          background: "#8B0000",
+          zIndex: 0,
         }}
       />
 
-      {/* Index */}
-      <div style={{ 
-        zIndex: 1, 
-        color: isHovered ? "#555" : "#999", 
-        fontFamily: "monospace",
-        fontSize: "16px",
-        transition: "color 0.3s"
-      }}>
-        [{String(index + 1).padStart(2, "0")}]
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          display: "grid",
+          gridTemplateColumns: "80px 1fr 2fr",
+          gap: "20px",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ color: hover ? "#fff" : "#000", opacity: 0.7 }}>
+          [{String(index + 1).padStart(2, "0")}]
+        </div>
+
+        <div
+          style={{
+            fontSize: "clamp(20px,3vw,36px)",
+            fontWeight: 600,
+            color: hover ? "#fff" : "#000",
+          }}
+        >
+          {item.title}
+        </div>
+
+        <div
+          style={{
+            fontSize: "clamp(14px,2vw,18px)",
+            color: hover ? "#eee" : "#444",
+            lineHeight: 1.6,
+          }}
+        >
+          {item.text}
+        </div>
       </div>
 
-      {/* Title */}
-      <div style={{ 
-        zIndex: 1, 
-        color: isHovered ? "#fff" : "#000", 
-        fontSize: "26px", 
-        fontWeight: "700",
-        letterSpacing: "-0.02em",
-        transition: "color 0.3s"
-      }}>
-        {item.title}
-      </div>
-
-      {/* Text */}
-      <div style={{ 
-        zIndex: 1, 
-        color: isHovered ? "#aaa" : "#444", 
-        fontSize: "17px", 
-        lineHeight: "1.6",
-        maxWidth: "500px",
-        transition: "color 0.3s"
-      }}>
-        {item.text}
-      </div>
-    </motion.div>
+      {/* MOBILE FIX */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          div[style*="grid"] {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
+    </div>
   );
 };
 

@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -14,140 +15,266 @@ const PrivacyPolicy = () => {
   ];
 
   return (
- <div
-  style={{
-    backgroundColor: "#F5F5F7",
-    minHeight: "100vh",
-    padding: "clamp(50px, 8vw, 120px) 16px",
-    fontFamily: "inherit",
-    color: "#111",
-  }}
->
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+    <section className="privacy-section">
+      <div className="privacy-container">
         
-        {/* Header matched to ToS */}
-        <header style={{ marginBottom: "80px", borderBottom: "2px solid #000", paddingBottom: "30px" }}>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{ fontSize: "clamp(48px, 7vw, 100px)", fontWeight: "800", letterSpacing: "-0.04em", margin: 0, textTransform: "uppercase" }}
-          >
-            Privacy <span style={{ fontWeight: "300", fontStyle: "italic" }}>Governance</span>
-          </motion.h1>
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", color: "#666", fontSize: "12px", fontWeight: "600", letterSpacing: "1px" }}>
-            <span>CODEGRID — DATA PROTECTION</span>
-            <span>EFFECTIVE MARCH 2026</span>
-          </div>
-        </header>
+        {/* HEADER */}
+        <div className="privacy-header">
+          <h1>
+            Privacy <span>Governance</span>
+          </h1>
+          <p>Your data. Your control. Our responsibility.</p>
+        </div>
 
-        {/* Interactive Sections with Left-to-Right Hover */}
-        <div style={{ marginBottom: "100px", borderTop: "1px solid #d1d1d1" }}>
+        {/* LIST */}
+        <div className="policy-list">
           {policies.map((item, index) => (
-            <PolicyRow key={index} item={item} index={index} />
+            <PolicyRow key={index} item={item} />
           ))}
         </div>
 
-        {/* Bottom CTA Block */}
-        <motion.footer 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          style={{ 
-            background: "#000", 
-            color: "#fff", 
-            padding: "80px 40px", 
-            borderRadius: "4px",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
-          <h2 style={{ fontSize: "clamp(32px, 4vw, 50px)", fontWeight: "700", marginBottom: "20px" }}>
-            Data Rights & Inquiries
-          </h2>
-          <p style={{ color: "#888", maxWidth: "600px", lineHeight: "1.6", marginBottom: "40px", fontSize: "18px" }}>
-            Need a full export of your project data or wish to exercise your right to be forgotten? Our compliance team is ready to assist.
-          </p>
-          
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", justifyContent: "center" }}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                background: "#fff", color: "#000", border: "none",
-                padding: "18px 45px", fontSize: "16px", fontWeight: "700",
-                cursor: "pointer", borderRadius: "100px"
-              }}
-            >
-              Contact Compliance
-            </motion.button>
-            <motion.button
-              whileHover={{ backgroundColor: "#333" }}
-              style={{
-                background: "transparent", color: "#fff", border: "1px solid #444",
-                padding: "18px 45px", fontSize: "16px", fontWeight: "700",
-                cursor: "pointer", borderRadius: "100px"
-              }}
-            >
-              Download PDF
-            </motion.button>
+        {/* CTA */}
+        <div className="privacy-cta">
+          <h2>Data Rights</h2>
+
+          <div className="btn-frame">
+            <div className="btn-strip">
+              <div className="circle side-left">
+                <div className="arrow"></div>
+              </div>
+              <div className="box">Contact Compliance</div>
+              <div className="circle side-right">
+                <div className="arrow"></div>
+              </div>
+            </div>
           </div>
-        </motion.footer>
+        </div>
       </div>
-    </div>
+
+      {/* CSS */}
+      <style jsx>{`
+        .privacy-section {
+          width: 100%;
+          padding: clamp(40px, 6vw, 100px) clamp(15px, 5vw, 80px);
+          background: #FBC1D4;
+          color: #202020;
+        }
+
+        .privacy-container {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .privacy-header {
+          margin-bottom: clamp(40px, 8vw, 100px);
+        }
+
+        .privacy-header h1 {
+          font-size: clamp(36px, 9vw, 100px);
+          margin: 0;
+          line-height: 1;
+        }
+
+        .privacy-header span {
+          font-weight: 300;
+        }
+
+        .privacy-header p {
+          font-size: clamp(16px, 3vw, 28px);
+          margin-top: 10px;
+          opacity: 0.8;
+        }
+
+        .policy-list {
+          border-top: 1px solid #1b1b1b25;
+        }
+
+        .privacy-cta {
+          margin-top: clamp(60px, 10vw, 120px);
+          text-align: center;
+        }
+
+        .privacy-cta h2 {
+          font-size: clamp(32px, 12vw, 86px);
+          color: #fff;
+          -webkit-text-stroke: 2px #000;
+          text-shadow:
+            -1px -1px 0 #000,
+             1px -1px 0 #000,
+            -1px  1px 0 #000,
+             1px  1px 0 #000;
+        }
+
+        /* BUTTON */
+        .btn-frame {
+          width: clamp(200px, 60%, 320px);
+          height: 48px;
+          overflow: hidden;
+          cursor: pointer;
+          border-radius: 999px;
+          margin: 40px auto 0;
+        }
+
+        .btn-strip {
+          display: flex;
+          align-items: center;
+          width: calc(100% + 48px);
+          transform: translateX(-48px);
+          transition: transform 0.45s cubic-bezier(.22,.61,.36,1);
+        }
+
+        .btn-frame:hover .btn-strip {
+          transform: translateX(0);
+        }
+
+        .box {
+          flex: 1;
+          height: 48px;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 999px;
+          font-size: clamp(14px, 2vw, 16px);
+        }
+
+        .circle {
+          width: 48px;
+          height: 48px;
+          background: #fff;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .arrow {
+          width: 8px;
+          height: 8px;
+          border-top: 2px solid #111;
+          border-right: 2px solid #111;
+          transform: rotate(45deg);
+        }
+
+        /* TABLET */
+        @media (max-width: 768px) {
+          .privacy-header {
+            text-align: center;
+          }
+        }
+
+        /* SMALL MOBILE */
+        @media (max-width: 480px) {
+          .privacy-section {
+            padding: 40px 15px;
+          }
+
+          .privacy-header h1 {
+            line-height: 1.1;
+          }
+
+          .privacy-cta h2 {
+            -webkit-text-stroke: 1px #000;
+          }
+        }
+      `}</style>
+    </section>
   );
 };
 
-const PolicyRow = ({ item, index }) => {
-  const [isHovered, setIsHovered] = useState(false);
+const PolicyRow = ({ item }) => {
+  const [hover, setHover] = useState(false);
 
   return (
-    <motion.div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        position: "relative",
-        display: "grid",
-        gridTemplateColumns: "80px 1fr 2fr",
-        padding: "50px 20px",
-        borderBottom: "1px solid #d1d1d1",
-        cursor: "pointer",
-        overflow: "hidden",
-        alignItems: "center"
-      }}
+    <div
+      className="policy-row"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
-      {/* Slide Background Effect */}
       <motion.div
-        initial={{ x: "-100%" }}
-        animate={{ x: isHovered ? "0%" : "-100%" }}
-        transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
-        style={{
-          position: "absolute",
-          top: 0, left: 0, width: "100%", height: "100%",
-          backgroundColor: "#000", zIndex: 0
-        }}
+        className="bg"
+        animate={{ x: hover ? "0%" : "-101%" }}
+        transition={{ duration: 0.5 }}
       />
 
-      {/* Content */}
-      <div style={{ zIndex: 1, color: isHovered ? "#555" : "#999", fontFamily: "monospace", transition: "0.3s" }}>
-        [{item.id}]
+      <div className="content">
+        <div className="id">[{item.id}]</div>
+        <div className="title">{item.title}</div>
+        <div className="text">{item.text}</div>
       </div>
 
-      <div style={{ 
-        zIndex: 1, color: isHovered ? "#fff" : "#000", 
-        fontSize: "24px", fontWeight: "700", transition: "0.3s" 
-      }}>
-        {item.title}
-      </div>
+      <style jsx>{`
+        .policy-row {
+          position: relative;
+          padding: clamp(20px, 4vw, 40px);
+          border-bottom: 1px solid #1b1b1b25;
+          overflow: hidden;
+        }
 
-      <div style={{ 
-        zIndex: 1, color: isHovered ? "#aaa" : "#444", 
-        fontSize: "17px", lineHeight: "1.6", maxWidth: "500px", transition: "0.3s" 
-      }}>
-        {item.text}
-      </div>
-    </motion.div>
+        .bg {
+          position: absolute;
+          inset: 0;
+          background: #8B0000;
+          z-index: 0;
+        }
+
+        .content {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: 80px 1fr 2fr;
+          gap: 20px;
+          align-items: start;
+        }
+
+        .id {
+          opacity: 0.7;
+          font-size: 12px;
+        }
+
+        .title {
+          font-size: clamp(18px, 3vw, 32px);
+          font-weight: 600;
+        }
+
+        .text {
+          font-size: clamp(14px, 2vw, 18px);
+          line-height: 1.6;
+          max-width: 600px;
+        }
+
+        /* TABLET */
+        @media (max-width: 900px) {
+          .content {
+            grid-template-columns: 60px 1fr;
+          }
+
+          .text {
+            grid-column: span 2;
+          }
+        }
+
+        /* MOBILE */
+        @media (max-width: 480px) {
+          .content {
+            grid-template-columns: 1fr;
+            gap: 10px;
+          }
+
+          .id {
+            font-size: 11px;
+          }
+
+          .title {
+            font-size: 18px;
+          }
+
+          .text {
+            font-size: 14px;
+          }
+        }
+      `}</style>
+    </div>
   );
 };
 

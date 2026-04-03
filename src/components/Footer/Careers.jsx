@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -16,16 +17,13 @@ const inputStyle = {
 /* MAIN COMPONENT */
 const Careers = () => {
   const [selectedJob, setSelectedJob] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [isTablet, setIsTablet] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      setIsTablet(window.innerWidth < 1024);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
   const jobs = [
@@ -37,49 +35,145 @@ const Careers = () => {
   ];
 
   return (
-    <div style={{ backgroundColor: "#F5F5F7", minHeight: "100vh", padding: "clamp(50px, 8vw, 120px) 16px", color: "#111" }}>
-      <div style={{ maxWidth: "min(1200px,92vw)", margin: "0 auto" }}>
+    <section
+      style={{
+        width: "100%",
+        padding: "clamp(40px,6vw,100px) clamp(15px,5vw,80px)",
+        background: "#FBC1D4",
+        color: "#202020",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        
         {/* HEADER */}
-        <header style={{ marginBottom: "clamp(50px, 8vw, 100px)", borderBottom: "1.5px solid #111", paddingBottom: "20px" }}>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            style={{ fontSize: "clamp(36px, 9vw, 100px)", fontWeight: "800", letterSpacing: "-0.04em", margin: 0, textTransform: "uppercase", lineHeight: "1.1" }}
+        <div style={{ marginBottom: "80px" }}>
+          <h1
+            style={{
+              fontSize: "clamp(36px,9vw,100px)",
+              margin: 0,
+              lineHeight: 1,
+              color: "#111",
+            }}
           >
-            Join <span style={{ fontWeight: "300", fontStyle: "italic" }}>CodeGrid</span>
-          </motion.h1>
+            Join <span style={{ fontWeight: 300 }}>CodeGrid</span>
+          </h1>
 
-          <div style={{ display: "flex", justifyContent: "space-between", flexDirection: isTablet ? "column" : "row", gap: "8px", marginTop: "20px", color: "#777", fontSize: "12px", fontWeight: "600", letterSpacing: "1px" }}>
-            <span>CAREERS — BUILD WITH US</span>
-            <span>OPEN ROLES 2026</span>
-          </div>
-        </header>
+          <p
+            style={{
+              fontSize: "clamp(18px,4vw,40px)",
+              marginTop: "10px",
+              opacity: 0.8,
+            }}
+          >
+            Build fast. Think bold. Ship elite.
+          </p>
+        </div>
 
         {/* JOB LIST */}
-        <div style={{ display: "grid", gap: "20px", marginBottom: "100px" }}>
+        <div style={{ borderTop: "1px solid #1b1b1b25" }}>
           {jobs.map((job, index) => (
             <JobRow key={index} job={job} onApply={setSelectedJob} isMobile={isMobile} />
           ))}
         </div>
 
         {/* CTA */}
-        <motion.footer initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-          style={{ background: "#111", color: "#fff", padding: "clamp(32px,6vw,90px) clamp(16px,4vw,40px)", borderRadius: "12px", textAlign: "center" }}
-        >
-          <h2 style={{ fontSize: "clamp(28px,5vw,60px)", marginBottom: "20px" }}>Build Something Elite</h2>
-          <p style={{ color: "#aaa", marginBottom: "30px" }}>We’re building a team of creators, thinkers, and builders.</p>
-          <motion.button whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}
-            style={{ background: "#fff", color: "#000", border: "none", padding: "14px 32px", borderRadius: "100px", fontWeight: "700", cursor: "pointer" }}
-            onClick={() => setSelectedJob({ title: "General Application" })}
+        <div style={{ marginTop: "100px", textAlign: "center" }}>
+          <h2
+            style={{
+              fontSize: "clamp(32px,12vw,86px)",
+              color: "#fff",
+              WebkitTextStroke: "2px #000",
+              textShadow:
+                "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+            }}
           >
-            Apply Now →
-          </motion.button>
-        </motion.footer>
+            Build With Us
+          </h2>
+
+          <div style={{ marginTop: "40px" }}>
+            <div
+              className="btn-frame"
+              onClick={() => setSelectedJob({ title: "General Application" })}
+            >
+              <div className="btn-strip">
+                <div className="circle side-left">
+                  <div className="arrow"></div>
+                </div>
+
+                <div className="box">Apply Now</div>
+
+                <div className="circle side-right">
+                  <div className="arrow"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* MODAL */}
       <AnimatePresence>
         {selectedJob && <ApplyModal job={selectedJob} onClose={() => setSelectedJob(null)} />}
       </AnimatePresence>
-    </div>
+
+      {/* BUTTON CSS */}
+      <style jsx>{`
+        .btn-frame {
+          width: 260px;
+          height: 48px;
+          overflow: hidden;
+          cursor: pointer;
+          border-radius: 999px;
+          margin: auto;
+        }
+
+        .btn-strip {
+          display: flex;
+          align-items: center;
+          width: calc(100% + 48px);
+          transform: translateX(-48px);
+          transition: transform 0.45s cubic-bezier(.22,.61,.36,1);
+        }
+
+        .btn-frame:hover .btn-strip {
+          transform: translateX(0);
+        }
+
+        .box {
+          flex: 1;
+          height: 48px;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 999px;
+        }
+
+        .circle {
+          width: 48px;
+          height: 48px;
+          background: #fff;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .arrow {
+          width: 8px;
+          height: 8px;
+          border-top: 2px solid #111;
+          border-right: 2px solid #111;
+          transform: rotate(45deg);
+        }
+
+        @media (max-width: 768px) {
+          .btn-frame {
+            width: 90%;
+          }
+        }
+      `}</style>
+    </section>
   );
 };
 
@@ -88,88 +182,170 @@ const JobRow = ({ job, onApply, isMobile }) => {
   const [hover, setHover] = useState(false);
 
   return (
-    <motion.div
+    <div
       onMouseEnter={() => !isMobile && setHover(true)}
       onMouseLeave={() => !isMobile && setHover(false)}
-      whileHover={!isMobile ? { y: -3, boxShadow: "0px 8px 20px rgba(0,0,0,0.08)" } : {}}
-      transition={{ duration: 0.25 }}
       style={{
         position: "relative",
-        display: "grid",
-        gridTemplateColumns: isMobile ? "1fr" : "80px minmax(200px,1fr) minmax(250px,2fr) auto",
-        gap: "clamp(12px,2vw,24px)",
-        padding: "clamp(24px,5vw,60px) clamp(12px,3vw,24px)",
-        borderRadius: "12px",
-        background: "#fff",
-        alignItems: "center",
+        padding: "clamp(20px,4vw,40px)",
+        borderBottom: "1px solid #1b1b1b25",
         overflow: "hidden",
-        boxShadow: "0px 2px 6px rgba(0,0,0,0.04)",
         cursor: "pointer",
       }}
     >
-      {/* LEFT-TO-RIGHT HOVER EFFECT */}
+      {/* BG */}
       {!isMobile && (
         <motion.div
-          initial={{ x: "-100%" }}
-          animate={{ x: hover ? "0%" : "-100%" }}
-          transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+          animate={{ x: hover ? "0%" : "-101%" }}
+          transition={{ duration: 0.5 }}
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(90deg, #111, #333)",
+            background: "#8B0000",
             zIndex: 0,
           }}
         />
       )}
 
-      {/* CONTENT */}
-      <div style={{ zIndex: 1, color: hover ? "#ddd" : "#aaa" }}>[{job.id}]</div>
-      <div style={{ zIndex: 1, color: hover ? "#fff" : "#111", fontWeight: "700", fontSize: "clamp(18px,2vw,24px)" }}>{job.title}</div>
-      <div style={{ zIndex: 1, color: hover ? "#ccc" : "#555", fontSize: "clamp(14px,1.2vw,16px)", maxWidth: "520px" }}>{job.text}</div>
-
-      {/* APPLY BUTTON */}
-      <motion.button
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.96 }}
+      <div
         style={{
+          position: "relative",
           zIndex: 1,
-          background: hover ? "#fff" : "#111",
-          color: hover ? "#000" : "#fff",
-          border: "none",
-          padding: "12px 24px",
-          borderRadius: "999px",
-          fontWeight: "600",
-          cursor: "pointer",
-          opacity: 1,
-          transition: "0.3s",
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "80px 1fr 2fr auto",
+          gap: "20px",
+          alignItems: "center",
         }}
-        onClick={() => onApply(job)}
       >
-        Apply →
-      </motion.button>
-    </motion.div>
+        <div style={{ color: hover ? "#fff" : "#000", opacity: 0.7 }}>
+          [{job.id}]
+        </div>
+
+        <div
+          style={{
+            fontSize: "clamp(20px,3vw,36px)",
+            fontWeight: 600,
+            color: hover ? "#fff" : "#000",
+          }}
+        >
+          {job.title}
+        </div>
+
+        <div
+          style={{
+            fontSize: "clamp(14px,2vw,18px)",
+            color: hover ? "#eee" : "#444",
+          }}
+        >
+          {job.text}
+        </div>
+
+        <div>
+          <div className="btn-frame" onClick={() => onApply(job)}>
+            <div className="btn-strip">
+              <div className="circle side-left">
+                <div className="arrow"></div>
+              </div>
+
+              <div className="box">Apply</div>
+
+              <div className="circle side-right">
+                <div className="arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE FIX */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          div[style*="grid"] {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
+    </div>
   );
 };
 
 /* MODAL */
 const ApplyModal = ({ job, onClose }) => (
-  <motion.div onClick={onClose} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-    style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.65)", backdropFilter: "blur(10px)", display: "flex", justifyContent: "center", alignItems: "center", padding: "16px", zIndex: 1000 }}
+  <motion.div
+    onClick={onClose}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    style={{
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.6)",
+      backdropFilter: "blur(8px)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "16px",
+      zIndex: 1000,
+    }}
   >
-    <motion.div onClick={(e) => e.stopPropagation()}
-      initial={{ opacity: 0, y: 40, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 40, scale: 0.95 }}
-      style={{ background: "#fff", padding: "clamp(20px, 5vw, 40px)", borderRadius: "16px", width: "100%", maxWidth: "min(500px,95vw)" }}
+    <motion.div
+      onClick={(e) => e.stopPropagation()}
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 40, scale: 0.95 }}
+      style={{
+        background: "#fff",
+        padding: "clamp(20px,5vw,40px)",
+        borderRadius: "16px",
+        width: "100%",
+        maxWidth: "500px",
+      }}
     >
-      <h2 style={{ marginBottom: "10px" }}>Apply for {job.title}</h2>
-      <p style={{ color: "#666", marginBottom: "20px" }}>Fill in your details and we’ll get back to you.</p>
-      <form style={{ display: "flex", flexDirection: "column", gap: "12px" }} onSubmit={(e) => { e.preventDefault(); alert("Application submitted 🚀"); onClose(); }}>
+      <h2>Apply for {job.title}</h2>
+      <p style={{ color: "#666", marginBottom: "20px" }}>
+        Fill your details and we’ll reach out.
+      </p>
+
+      <form
+        style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          alert("Application submitted 🚀");
+          onClose();
+        }}
+      >
         <input placeholder="Your Name" required style={inputStyle} />
         <input placeholder="Email" type="email" required style={inputStyle} />
         <input placeholder="Resume Link" style={inputStyle} />
         <textarea placeholder="Why should we hire you?" rows="4" style={inputStyle} />
-        <motion.button whileHover={{ scale: 1.05 }} style={{ background: "#111", color: "#fff", padding: "14px", border: "none", borderRadius: "8px", cursor: "pointer" }}>Submit Application</motion.button>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          style={{
+            background: "#111",
+            color: "#fff",
+            padding: "14px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Submit Application
+        </motion.button>
       </form>
-      <button onClick={onClose} style={{ marginTop: "12px", background: "none", border: "none", color: "#888", cursor: "pointer" }}>Close</button>
+
+      <button
+        onClick={onClose}
+        style={{
+          marginTop: "12px",
+          background: "none",
+          border: "none",
+          color: "#888",
+          cursor: "pointer",
+        }}
+      >
+        Close
+      </button>
     </motion.div>
   </motion.div>
 );

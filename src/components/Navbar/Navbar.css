@@ -224,9 +224,15 @@ nav {
   color: #fff;
   padding: 10em 5em;
   z-index: 9999;
- pointer-events: auto;
+ pointer-events: none; 
 }
 
+.overlay-menu.active {
+  display: flex;
+  opacity: 1;
+
+  pointer-events: auto;  /* enable clicking */
+}
 .menu-title,
 .menu-item {
   flex: 1;

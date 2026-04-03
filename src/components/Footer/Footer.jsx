@@ -841,216 +841,365 @@
 // };
 
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import "./Footer.css";
+// import { Link } from "react-router-dom";
+
+
+// export function FooterPage() {
+//   const [name, setName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [message, setMessage] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [submitted, setSubmitted] = useState(false);
+
+//   const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
+//   const API_KEY = import.meta.env.VITE_API_KEY;
+// s
+//   const isFormValid =
+//     name.trim() !== "" &&
+//     email.trim() !== "" &&
+//     message.trim() !== "" &&
+//     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!isFormValid || loading) return;
+
+//     setLoading(true);
+
+//     try {
+//       const formData = new FormData();
+//       formData.append("key", API_KEY);
+//       formData.append("name", name.trim());
+//       formData.append("email", email.trim());
+//       formData.append("message", message.trim());
+//       formData.append("website", "");
+
+//       await fetch(SCRIPT_URL, {
+//         method: "POST",
+//         body: formData,
+//         mode: "no-cors"
+//       });
+
+//       setSubmitted(true);
+//       setName("");
+//       setEmail("");
+//       setMessage("");
+
+//       setTimeout(() => {
+//         setSubmitted(false);
+//       }, 5000);
+
+//     } catch (err) {
+//       console.error("Form submission error:", err);
+//       alert("❌ Submission failed.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//  return (
+//   <div className="footer-main">
+//     <div id="Footer" className="mita-wrapper">
+
+//       {/* ===== TOP SECTION ===== */}
+//       <div className="mita-top-section">
+
+//         <nav className="mita-top-nav">
+
+//           <div className="nav-socials">
+//             <a href="https://github.com/Dcoderath" target="_blank" rel="noopener noreferrer">
+//               GITHUB
+//             </a>
+
+//             <a
+//               href="https://www.linkedin.com/in/divakar-trivedi-85326a376/"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               LINKEDIN
+//             </a>
+//           </div>
+
+//           <div className="nav-menu">
+//             <span>MITA</span>
+//             <span>THE APP</span>
+//             <span>NOT NFTS</span>
+//             <span>FAQ IT</span>
+//             <span>FOUNDERS</span>
+//           </div>
+
+//           <div className="nav-access">↗ EARLY ACCESS</div>
+
+//         </nav>
+
+//         <section className="mita-hero">
+//           <h1 className="mita-title">JOIN US</h1>
+
+//           <div className="mita-subtitles">
+//             <span>A MOVEMENT</span>
+//             <span>INDIA</span>
+//             <span>DEVELOPER</span>
+//           </div>
+//         </section>
+
+//       </div>
+
+//       {/* ===== BOTTOM SECTION ===== */}
+
+//       <div className="mita-bottom-section">
+
+//         <section className="mita-form-zone">
+
+//           <p className="mita-instruction">
+//             TYPE YOUR NAME, EMAIL AND MESSAGE BELOW TO <br />
+//             PRE-REGISTER FOR EARLY ACCESS...
+//           </p>
+
+//           {submitted ? (
+//             <div className="success-box">
+//               <h3>SUCCESS!</h3>
+//               <p>Thank you for joining MITA early access.</p>
+//             </div>
+//           ) : (
+
+//             <form onSubmit={handleSubmit}>
+
+//               <div className="mita-input-row">
+//                 <input
+//                   type="text"
+//                   placeholder="YOUR NAME..."
+//                   value={name}
+//                   onChange={(e) => setName(e.target.value)}
+//                   required
+//                 />
+//                 <span className="mita-star">*</span>
+//               </div>
+
+//               <div className="mita-input-row">
+//                 <input
+//                   type="email"
+//                   placeholder="YOUR EMAIL..."
+//                   value={email}
+//                   onChange={(e) => setEmail(e.target.value)}
+//                   required
+//                 />
+//                 <span className="mita-star">*</span>
+//               </div>
+
+//               <div className="mita-input-row">
+//                 <input
+//                   type="text"
+//                   placeholder="YOUR MESSAGE..."
+//                   value={message}
+//                   onChange={(e) => setMessage(e.target.value)}
+//                   required
+//                 />
+//                 <span className="mita-star">*</span>
+//               </div>
+
+//               <button
+//                 className="mita-submit-btn"
+//                 type="submit"
+//                 disabled={!isFormValid || loading}
+//               >
+//                 {loading ? "SENDING..." : "PRE-REGISTER ↗"}
+//               </button>
+
+//             </form>
+//           )}
+
+//           {!submitted && (
+//             <p className="mita-spam-text">
+//               DON'T WORRY, WE WON'T SPAM YOU
+//             </p>
+//           )}
+
+//         </section>
+
+
+//         <footer className="mita-bottom-bar">
+
+//           <div className="mita-links-group">
+//             <span>
+//               MORE QUESTIONS? <a href="#contact">CONTACT US</a>
+//             </span>
+
+//             <span>
+//               WANNA <a href="/careers">JOIN THE TEAM?</a>
+//             </span>
+//           </div>
+
+
+//           <div className="mita-links-group">
+//             <a href="/terms">TERMS OF SERVICE</a>
+//             <a href="/privacy">PRIVACY POLICY</a>
+
+//             <span>
+//               MADE BY{" "}
+//               <a href="https://github.com/Dcoderath">
+//                 Dcoderath
+//               </a>
+//             </span>
+//           </div>
+
+//         </footer>
+
+//       </div>
+
+//     </div>
+//   </div>
+// );
+// }
+
+// export default FooterPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from "react";
 import "./Footer.css";
-import { Link } from "react-router-dom";
+import { BsArrowReturnRight } from "react-icons/bs";
 
+const Footer = () => {
+  return (
+    <footer className="cg-footer">
 
-export function FooterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+      <div className="cg-footer-top">
 
-  const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
-  const API_KEY = import.meta.env.VITE_API_KEY;
+        <div className="cg-footer-col">
 
-  const isFormValid =
-    name.trim() !== "" &&
-    email.trim() !== "" &&
-    message.trim() !== "" &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!isFormValid || loading) return;
-
-    setLoading(true);
-
-    try {
-      const formData = new FormData();
-      formData.append("key", API_KEY);
-      formData.append("name", name.trim());
-      formData.append("email", email.trim());
-      formData.append("message", message.trim());
-      formData.append("website", "");
-
-      await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: formData,
-        mode: "no-cors"
-      });
-
-      setSubmitted(true);
-      setName("");
-      setEmail("");
-      setMessage("");
-
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 5000);
-
-    } catch (err) {
-      console.error("Form submission error:", err);
-      alert("❌ Submission failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
- return (
-  <div className="footer-main">
-    <div id="Footer" className="mita-wrapper">
-
-      {/* ===== TOP SECTION ===== */}
-      <div className="mita-top-section">
-
-        <nav className="mita-top-nav">
-
-          <div className="nav-socials">
-            <a href="https://github.com/Dcoderath" target="_blank" rel="noopener noreferrer">
-              GITHUB
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/divakar-trivedi-85326a376/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LINKEDIN
-            </a>
-          </div>
-
-          <div className="nav-menu">
-            <span>MITA</span>
-            <span>THE APP</span>
-            <span>NOT NFTS</span>
-            <span>FAQ IT</span>
-            <span>FOUNDERS</span>
-          </div>
-
-          <div className="nav-access">↗ EARLY ACCESS</div>
-
-        </nav>
-
-        <section className="mita-hero">
-          <h1 className="mita-title">JOIN US</h1>
-
-          <div className="mita-subtitles">
-            <span>A MOVEMENT</span>
-            <span>INDIA</span>
-            <span>DEVELOPER</span>
-          </div>
-        </section>
-
-      </div>
-
-      {/* ===== BOTTOM SECTION ===== */}
-
-      <div className="mita-bottom-section">
-
-        <section className="mita-form-zone">
-
-          <p className="mita-instruction">
-            TYPE YOUR NAME, EMAIL AND MESSAGE BELOW TO <br />
-            PRE-REGISTER FOR EARLY ACCESS...
+          <p className="cg-label">
+            EXPLORE
           </p>
 
-          {submitted ? (
-            <div className="success-box">
-              <h3>SUCCESS!</h3>
-              <p>Thank you for joining MITA early access.</p>
-            </div>
-          ) : (
+          <div className="cg-nav">
 
-            <form onSubmit={handleSubmit}>
+            <a href="#" className="cg-link">Work</a>
+            <a href="#" className="cg-link">About</a>
+            <a href="#" className="cg-link">Services</a>
+            <a href="#" className="cg-link">Blog</a>
 
-              <div className="mita-input-row">
-                <input
-                  type="text"
-                  placeholder="YOUR NAME..."
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <span className="mita-star">*</span>
-              </div>
+          </div>
 
-              <div className="mita-input-row">
-                <input
-                  type="email"
-                  placeholder="YOUR EMAIL..."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <span className="mita-star">*</span>
-              </div>
+        </div>
 
-              <div className="mita-input-row">
-                <input
-                  type="text"
-                  placeholder="YOUR MESSAGE..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  required
-                />
-                <span className="mita-star">*</span>
-              </div>
+        <div className="cg-footer-col">
 
-              <button
-                className="mita-submit-btn"
-                type="submit"
-                disabled={!isFormValid || loading}
-              >
-                {loading ? "SENDING..." : "PRE-REGISTER ↗"}
-              </button>
+          <p className="cg-label">
+            STALK US
+          </p>
 
-            </form>
-          )}
+          <div className="cg-nav">
 
-          {!submitted && (
-            <p className="mita-spam-text">
-              DON'T WORRY, WE WON'T SPAM YOU
+            <a href="#" className="cg-link">LinkedIn</a>
+            <a href="#" className="cg-link">Instagram</a>
+            <a href="#" className="cg-link">GITHUB</a>
+
+          </div>
+
+        </div>
+
+        <div className="cg-footer-col cg-right">
+
+          <div className="cg-card dark">
+
+            <p className="cg-label-alt alt">
+              SAY HELLO
             </p>
-          )}
 
-        </section>
+            <div className="cg-email-row">
 
+              <BsArrowReturnRight className="cg-arrow" />
 
-        <footer className="mita-bottom-bar">
-
-          <div className="mita-links-group">
-            <span>
-              MORE QUESTIONS? <a href="#contact">CONTACT US</a>
-            </span>
-
-            <span>
-              WANNA <a href="/careers">JOIN THE TEAM?</a>
-            </span>
-          </div>
-
-
-          <div className="mita-links-group">
-            <a href="/terms">TERMS OF SERVICE</a>
-            <a href="/privacy">PRIVACY POLICY</a>
-
-            <span>
-              MADE BY{" "}
-              <a href="https://github.com/Dcoderath">
-                Dcoderath
+              <a
+                href="mailto:hello@codegrid.com"
+                className="cg-email"
+              >
+                hello@codegrid.com
               </a>
-            </span>
+
+            </div>
+
           </div>
 
-        </footer>
+          <div className="cg-card light">
+
+            <p className="cg-label-alt">
+              CAREERS
+            </p>
+
+            <div className="cg-email-row">
+
+              <BsArrowReturnRight className="cg-arrow dark" />
+
+              <a
+                href="mailto:apply@codegrid.com"
+                className="cg-email dark"
+              >
+                apply@codegrid.com
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 
-    </div>
-  </div>
-);
-}
+      <div className="cg-footer-bottom">
 
-export default FooterPage;
+        <div className="cg-brand-row">
+
+          <h1 className="cg-brand">
+            CODE
+          </h1>
+
+          <h1 className="cg-brand">
+            GRID
+          </h1>
+
+        </div>
+
+        <div className="cg-meta">
+
+          <div className="cg-meta-left">
+
+            <span>© 2026 CODEGRID STUDIO</span>
+            <span>NOIDA / INDIA</span>
+
+          </div>
+
+          <div className="cg-meta-right">
+
+            <a href="#" className="cg-meta-link">
+              PRIVACY & POLICY
+            </a>
+
+            <a href="#" className="cg-meta-link">
+              TERMS & CONDITIONS
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </footer>
+  );
+};
+
+export default Footer;

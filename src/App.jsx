@@ -793,6 +793,7 @@ import Careers from "./components/Footer/Careers";
 
 import { Helmet } from "react-helmet";
 
+
 const BLOCK_SIZE = 30;
 
 const App = () => {
@@ -969,6 +970,7 @@ const highlightBlock = useCallback((e) => {
         <Projects />
         <WhySection />
         <MarqueeScroll />
+        <Contact/>
       </>
     }
   />

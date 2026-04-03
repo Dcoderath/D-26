@@ -143,6 +143,7 @@ overflow-y: auto;
   background: #FF2A00;
   color: #fff;
 }
+
 @media (max-width: 480px) {
   .app-highlight,
   .app-overlay,

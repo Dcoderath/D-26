@@ -785,7 +785,7 @@ import Services from "./components/Services/Services";
 import Footer from "./components/Footer/Footer";
 import WhySection from "./components/WhySection/WhySection";
 import MarqueeScroll from "./components/MarqueeScroll/MarqueeScroll";
-
+import Contact from "./components/Contact/Contact";
 import { Routes, Route, useLocation } from "react-router-dom";
 import TermsOfService from "./components/Footer/TermsOfService";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";

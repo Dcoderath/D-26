@@ -543,16 +543,16 @@ text-decoration:underline;
 color:inherit;
 cursor:pointer;
 }
-/* --- Base Adjustments for Better Scaling --- */
+
 .mita-wrapper {
-  overflow-x: hidden; /* Prevents horizontal scroll on small screens */
+  overflow-x: hidden;
 }
 
-/* --- Responsive Polish --- */
+
 
 @media (max-width: 1024px) {
   .mita-title {
-    /* Keeps the font massive but prevents overlap */
+  
     font-size: clamp(80px, 22vw, 240px);
   }
 }
@@ -561,7 +561,7 @@ cursor:pointer;
   .mita-top-section {
     height: auto;
     min-height: 50vh;
-    padding: 60px 5% 20px; /* Space for the absolute nav */
+    padding: 60px 5% 20px; 
   }
 
   .mita-top-nav {
@@ -570,7 +570,7 @@ cursor:pointer;
   }
 
   .nav-menu {
-    display: none; /* Hide non-essential links to keep it clean */
+    display: none;
   }
 
   .mita-title {
@@ -591,7 +591,7 @@ cursor:pointer;
   }
 
   .mita-title {
-    /* The "Pro" look: high impact, tight leading */
+    
     font-size: 18vw; 
     line-height: 0.8;
   }

@@ -1,0 +1,53 @@
+/* Contact.css */
+.contact-form-zone {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.input-row {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.input-row input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.star {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.submit-btn {
+  background: #ff0080;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.success-box {
+  text-align: center;
+  color: green;
+}
+
+.contact-instruction,
+.spam-text {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}

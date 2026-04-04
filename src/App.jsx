@@ -775,258 +775,6 @@
 
 
 
-// import React, { useEffect, useRef, useCallback } from "react";
-// import "./App.css";
-
-// import Navbar from "./components/Navbar/Navbar";
-// import Home from "./components/Home/Home";
-// import Projects from "./components/Projects/Projects";
-// import Services from "./components/Services/Services";
-// import Footer from "./components/Footer/Footer";
-// import WhySection from "./components/WhySection/WhySection";
-// import MarqueeScroll from "./components/MarqueeScroll/MarqueeScroll";
-// import Contact from "./components/Contact/Contact";
-// import { Routes, Route, useLocation } from "react-router-dom";
-// import TermsOfService from "./components/Footer/TermsOfService";
-// import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
-// import Careers from "./components/Footer/Careers";
-
-// import { Helmet } from "react-helmet";
-
-
-// const BLOCK_SIZE = 30;
-
-// const App = () => {
-//   const location = useLocation();
-
-//   const blocksRef = useRef(null);
-//   const rafIdRef = useRef(null);
-//   const mousePosRef = useRef({ x: 0, y: 0 });
-
-//   /* ---------------- GRID ---------------- */
-//   const createBlocks = useCallback(() => {
-//     if (!blocksRef.current) return;
-
-//     const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
-//     const rows = Math.ceil(window.innerHeight / BLOCK_SIZE);
-
-//     blocksRef.current.innerHTML = "";
-//     blocksRef.current.style.gridTemplateColumns = `repeat(${cols}, ${BLOCK_SIZE}px)`;
-
-//     for (let i = 0; i < cols * rows; i++) {
-//       const div = document.createElement("div");
-//       div.className = "app-block-grid";
-//       blocksRef.current.appendChild(div);
-//     }
-//   }, []);
-
-//  const prevPosRef = useRef(null);
-
-// const highlightBlock = useCallback((e) => {
-//   if (!blocksRef.current || rafIdRef.current) return;
-
-//   mousePosRef.current = { x: e.clientX, y: e.clientY };
-
-//   rafIdRef.current = requestAnimationFrame(() => {
-//     const rect = blocksRef.current.getBoundingClientRect();
-
-//     const x = mousePosRef.current.x - rect.left;
-//     const y = mousePosRef.current.y - rect.top;
-
-//     const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
-
-//     const col = Math.floor(x / BLOCK_SIZE);
-//     const row = Math.floor(y / BLOCK_SIZE);
-
-//     if (prevPosRef.current) {
-//       const prevCol = prevPosRef.current.col;
-//       const prevRow = prevPosRef.current.row;
-
-//       const steps = Math.max(
-//         Math.abs(col - prevCol),
-//         Math.abs(row - prevRow)
-//       );
-
-//       for (let i = 0; i <= steps; i++) {
-//         const interpCol = Math.round(
-//           prevCol + ((col - prevCol) * i) / steps
-//         );
-
-//         const interpRow = Math.round(
-//           prevRow + ((row - prevRow) * i) / steps
-//         );
-
-//         const index = interpRow * cols + interpCol;
-
-//         const block = blocksRef.current.children[index];
-
-//         if (block) {
-//           block.classList.add("app-highlight");
-
-//           setTimeout(() => {
-//             block.classList.remove("app-highlight");
-//           }, 300);
-//         }
-//       }
-//     }
-
-//     prevPosRef.current = { col, row };
-
-//     rafIdRef.current = null;
-//   });
-// }, []);
-
-//   /* ---------------- GRID ONLY ON HOME ---------------- */
-//   useEffect(() => {
-//     if (location.pathname !== "/") return;
-
-//     createBlocks();
-//     window.addEventListener("resize", createBlocks);
-//     window.addEventListener("mousemove", highlightBlock);
-
-//     return () => {
-//       window.removeEventListener("resize", createBlocks);
-//       window.removeEventListener("mousemove", highlightBlock);
-//     };
-//   }, [location.pathname, createBlocks, highlightBlock]);
-
-//   /* ---------------- BRICK ANIMATION (ONLY FIRST TIME) ---------------- */
-//   useEffect(() => {
-//     if (sessionStorage.getItem("introPlayed")) return;
-
-//     const runAnimation = async () => {
-//       const gsap = (await import("gsap")).default;
-
-//       const overlay = document.getElementById("app-overlay");
-//       if (!overlay) return;
-
-//       const blocks = overlay.querySelectorAll(".app-block");
-
-//       overlay.style.display = "grid";
-
-//       gsap.fromTo(
-//         blocks,
-//         { y: 0 },
-//         {
-//           y: "-100%",
-//           duration: 1.2,
-//           stagger: 0.06,
-//           ease: "power4.inOut",
-//           delay: 0.2,
-//           onComplete: () => {
-//             overlay.style.display = "none";
-//           }
-//         }
-//       );
-
-//       sessionStorage.setItem("introPlayed", "true");
-//     };
-
-//     runAnimation();
-//   }, []);
-
-//   /* ---------------- SCROLL RESET ---------------- */
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, [location.pathname]);
-
-//   /* ---------------- MAIN ---------------- */
-//   return (
-//     <div className="App">
-
-//       <Helmet>
-//         <title>CodeGrid | Web & App Development Agency</title>
-//         <meta
-//           name="description"
-//           content="CodeGrid builds modern websites, apps, and UI/UX experiences."
-//         />
-//       </Helmet>
-
-//       {/* BRICK OVERLAY */}
-//       <div className="app-overlay" id="app-overlay">
-//         {[...Array(8)].map((_, i) => (
-//           <div key={i} className="app-block"></div>
-//         ))}
-//       </div>
-
-//       <Navbar />
-
-//       {/* GRID ONLY ON HOME */}
-//       {location.pathname === "/" && (
-//         <div className="app-blocks-container">
-//           <div ref={blocksRef} className="app-blocks-grid"></div>
-//         </div>
-//       )}
-
-//       <Routes>
-
-//   {/* HOME */}
-//   <Route
-//     path="/"
-//     element={
-//       <>
-//         <Home />
-//         <Services />
-//         <Projects />
-//         <WhySection />
-//         <MarqueeScroll />
-//         <Contact/>
-//       </>
-//     }
-//   />
-
-//   {/* TERMS */}
-//   <Route
-//     path="/terms"
-//     element={
-//       <>
-//         <Helmet>
-//           <title>Terms of Service | CodeGrid</title>
-//         </Helmet>
-//         <TermsOfService />
-//       </>
-//     }
-//   />
-
-//   {/* PRIVACY */}
-//   <Route
-//     path="/privacy"
-//     element={
-//       <>
-//         <Helmet>
-//           <title>Privacy Policy | CodeGrid</title>
-//         </Helmet>
-//         <PrivacyPolicy />
-//       </>
-//     }
-//   />
-
-//   {/* ✅ CAREERS (MOVE HERE) */}
-//   <Route
-//     path="/careers"
-//     element={
-//       <>
-//         <Helmet>
-//           <title>Careers | CodeGrid</title>
-//           <meta
-//             name="description"
-//             content="Join CodeGrid and build modern digital experiences."
-//           />
-//         </Helmet>
-//         <Careers />
-//       </>
-//     }
-//   />
-
-// </Routes>
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default App;
-
-
 import React, { useEffect, useRef, useCallback } from "react";
 import "./App.css";
 
@@ -1045,6 +793,7 @@ import Careers from "./components/Footer/Careers";
 
 import { Helmet } from "react-helmet";
 
+
 const BLOCK_SIZE = 30;
 
 const App = () => {
@@ -1053,7 +802,6 @@ const App = () => {
   const blocksRef = useRef(null);
   const rafIdRef = useRef(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
-  const prevPosRef = useRef(null);
 
   /* ---------------- GRID ---------------- */
   const createBlocks = useCallback(() => {
@@ -1072,57 +820,61 @@ const App = () => {
     }
   }, []);
 
-  const highlightBlock = useCallback((e) => {
-    if (!blocksRef.current || rafIdRef.current) return;
+ const prevPosRef = useRef(null);
 
-    mousePosRef.current = { x: e.clientX, y: e.clientY };
+const highlightBlock = useCallback((e) => {
+  if (!blocksRef.current || rafIdRef.current) return;
 
-    rafIdRef.current = requestAnimationFrame(() => {
-      const rect = blocksRef.current.getBoundingClientRect();
+  mousePosRef.current = { x: e.clientX, y: e.clientY };
 
-      const x = mousePosRef.current.x - rect.left;
-      const y = mousePosRef.current.y - rect.top;
+  rafIdRef.current = requestAnimationFrame(() => {
+    const rect = blocksRef.current.getBoundingClientRect();
 
-      const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
+    const x = mousePosRef.current.x - rect.left;
+    const y = mousePosRef.current.y - rect.top;
 
-      const col = Math.floor(x / BLOCK_SIZE);
-      const row = Math.floor(y / BLOCK_SIZE);
+    const cols = Math.ceil(window.innerWidth / BLOCK_SIZE);
 
-      if (prevPosRef.current) {
-        const prevCol = prevPosRef.current.col;
-        const prevRow = prevPosRef.current.row;
+    const col = Math.floor(x / BLOCK_SIZE);
+    const row = Math.floor(y / BLOCK_SIZE);
 
-        const steps = Math.max(
-          Math.abs(col - prevCol),
-          Math.abs(row - prevRow)
+    if (prevPosRef.current) {
+      const prevCol = prevPosRef.current.col;
+      const prevRow = prevPosRef.current.row;
+
+      const steps = Math.max(
+        Math.abs(col - prevCol),
+        Math.abs(row - prevRow)
+      );
+
+      for (let i = 0; i <= steps; i++) {
+        const interpCol = Math.round(
+          prevCol + ((col - prevCol) * i) / steps
         );
 
-        for (let i = 0; i <= steps; i++) {
-          const interpCol = Math.round(
-            prevCol + ((col - prevCol) * i) / steps
-          );
+        const interpRow = Math.round(
+          prevRow + ((row - prevRow) * i) / steps
+        );
 
-          const interpRow = Math.round(
-            prevRow + ((row - prevRow) * i) / steps
-          );
+        const index = interpRow * cols + interpCol;
 
-          const index = interpRow * cols + interpCol;
-          const block = blocksRef.current.children[index];
+        const block = blocksRef.current.children[index];
 
-          if (block) {
-            block.classList.add("app-highlight");
+        if (block) {
+          block.classList.add("app-highlight");
 
-            setTimeout(() => {
-              block.classList.remove("app-highlight");
-            }, 300);
-          }
+          setTimeout(() => {
+            block.classList.remove("app-highlight");
+          }, 300);
         }
       }
+    }
 
-      prevPosRef.current = { col, row };
-      rafIdRef.current = null;
-    });
-  }, []);
+    prevPosRef.current = { col, row };
+
+    rafIdRef.current = null;
+  });
+}, []);
 
   /* ---------------- GRID ONLY ON HOME ---------------- */
   useEffect(() => {
@@ -1138,8 +890,10 @@ const App = () => {
     };
   }, [location.pathname, createBlocks, highlightBlock]);
 
-  /* ---------------- INTRO ANIMATION FIXED ---------------- */
+  /* ---------------- BRICK ANIMATION (ONLY FIRST TIME) ---------------- */
   useEffect(() => {
+    if (sessionStorage.getItem("introPlayed")) return;
+
     const runAnimation = async () => {
       const gsap = (await import("gsap")).default;
 
@@ -1164,16 +918,11 @@ const App = () => {
           }
         }
       );
+
+      sessionStorage.setItem("introPlayed", "true");
     };
 
-    const overlay = document.getElementById("app-overlay");
-
-    if (!sessionStorage.getItem("introPlayed")) {
-      runAnimation();
-      sessionStorage.setItem("introPlayed", "true");
-    } else {
-      if (overlay) overlay.style.display = "none";
-    }
+    runAnimation();
   }, []);
 
   /* ---------------- SCROLL RESET ---------------- */
@@ -1184,6 +933,7 @@ const App = () => {
   /* ---------------- MAIN ---------------- */
   return (
     <div className="App">
+
       <Helmet>
         <title>CodeGrid | Web & App Development Agency</title>
         <meta
@@ -1209,65 +959,66 @@ const App = () => {
       )}
 
       <Routes>
-        {/* HOME */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Home />
-              <Services />
-              <Projects />
-              <WhySection />
-              <MarqueeScroll />
-              <Contact />
-            </>
-          }
-        />
 
-        {/* TERMS */}
-        <Route
-          path="/terms"
-          element={
-            <>
-              <Helmet>
-                <title>Terms of Service | CodeGrid</title>
-              </Helmet>
-              <TermsOfService />
-            </>
-          }
-        />
+  {/* HOME */}
+  <Route
+    path="/"
+    element={
+      <>
+        <Home />
+        <Services />
+        <Projects />
+        <WhySection />
+        <MarqueeScroll />
+        <Contact/>
+      </>
+    }
+  />
 
-        {/* PRIVACY */}
-        <Route
-          path="/privacy"
-          element={
-            <>
-              <Helmet>
-                <title>Privacy Policy | CodeGrid</title>
-              </Helmet>
-              <PrivacyPolicy />
-            </>
-          }
-        />
+  {/* TERMS */}
+  <Route
+    path="/terms"
+    element={
+      <>
+        <Helmet>
+          <title>Terms of Service | CodeGrid</title>
+        </Helmet>
+        <TermsOfService />
+      </>
+    }
+  />
 
-        {/* CAREERS */}
-        <Route
-          path="/careers"
-          element={
-            <>
-              <Helmet>
-                <title>Careers | CodeGrid</title>
-                <meta
-                  name="description"
-                  content="Join CodeGrid and build modern digital experiences."
-                />
-              </Helmet>
-              <Careers />
-            </>
-          }
-        />
-      </Routes>
+  {/* PRIVACY */}
+  <Route
+    path="/privacy"
+    element={
+      <>
+        <Helmet>
+          <title>Privacy Policy | CodeGrid</title>
+        </Helmet>
+        <PrivacyPolicy />
+      </>
+    }
+  />
 
+  {/* ✅ CAREERS (MOVE HERE) */}
+  <Route
+    path="/careers"
+    element={
+      <>
+        <Helmet>
+          <title>Careers | CodeGrid</title>
+          <meta
+            name="description"
+            content="Join CodeGrid and build modern digital experiences."
+          />
+        </Helmet>
+        <Careers />
+      </>
+    }
+  />
+
+</Routes>
       <Footer />
     </div>
   );

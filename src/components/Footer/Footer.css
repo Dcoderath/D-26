@@ -662,6 +662,7 @@ cursor:pointer;
   position: relative;
   display: inline-block;
   width: fit-content;
+  font-family: 'Courier New', Courier, monospace;
   font-size: clamp(26px,3.5vw,46px);
   text-decoration: none;
   color: #000;
@@ -709,7 +710,7 @@ cursor:pointer;
 }
 
 .cg-label-alt {
-    color: #504b4b;
+  color: #504b4b;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 18px;
   letter-spacing: 0.1em;
@@ -720,16 +721,21 @@ cursor:pointer;
 }
 
 .cg-email-row {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
+/* fixed arrow space */
+
 .cg-arrow {
+  position: absolute;
+  left: 0;
+  width: 28px; /* controls perfect gap */
   font-size: 38px;
   opacity: 0;
-  transform: translateX(-6px);
-  transition: all .3s ease;
+  transform: translateX(-16px);
+  transition: all .35s ease;
   color: #fff;
 }
 
@@ -737,23 +743,31 @@ cursor:pointer;
   color: #000;
 }
 
-.cg-email-row:hover .cg-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
-
 .cg-email {
   position: relative;
   display: inline-block;
-  width: fit-content;
   font-size: 1.9rem;
   text-decoration: none;
   color: #fff;
+  transition: transform .35s ease;
 }
 
 .cg-email.dark {
   color: #000;
 }
+
+/* hover */
+
+.cg-email-row:hover .cg-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cg-email-row:hover .cg-email {
+  transform: translateX(32px); /* must match arrow width */
+}
+
+/* underline */
 
 .cg-email::after {
   content: "";
